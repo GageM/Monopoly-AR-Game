@@ -4,20 +4,9 @@ using UnityEngine;
 
 public class PlayerSpace : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Player interactingPlayer;
+    public virtual void OnLanded(Player _interactingPlayer)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public virtual void OnLanded(Player interactingPlayer)
-    {
-        
+        interactingPlayer = _interactingPlayer;
     }
 }

@@ -7,20 +7,9 @@ public class SuperTax : PlayerSpace
     [SerializeField, Tooltip("How much money a player landing on this space will lose")]
     float taxAmount;
 
-    // Start is called before the first frame update
-    void Start()
+    public override void OnLanded(Player _interactingPlayer)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public override void OnLanded(Player interactingPlayer)
-    {
+        base.OnLanded(_interactingPlayer);
         interactingPlayer.cash -= taxAmount;
     }
 }

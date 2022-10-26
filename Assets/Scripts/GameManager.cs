@@ -8,31 +8,28 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance { get; private set; }
+    public static GameManager Instance { get; private set; }
 
     // Cache ARRaycastManager GameObject from ARCoreSession
     private ARRaycastManager _raycastManager;
 
-    // Cache ARAnchorManager
-    private ARAnchorManager _anchorManager;
-
     // List for raycast hits is re-used by raycast manager
-    private static readonly List<ARRaycastHit> Hits = new List<ARRaycastHit>();
+    private static readonly List<ARRaycastHit> Hits = new();
 
-    [SerializeField, Tooltip("The player prefab")]
+    [Tooltip("The player prefab")]
     public GameObject playerPrefab;
 
-    [SerializeField, Tooltip("The game board prefab")]
+    [Tooltip("The game board prefab")]
     public GameObject boardPrefab;
 
-    [SerializeField, Tooltip("The AR Session prefab")]
+    [Tooltip("The AR Session prefab")]
     public GameObject ARSessionPrefab;
 
-    [SerializeField, Tooltip("The number of players")]
+    [Tooltip("The number of players")]
     public int numberOfPlayers;
 
     // An array of all the game's players
-    List<Player> players;
+    public List<Player> players;
 
     // the game board
     [HideInInspector]
@@ -65,13 +62,13 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance != null && instance != this)
+        if (Instance != null && Instance != this)
         {
             Destroy(this);
         }
         else
         {
-            instance = this;
+            Instance = this;
         }
 
         // Has not yet initialized AR
@@ -82,9 +79,6 @@ public class GameManager : MonoBehaviour
 
         // Set the raycastManager to its component on the object
         _raycastManager = GetComponent<ARRaycastManager>();
-
-        // Set the anchorManager to its component on the object
-        _anchorManager = GetComponent<ARAnchorManager>();
 
         // Create a list of all the players
         players = new List<Player>();
@@ -102,8 +96,6 @@ public class GameManager : MonoBehaviour
         // If the player does not touch the screen do nothing
         Touch touch;
         if (Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began) { return; }
-
-        UpdateUIText("Touched The Screen", 2);
         
         if (initializedAR)
         {            
@@ -111,6 +103,9 @@ public class GameManager : MonoBehaviour
             {
                 // If the player can roll the dice, then do that
                 if (canRoll) RollDice();
+
+                // Move the player to their next space        
+                StartCoroutine(MovePLayerByRoll(currentPlayerIndex));
             }
             else
             {
@@ -143,13 +138,10 @@ public class GameManager : MonoBehaviour
         // Print the roll result to the screen
         UIText.text = $"Rolled a {rollResult}";
 
-        // Move the player to their next space        
-        StartCoroutine(MovePlayer());
-
         return rollResult;
     }
 
-    IEnumerator MovePlayer()
+    public IEnumerator MovePLayerByRoll(int _playerIndex)
     {
         while (rollResult > 0)
         {
@@ -157,26 +149,24 @@ public class GameManager : MonoBehaviour
             UIText.text = $"{rollResult} Spaces left to move";
 
             // If the player still has spaces before the end of the board
-            if (players[currentPlayerIndex].currentSpaceIndex < board.spaces.Length - 1)
+            if (players[_playerIndex].currentSpaceIndex < board.spaces.Length - 2)
             {
                 // Move to the next space if there is a next space
-                players[currentPlayerIndex].currentSpaceIndex++;
-                players[currentPlayerIndex].currentSpace = board.spaces[players[currentPlayerIndex].currentSpaceIndex];
-                players[currentPlayerIndex].transform.position = players[currentPlayerIndex].currentSpace.transform.position;
-                players[currentPlayerIndex].transform.rotation = players[currentPlayerIndex].currentSpace.transform.rotation;
+                players[_playerIndex].currentSpaceIndex++;
+                players[_playerIndex].currentSpace = board.spaces[players[_playerIndex].currentSpaceIndex];
+                players[_playerIndex].transform.SetPositionAndRotation(players[_playerIndex].currentSpace.transform.position, players[_playerIndex].currentSpace.transform.rotation);
             }
 
             // If the player passes GO
             else
             {
                 // Move to the first space if at the end of the board
-                players[currentPlayerIndex].currentSpaceIndex = 0;
-                players[currentPlayerIndex].currentSpace = board.spaces[0];
-                players[currentPlayerIndex].transform.position = players[currentPlayerIndex].currentSpace.transform.position;
-                players[currentPlayerIndex].transform.rotation = players[currentPlayerIndex].currentSpace.transform.rotation;
+                players[_playerIndex].currentSpaceIndex = 0;
+                players[_playerIndex].currentSpace = board.spaces[0];
+                players[_playerIndex].transform.SetPositionAndRotation(players[_playerIndex].currentSpace.transform.position, players[_playerIndex].currentSpace.transform.rotation);
 
                 // Call the PassGO function since the player passed go
-                PassGO();
+                PassGO(_playerIndex);
             }
 
             // decrement the roll result 
@@ -188,21 +178,67 @@ public class GameManager : MonoBehaviour
         // Clear the UI text when finished moving
         UIText.text = string.Empty;
 
-        LandOnSpace();
-        EndTurn();
+        LandOnSpace(_playerIndex);
+
+        if (_playerIndex == currentPlayerIndex)
+        {
+            EndTurn();
+        }
     }
 
-    void PassGO()
+    public IEnumerator MovePlayerToSpace(int _playerIndex, int _spaceIndex, bool cashOnPassGo)
+    {
+        while (players[_playerIndex].currentSpace != board.spaces[_spaceIndex])
+        {
+
+            // If the player still has spaces before the end of the board
+            if (players[_playerIndex].currentSpaceIndex < board.spaces.Length - 2)
+            {
+                // Move to the next space if there is a next space
+                players[_playerIndex].currentSpaceIndex++;
+                players[_playerIndex].currentSpace = board.spaces[players[_playerIndex].currentSpaceIndex];
+                players[_playerIndex].transform.SetPositionAndRotation(players[_playerIndex].currentSpace.transform.position, players[_playerIndex].currentSpace.transform.rotation);
+            }
+
+            // If the player passes GO
+            else
+            {
+                // Move to the first space if at the end of the board
+                players[_playerIndex].currentSpaceIndex = 0;
+                players[_playerIndex].currentSpace = board.spaces[0];
+                players[_playerIndex].transform.SetPositionAndRotation(players[_playerIndex].currentSpace.transform.position, players[_playerIndex].currentSpace.transform.rotation);
+
+                if (cashOnPassGo)
+                {
+                    // Call the PassGO function since the player passed go
+                    PassGO(_playerIndex);
+                }
+            }
+        }
+        // Clear the UI text when finished moving
+        UIText.text = string.Empty;
+
+        LandOnSpace(_playerIndex);
+
+        if (_playerIndex == currentPlayerIndex)
+        {
+            EndTurn();
+        }
+
+        yield return "Player Moved";
+    }
+
+    public void PassGO(int _playerIndex)
     {
         // Give the player $200 for passing GO!
-        players[currentPlayerIndex].cash += 200;
+        players[_playerIndex].cash += 200;
         StartCoroutine(UpdateUIText($"You Passed GO!", 2));
     }
 
-    void LandOnSpace()
+    void LandOnSpace(int _playerIndex)
     {
         // Set the UI text to display the space the player landed on
-        StartCoroutine(UpdateUIText(players[currentPlayerIndex].currentSpace.name, 3f));
+        StartCoroutine(UpdateUIText(players[_playerIndex].currentSpace.name, 3f));
 
         // Call the player's Land On Space Function
         players[currentPlayerIndex].LandOnSpace();
@@ -220,7 +256,7 @@ public class GameManager : MonoBehaviour
             Player temp = Instantiate(playerPrefab, board.transform).GetComponent<Player>();
 
             // Set the player's player index
-            temp.playerIndex = i + 1;
+            temp.playerIndex = i;
 
             // Add to the list of players
             players.Add(temp);
@@ -229,12 +265,11 @@ public class GameManager : MonoBehaviour
             players[i].gameObject.GetComponentInChildren<MeshRenderer>().material = playerMaterials[i];
 
             // Set the player's cash counter UI element
-            players[i].playerCashUI = GameObject.Find($"Player {players[i].playerIndex} Cash Counter").GetComponent<TextMeshProUGUI>();
+            players[i].playerCashUI = GameObject.Find($"Player {players[i].playerIndex + 1} Cash Counter").GetComponent<TextMeshProUGUI>();
 
             // Initialize the player on the first space
             players[i].currentSpace = board.spaces[players[i].currentSpaceIndex];
-            players[i].transform.position = players[i].currentSpace.transform.position;
-            players[i].transform.rotation = players[i].currentSpace.transform.rotation;
+            players[i].transform.SetPositionAndRotation(players[i].currentSpace.transform.position, players[i].currentSpace.transform.rotation);
         }
 
         // Register that the game has started
@@ -248,7 +283,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    IEnumerator UpdateUIText(string text, float duration)
+    public IEnumerator UpdateUIText(string text, float duration)
     {
 
         // Set the UI text to 'text' for 'duration' seconds

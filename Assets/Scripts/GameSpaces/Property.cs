@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class Property : PlayerSpace
 {
-    [SerializeField, Tooltip("How much this property costs to buy")]
+    [Tooltip("How much this property costs to buy")]
     public float value;
 
-    [SerializeField, Tooltip("This property's rent amount")]
+    [Tooltip("This property's rent amount")]
     public float rent;
 
     [SerializeField, Tooltip("The Group This Property is a Part of")]
     string group;
+
+    [HideInInspector, Tooltip("The amount of houses on this property")]
+    public int houseCount;
+
+    [HideInInspector, Tooltip("The amount of hotels on this property")]
+    public int hotelCount;
 
     // The property's owner
     public Player owner = null;
@@ -19,17 +25,14 @@ public class Property : PlayerSpace
     // Start is called before the first frame update
     void Start()
     {
-        
+        houseCount = 0;
+        hotelCount = 0;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void OnLanded(Player _interactingPlayer)
     {
-        
-    }
 
-    public override void OnLanded(Player interactingPlayer)
-    {
+        base.OnLanded(_interactingPlayer);
         // Check if this property has an owner
         if (owner == null)
         {

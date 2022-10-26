@@ -128,4 +128,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c43b85f74f96c3040b43d961af81afd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  board: {fileID: 0}
+  currentSpace: {fileID: 0}
+  currentSpaceIndex: 0
+  isInJail: 0
+  playerIndex: 0
+  startingCash: 200
+  cash: 0
+  ownedProperties: []
+  playerCashUI: {fileID: 0}

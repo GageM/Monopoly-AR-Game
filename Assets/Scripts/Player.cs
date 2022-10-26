@@ -13,8 +13,16 @@ public class Player : MonoBehaviour
     [HideInInspector]
     public int currentSpaceIndex;
 
+    // If the player is in jail or not
+    [HideInInspector]
+    public bool isInJail;
+
     // The multiplyer index of the player
+    [HideInInspector]
     public int playerIndex;
+
+    [Tooltip("The amount of cash the player begins the game with")]
+    public float startingCash;
 
     // The amount of money the player has
     [HideInInspector] public float cash;
@@ -28,13 +36,17 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        // The player starts on Go
         currentSpaceIndex = 0;
 
         // Set the player's starting cash
-        cash = 200;
+        cash = startingCash;
 
         // Create a new list of owned properties
-        ownedProperties = new List<Property>();
+        ownedProperties = new();
+
+        // The player does not start in jail
+        isInJail = false;
     }
 
     // Update is called once per frame

@@ -21,12 +21,6 @@ public class UIController : MonoBehaviour
         StartCoroutine(LateStart());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void SetNumberOfPlayers(int _numberOfPlayers)
     {
         gameManager.SetNumberOfPlayers(_numberOfPlayers);

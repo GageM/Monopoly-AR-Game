@@ -16,17 +16,13 @@ public class IncomeTax : PlayerSpace
     // Start is called before the first frame update
     void Start()
     {
-        taxPercentage = taxPercentage / 100f;
+        taxPercentage /= 100f;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void OnLanded(Player _interactingPlayer)
     {
-        
-    }
 
-    public override void OnLanded(Player interactingPlayer)
-    {
+        base.OnLanded(_interactingPlayer);
         float netWorth = 0;
 
         for(int i = 0; i < interactingPlayer.ownedProperties.Count; i++)

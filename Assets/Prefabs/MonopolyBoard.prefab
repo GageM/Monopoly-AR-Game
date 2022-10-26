@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31b4069130bc8b943b59676ff7a09eed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
   taxPercentage: 10
   flatTaxAmount: 200
 --- !u!1 &693326629055290370
@@ -90,6 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7553b9c5da57dab479a2defb191499ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
 --- !u!1 &716413928757242478
 GameObject:
   m_ObjectHideFlags: 0
@@ -99,7 +101,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5407594841314730195}
-  - component: {fileID: 3326377915382485850}
+  - component: {fileID: 6213119353382967977}
   m_Layer: 0
   m_Name: Chance
   m_TagString: Untagged
@@ -122,7 +124,7 @@ Transform:
   m_Father: {fileID: 5511658453486484573}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3326377915382485850
+--- !u!114 &6213119353382967977
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,9 +133,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 716413928757242478}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7553b9c5da57dab479a2defb191499ca, type: 3}
+  m_Script: {fileID: 11500000, guid: dc967efe24c4fd545b5d75f60d33f4a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
 --- !u!1 &937991673130613377
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,9 +181,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
   value: 260
   rent: 22
   group: Yellow
+  houseCount: 0
+  hotelCount: 0
   owner: {fileID: 0}
 --- !u!1 &1004620955573110420
 GameObject:
@@ -226,9 +232,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
   value: 200
   rent: 16
   group: Orange
+  houseCount: 0
+  hotelCount: 0
   owner: {fileID: 0}
 --- !u!1 &1665648202201059869
 GameObject:
@@ -274,6 +283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7553b9c5da57dab479a2defb191499ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
 --- !u!1 &1711391979987044387
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,9 +328,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
   value: 260
   rent: 22
   group: Yellow
+  houseCount: 0
+  hotelCount: 0
   owner: {fileID: 0}
 --- !u!1 &1729873026485851932
 GameObject:
@@ -331,7 +344,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 781731927453566727}
-  - component: {fileID: 7733508066353549136}
+  - component: {fileID: 7119669820084027260}
   m_Layer: 0
   m_Name: Chance
   m_TagString: Untagged
@@ -354,7 +367,7 @@ Transform:
   m_Father: {fileID: 5511658453486484573}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 270}
---- !u!114 &7733508066353549136
+--- !u!114 &7119669820084027260
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -363,9 +376,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1729873026485851932}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7553b9c5da57dab479a2defb191499ca, type: 3}
+  m_Script: {fileID: 11500000, guid: dc967efe24c4fd545b5d75f60d33f4a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
 --- !u!1 &2332088025676963238
 GameObject:
   m_ObjectHideFlags: 0
@@ -410,6 +424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7553b9c5da57dab479a2defb191499ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
 --- !u!1 &2387495227004724211
 GameObject:
   m_ObjectHideFlags: 0
@@ -454,9 +469,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
   value: 140
   rent: 10
   group: Pink
+  houseCount: 0
+  hotelCount: 0
   owner: {fileID: 0}
 --- !u!1 &2633932868231932628
 GameObject:
@@ -502,6 +520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7553b9c5da57dab479a2defb191499ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
 --- !u!1 &2693419206307756434
 GameObject:
   m_ObjectHideFlags: 0
@@ -546,9 +565,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
   value: 150
   rent: 24
   group: Utilities
+  houseCount: 0
+  hotelCount: 0
   owner: {fileID: 0}
 --- !u!1 &2933924947447776300
 GameObject:
@@ -594,9 +616,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
   value: 150
   rent: 24
   group: Utilities
+  houseCount: 0
+  hotelCount: 0
   owner: {fileID: 0}
 --- !u!1 &3505404952882991320
 GameObject:
@@ -642,9 +667,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
   value: 189
   rent: 14
   group: Orange
+  houseCount: 0
+  hotelCount: 0
   owner: {fileID: 0}
 --- !u!1 &3521685765056998933
 GameObject:
@@ -714,6 +742,7 @@ Transform:
   - {fileID: 2754590983495012788}
   - {fileID: 7267352334454567206}
   - {fileID: 4261838158543365248}
+  - {fileID: 4723348745116610337}
   m_Father: {fileID: 8204270144827097889}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
@@ -761,9 +790,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
   value: 120
   rent: 8
   group: Light Blue
+  houseCount: 0
+  hotelCount: 0
   owner: {fileID: 0}
 --- !u!1 &4244177599228340899
 GameObject:
@@ -809,6 +841,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7553b9c5da57dab479a2defb191499ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
 --- !u!1 &4289923805993103831
 GameObject:
   m_ObjectHideFlags: 0
@@ -853,6 +886,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7553b9c5da57dab479a2defb191499ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
 --- !u!1 &4366655996151712528
 GameObject:
   m_ObjectHideFlags: 0
@@ -897,9 +931,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
   value: 300
   rent: 26
   group: Green
+  houseCount: 0
+  hotelCount: 0
   owner: {fileID: 0}
 --- !u!1 &4390062843628965653
 GameObject:
@@ -945,6 +982,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7553b9c5da57dab479a2defb191499ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
 --- !u!1 &4591909916247301312
 GameObject:
   m_ObjectHideFlags: 0
@@ -989,9 +1027,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
   value: 100
   rent: 6
   group: Light Blue
+  houseCount: 0
+  hotelCount: 0
   owner: {fileID: 0}
 --- !u!1 &4843266840826266357
 GameObject:
@@ -1037,9 +1078,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
   value: 140
   rent: 10
   group: Pink
+  houseCount: 0
+  hotelCount: 0
   owner: {fileID: 0}
 --- !u!1 &5035348826118449280
 GameObject:
@@ -1085,9 +1129,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
   value: 200
   rent: 25
   group: Train Station
+  houseCount: 0
+  hotelCount: 0
   owner: {fileID: 0}
 --- !u!1 &5068981051610069757
 GameObject:
@@ -1230,9 +1277,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
   value: 160
   rent: 12
   group: Pink
+  houseCount: 0
+  hotelCount: 0
   owner: {fileID: 0}
 --- !u!1 &5944850085837553480
 GameObject:
@@ -1278,9 +1328,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
   value: 350
   rent: 35
   group: Blue
+  houseCount: 0
+  hotelCount: 0
   owner: {fileID: 0}
 --- !u!1 &5970683061288717508
 GameObject:
@@ -1291,7 +1344,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 511717232942626262}
-  - component: {fileID: 2992949364056542998}
+  - component: {fileID: 5517861990963143188}
   m_Layer: 0
   m_Name: Chance
   m_TagString: Untagged
@@ -1314,7 +1367,7 @@ Transform:
   m_Father: {fileID: 5511658453486484573}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 90, y: -90, z: 270}
---- !u!114 &2992949364056542998
+--- !u!114 &5517861990963143188
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1323,9 +1376,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5970683061288717508}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7553b9c5da57dab479a2defb191499ca, type: 3}
+  m_Script: {fileID: 11500000, guid: dc967efe24c4fd545b5d75f60d33f4a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
 --- !u!1 &6603887004192117022
 GameObject:
   m_ObjectHideFlags: 0
@@ -1370,9 +1424,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
   value: 280
   rent: 24
   group: Yellow
+  houseCount: 0
+  hotelCount: 0
   owner: {fileID: 0}
 --- !u!1 &6668684403963040501
 GameObject:
@@ -1418,9 +1475,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
   value: 320
   rent: 28
   group: Green
+  houseCount: 0
+  hotelCount: 0
   owner: {fileID: 0}
 --- !u!1 &7148796695548938070
 GameObject:
@@ -1466,9 +1526,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
   value: 240
   rent: 20
   group: Red
+  houseCount: 0
+  hotelCount: 0
   owner: {fileID: 0}
 --- !u!1 &7357445061469853447
 GameObject:
@@ -1514,9 +1577,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
   value: 200
   rent: 25
   group: Train Station
+  houseCount: 0
+  hotelCount: 0
   owner: {fileID: 0}
 --- !u!1 &7696812999952770676
 GameObject:
@@ -1562,6 +1628,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2de6b1821ee987d41b753c6fb9b1cf65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
   taxAmount: 100
 --- !u!1 &7809839894228122083
 GameObject:
@@ -1607,9 +1674,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
   value: 220
   rent: 18
   group: Red
+  houseCount: 0
+  hotelCount: 0
   owner: {fileID: 0}
 --- !u!1 &7954357974014637906
 GameObject:
@@ -1655,9 +1725,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
   value: 200
   rent: 25
   group: Train Station
+  houseCount: 0
+  hotelCount: 0
   owner: {fileID: 0}
 --- !u!1 &7954509166513422037
 GameObject:
@@ -1703,9 +1776,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
   value: 220
   rent: 18
   group: Red
+  houseCount: 0
+  hotelCount: 0
   owner: {fileID: 0}
 --- !u!1 &8003914383761094317
 GameObject:
@@ -1751,10 +1827,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
   value: 100
   rent: 6
   group: Light Blue
+  houseCount: 0
+  hotelCount: 0
   owner: {fileID: 0}
+--- !u!1 &8041088029941782424
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4723348745116610337}
+  - component: {fileID: 6072146478690859915}
+  m_Layer: 0
+  m_Name: Jail
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4723348745116610337
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8041088029941782424}
+  m_LocalRotation: {x: 0.0000021183298, y: 0.7071067, z: 0.7071068, w: 0.0000022227955}
+  m_LocalPosition: {x: 0.002094, y: -0.002038, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 5511658453486484573}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 180}
+--- !u!114 &6072146478690859915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8041088029941782424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7553b9c5da57dab479a2defb191499ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
 --- !u!1 &8167887298840670514
 GameObject:
   m_ObjectHideFlags: 0
@@ -1799,9 +1923,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
   value: 200
   rent: 25
   group: Train Station
+  houseCount: 0
+  hotelCount: 0
   owner: {fileID: 0}
 --- !u!1 &8204270144827097891
 GameObject:
@@ -1857,7 +1984,7 @@ MonoBehaviour:
   - {fileID: 2398640681080562512}
   - {fileID: 5816553949942698830}
   - {fileID: 2291978750374699432}
-  - {fileID: 3326377915382485850}
+  - {fileID: 6213119353382967977}
   - {fileID: 4152204136526287331}
   - {fileID: 5709430858896124758}
   - {fileID: 6380650583424881611}
@@ -1872,7 +1999,7 @@ MonoBehaviour:
   - {fileID: 9129943875335000991}
   - {fileID: 7108219272206896003}
   - {fileID: 5642583828251978743}
-  - {fileID: 7733508066353549136}
+  - {fileID: 7119669820084027260}
   - {fileID: 5804383133933861769}
   - {fileID: 7771391068708154036}
   - {fileID: 1479744621266466559}
@@ -1886,10 +2013,11 @@ MonoBehaviour:
   - {fileID: 6063818919665890172}
   - {fileID: 5378629122475315032}
   - {fileID: 4941324324188253933}
-  - {fileID: 2992949364056542998}
+  - {fileID: 5517861990963143188}
   - {fileID: 8691040953328828633}
   - {fileID: 8814422091581283907}
   - {fileID: 2278810381128068078}
+  - {fileID: 6072146478690859915}
 --- !u!1 &8431942083997885329
 GameObject:
   m_ObjectHideFlags: 0
@@ -1934,9 +2062,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
   value: 60
   rent: 2
   group: Brown
+  houseCount: 0
+  hotelCount: 0
   owner: {fileID: 0}
 --- !u!1 &8795279928875197189
 GameObject:
@@ -1982,9 +2113,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
   value: 60
   rent: 4
   group: Brown
+  houseCount: 0
+  hotelCount: 0
   owner: {fileID: 0}
 --- !u!1 &8871144939763868062
 GameObject:
@@ -2030,9 +2164,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
   value: 400
   rent: 50
   group: Blue
+  houseCount: 0
+  hotelCount: 0
   owner: {fileID: 0}
 --- !u!1 &8881141263634183796
 GameObject:
@@ -2078,9 +2215,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
   value: 180
   rent: 14
   group: Orange
+  houseCount: 0
+  hotelCount: 0
   owner: {fileID: 0}
 --- !u!1 &9006468609073847717
 GameObject:
@@ -2126,7 +2266,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactingPlayer: {fileID: 0}
   value: 300
   rent: 26
   group: Green
+  houseCount: 0
+  hotelCount: 0
   owner: {fileID: 0}
