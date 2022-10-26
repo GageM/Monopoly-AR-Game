@@ -8,7 +8,7 @@ public class Chance : PlayerSpace
 
     delegate void ChanceCards();
 
-    List<ChanceCards> chanceCards = new();
+    readonly List<ChanceCards> chanceCards = new();
 
     // Start is called before the first frame update
     void Start()
@@ -35,27 +35,29 @@ public class Chance : PlayerSpace
     public override void OnLanded(Player _interactingPlayer)
     {
         base.OnLanded(_interactingPlayer);
+
         int topCard = Random.Range(0, chanceCards.Count - 1);
+
         chanceCards[topCard]();
     }
 
     void AdvanceToGo()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Advance to Go, Collect 200 Dollars", 2));
+        manager.StartCoroutine(manager.UpdateUIText("Advance to Go, Collect $200", 2));
         // Advance to Go, Collect 200 Dollars
         manager.StartCoroutine(manager.MovePlayerToSpace(interactingPlayer.playerIndex, 0, true));
     }
 
     void AdvanceToTrafalgarSquare()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Advance to Trafalgar Square. If you pass Go, collect 200 Dollars", 2));
+        manager.StartCoroutine(manager.UpdateUIText("Advance to Trafalgar Square. If you pass Go, collect $200", 2));
         // Advance to Trafalgar Square. If you pass Go, collect 200 Dollars
         manager.StartCoroutine(manager.MovePlayerToSpace(interactingPlayer.playerIndex, 24, true));
     }
 
     void AdvanceToPallMall()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Advance to Pall Mall If you pass Go, collect 200 Dollars.", 2));
+        manager.StartCoroutine(manager.UpdateUIText("Advance to Pall Mall If you pass Go, collect $200.", 2));
         // Advance to Pall Mall If you pass Go, collect 200 Dollars.
         manager.StartCoroutine(manager.MovePlayerToSpace(interactingPlayer.playerIndex, 11, true));
     }
@@ -74,7 +76,7 @@ public class Chance : PlayerSpace
 
     void BankDividend()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Bank pays you dividend of 50 Dollars", 2));
+        manager.StartCoroutine(manager.UpdateUIText("Bank pays you dividend of $50", 2));
         // Bank pays you dividend of 50 Dollars
         interactingPlayer.cash += 50;
     }
@@ -99,14 +101,14 @@ public class Chance : PlayerSpace
 
     void GoToJail()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Go directly to Jail. Do not pass Go, do not collect 200 Dollars", 2));
+        manager.StartCoroutine(manager.UpdateUIText("Go directly to Jail. Do not pass Go, do not collect $200", 2));
         // Go directly to Jail. Do not pass Go, do not collect 200 Dollars
         manager.StartCoroutine(manager.MovePlayerToSpace(interactingPlayer.playerIndex, 40, false));
     }
 
     void PropertyRepair()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Make general repairs on all your properties: For each house pay 25 Dollars, For each hotel pay 100 Dollars", 2));
+        manager.StartCoroutine(manager.UpdateUIText("Make general repairs on all your properties: For each house pay 25 Dollars, For each hotel pay $100", 2));
         // Make general repairs on all your properties: For each house pay 25 Dollars, For each hotel pay 100 Dollars
         int hotelCount = 0;
         int houseCount = 0;
@@ -123,7 +125,7 @@ public class Chance : PlayerSpace
 
     void AdvanceToKingsCross()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Take a ride to King’s Cross Station. If you pass Go, collect 200 Dollars", 2));
+        manager.StartCoroutine(manager.UpdateUIText("Take a ride to King’s Cross Station. If you pass Go, collect $200", 2));
         // Take a ride to King’s Cross Station. If you pass Go, collect 200 Dollars
         manager.StartCoroutine(manager.MovePlayerToSpace(interactingPlayer.playerIndex, 5, true));
     }
@@ -137,7 +139,7 @@ public class Chance : PlayerSpace
 
     void PayPlayers()
     {
-        manager.StartCoroutine(manager.UpdateUIText("You have been elected Chairman of the Board. Pay each player 50 Dollars.", 2));
+        manager.StartCoroutine(manager.UpdateUIText("You have been elected Chairman of the Board. Pay each player $50.", 2));
         // You have been elected Chairman of the Board. Pay each player 50 Dollars.
         for (int i = 0; i < manager.numberOfPlayers; i++)
         {
@@ -152,7 +154,7 @@ public class Chance : PlayerSpace
 
     void LoanMatures()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Your building loan matures. Collect 150 Dollars.", 2));
+        manager.StartCoroutine(manager.UpdateUIText("Your building loan matures. Collect $150.", 2));
         // Your building loan matures. Collect 150 Dollars.
         interactingPlayer.cash += 150;
     }

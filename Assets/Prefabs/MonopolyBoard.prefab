@@ -56,7 +56,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6834104612022934861}
-  - component: {fileID: 6063818919665890172}
+  - component: {fileID: 8326368644240001228}
   m_Layer: 0
   m_Name: Community Chest
   m_TagString: Untagged
@@ -79,7 +79,7 @@ Transform:
   m_Father: {fileID: 5511658453486484573}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 90, y: -90, z: 270}
---- !u!114 &6063818919665890172
+--- !u!114 &8326368644240001228
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -88,7 +88,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 693326629055290370}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7553b9c5da57dab479a2defb191499ca, type: 3}
+  m_Script: {fileID: 11500000, guid: 82aa264f906b3154a8feb7faa5aaa97d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   interactingPlayer: {fileID: 0}
@@ -806,7 +806,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 424060454113452427}
-  - component: {fileID: 3508316183122602360}
+  - component: {fileID: 6033632521863332787}
   m_Layer: 0
   m_Name: Community Chest
   m_TagString: Untagged
@@ -829,7 +829,7 @@ Transform:
   m_Father: {fileID: 5511658453486484573}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3508316183122602360
+--- !u!114 &6033632521863332787
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -838,7 +838,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4244177599228340899}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7553b9c5da57dab479a2defb191499ca, type: 3}
+  m_Script: {fileID: 11500000, guid: 82aa264f906b3154a8feb7faa5aaa97d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   interactingPlayer: {fileID: 0}
@@ -851,7 +851,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2256077937439793635}
-  - component: {fileID: 8181937878979357318}
+  - component: {fileID: 349342649808242681}
   m_Layer: 0
   m_Name: Community Chest
   m_TagString: Untagged
@@ -874,7 +874,7 @@ Transform:
   m_Father: {fileID: 5511658453486484573}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 180}
---- !u!114 &8181937878979357318
+--- !u!114 &349342649808242681
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -883,7 +883,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4289923805993103831}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7553b9c5da57dab479a2defb191499ca, type: 3}
+  m_Script: {fileID: 11500000, guid: 82aa264f906b3154a8feb7faa5aaa97d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   interactingPlayer: {fileID: 0}
@@ -1979,7 +1979,7 @@ MonoBehaviour:
   spaces:
   - {fileID: 3458556442551339410}
   - {fileID: 6017773575482462459}
-  - {fileID: 3508316183122602360}
+  - {fileID: 6033632521863332787}
   - {fileID: 5522120608644583995}
   - {fileID: 2398640681080562512}
   - {fileID: 5816553949942698830}
@@ -1994,7 +1994,7 @@ MonoBehaviour:
   - {fileID: 4366770612564670471}
   - {fileID: 2653652662084614736}
   - {fileID: 1374405133698402267}
-  - {fileID: 8181937878979357318}
+  - {fileID: 349342649808242681}
   - {fileID: 9098696565319165032}
   - {fileID: 9129943875335000991}
   - {fileID: 7108219272206896003}
@@ -2010,7 +2010,7 @@ MonoBehaviour:
   - {fileID: 4976989813156167388}
   - {fileID: 7787302397577423696}
   - {fileID: 1200042261131090080}
-  - {fileID: 6063818919665890172}
+  - {fileID: 8326368644240001228}
   - {fileID: 5378629122475315032}
   - {fileID: 4941324324188253933}
   - {fileID: 5517861990963143188}
