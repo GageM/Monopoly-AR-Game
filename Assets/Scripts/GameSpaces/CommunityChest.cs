@@ -67,14 +67,17 @@ public class CommunityChest : PlayerSpace
     void GetOutOfJailFree()
     {
         manager.StartCoroutine(manager.UpdateUIText("Get out of Jail Free", 2));
-        // TODO: Set Up Jail System
+
+        // add a get out of jail free card to the player
+        interactingPlayer.getOutOfJailCards++;
     }
 
     void GoToJail()
     {
         manager.StartCoroutine(manager.UpdateUIText("Go directly to Jail. Do not pass Go, do not collect $200", 2));
         // Go directly to Jail. Do not pass Go, do not collect 200 Dollars
-        manager.StartCoroutine(manager.MovePlayerToSpace(interactingPlayer.playerIndex, 40, false));
+
+        manager.GoToJail(interactingPlayer.playerIndex);
     }
 
     void OperaNight()

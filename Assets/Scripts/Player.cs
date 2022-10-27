@@ -30,6 +30,12 @@ public class Player : MonoBehaviour
     // A list of all the properties the player owns
     public List<Property> ownedProperties;
 
+    [HideInInspector, Tooltip("The amount of Get out of jail free cards this player has")]
+    public int getOutOfJailCards;
+
+    [HideInInspector, Tooltip("The amount of turns since the player went to jail")]
+    public int turnsSinceJailed;
+
     // The UI element that displays the player's available cash
     [HideInInspector] public TextMeshProUGUI playerCashUI;
 
@@ -47,6 +53,12 @@ public class Player : MonoBehaviour
 
         // The player does not start in jail
         isInJail = false;
+
+        // The player starts with no get out of jail free cards
+        getOutOfJailCards = 0;
+
+        // Turns since jailed is 0
+        turnsSinceJailed = 0;
     }
 
     // Update is called once per frame

@@ -485,7 +485,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 720051122151397481}
-  - component: {fileID: 4976989813156167388}
+  - component: {fileID: 7629533115763730497}
   m_Layer: 0
   m_Name: Go To Jail
   m_TagString: Untagged
@@ -508,7 +508,7 @@ Transform:
   m_Father: {fileID: 5511658453486484573}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 45, y: -90, z: 270}
---- !u!114 &4976989813156167388
+--- !u!114 &7629533115763730497
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -517,7 +517,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2633932868231932628}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7553b9c5da57dab479a2defb191499ca, type: 3}
+  m_Script: {fileID: 11500000, guid: 6289f6f113cea344e9ebfc77128a6801, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   interactingPlayer: {fileID: 0}
@@ -2007,7 +2007,7 @@ MonoBehaviour:
   - {fileID: 3153368886280919106}
   - {fileID: 268369225069695101}
   - {fileID: 1549334077090512752}
-  - {fileID: 4976989813156167388}
+  - {fileID: 7629533115763730497}
   - {fileID: 7787302397577423696}
   - {fileID: 1200042261131090080}
   - {fileID: 8326368644240001228}

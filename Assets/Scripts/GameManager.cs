@@ -101,12 +101,23 @@ public class GameManager : MonoBehaviour
         {            
             if (gameStarted)
             {
-                // If the player can roll the dice, then do that
-                if (canRoll) RollDice();
-
-                // Move the player to their next space        
-                StartCoroutine(MovePLayerByRoll(currentPlayerIndex));
+                // check if the player can start their turn
+                if(canRoll)
+                {
+                    // If the player isn't in jail, continue turn normally
+                    if (!players[currentPlayerIndex].isInJail)
+                    {
+                        BeginTurn();
+                    }
+                    // if the player is in jail
+                    else
+                    {
+                        BeginTurnFromJail();
+                    }
+                }
             }
+
+            // initialize the game
             else
             {
                 // Perform AR raycast to any plane
@@ -147,6 +158,12 @@ public class GameManager : MonoBehaviour
         {
             // Set the UI text to the amount of spaces left to move
             UIText.text = $"{rollResult} Spaces left to move";
+
+            // if the player is moving after being in jail start them from Just Visiting
+            if (players[_playerIndex].currentSpaceIndex == 40)
+            {
+                players[_playerIndex].currentSpaceIndex = 10;
+            }
 
             // If the player still has spaces before the end of the board
             if (players[_playerIndex].currentSpaceIndex < board.spaces.Length - 2)
@@ -190,7 +207,6 @@ public class GameManager : MonoBehaviour
     {
         while (players[_playerIndex].currentSpace != board.spaces[_spaceIndex])
         {
-
             // If the player still has spaces before the end of the board
             if (players[_playerIndex].currentSpaceIndex < board.spaces.Length - 2)
             {
@@ -353,5 +369,84 @@ public class GameManager : MonoBehaviour
         StartCoroutine(UpdateUIText("Game Starting", 2));
 
         initializedAR = true;
+    }
+
+    void BeginTurn()
+    {
+        // Roll the dice
+        RollDice();
+
+        // Move the player to their next space        
+        StartCoroutine(MovePLayerByRoll(currentPlayerIndex));
+    }
+
+    void BeginTurnFromJail()
+    {
+        StartCoroutine(UpdateUIText("Player is in jail", 2));
+
+        // If the player has a get out of jail card
+        if (players[currentPlayerIndex].getOutOfJailCards > 0)
+        {
+            // Reset turns since jailed
+            players[currentPlayerIndex].turnsSinceJailed = 0;
+
+            // The player is no longer in jail
+            players[currentPlayerIndex].isInJail = false;
+
+            // Subtract a get out of jail card
+            players[currentPlayerIndex].getOutOfJailCards--;
+
+            // If the player can roll the dice, then do that
+            if (canRoll) RollDice();
+
+            // Move the player to their next space   
+            StartCoroutine(MovePLayerByRoll(currentPlayerIndex));
+        }
+        // if the player has no get out of jail cards
+        else
+        {
+            // Free the player if they have been in jail for 3 or more turns
+            if (players[currentPlayerIndex].turnsSinceJailed >= 3)
+            {
+                // Clear days since jailed
+                players[currentPlayerIndex].turnsSinceJailed = 0;
+
+                // The player is no longer in jail
+                players[currentPlayerIndex].isInJail = false;
+
+                // Pay jail fine
+                players[currentPlayerIndex].cash -= 50;
+
+                // Roll the dice
+                RollDice();
+
+                // Move the player to their next space        
+                StartCoroutine(MovePLayerByRoll(currentPlayerIndex));
+            }
+            else
+            {
+                // Increse the amount of turns since the player was jailed
+                players[currentPlayerIndex].turnsSinceJailed++;
+
+                // End the player's turn
+                EndTurn();
+            }
+
+        }
+    }
+
+    public void GoToJail(int _playerIndex)
+    {
+        // Tell the game the player is in jail
+        players[_playerIndex].isInJail = true;
+
+        // Set the player's space index to the jail space
+        players[_playerIndex].currentSpaceIndex = 40;
+
+        // Set the player's current space to the jail space
+        players[_playerIndex].currentSpace = board.spaces[players[_playerIndex].currentSpaceIndex];
+
+        // Move the player to jail
+        players[_playerIndex].transform.SetPositionAndRotation(players[_playerIndex].currentSpace.transform.position, players[_playerIndex].currentSpace.transform.rotation);
     }
 }

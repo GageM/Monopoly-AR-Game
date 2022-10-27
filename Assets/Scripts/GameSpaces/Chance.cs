@@ -66,12 +66,40 @@ public class Chance : PlayerSpace
     {
         manager.StartCoroutine(manager.UpdateUIText("Advance token to the nearest Utility. If unowned, you may buy it from the Bank. If owned, throw dice and pay owner a total 10 times the amount thrown.", 2));
         // Advance token to the nearest Utility. If unowned, you may buy it from the Bank. If owned, throw dice and pay owner a total 10 times the amount thrown.
+
+        // Determine the Utility to move to
+        if (interactingPlayer.currentSpaceIndex >= 28 || interactingPlayer.currentSpaceIndex <= 12)
+        {
+            manager.StartCoroutine(manager.MovePlayerToSpace(interactingPlayer.playerIndex, 12, true));
+        }
+        else
+        {
+            manager.StartCoroutine(manager.MovePlayerToSpace(interactingPlayer.playerIndex, 28, true));
+        }
     }
 
     void AdvanceToNearestRailroad()
     {
         manager.StartCoroutine(manager.UpdateUIText("Advance to the nearest Railroad. If unowned, you may buy it from the Bank. If owned, pay owner twice the rental price.", 2));
         // Advance to the nearest Railroad. If unowned, you may buy it from the Bank. If owned, pay owner twice the rental price.
+
+        // Determine the Railway to move to
+        if (interactingPlayer.currentSpaceIndex >= 36 || interactingPlayer.currentSpaceIndex <= 5)
+        {
+            manager.StartCoroutine(manager.MovePlayerToSpace(interactingPlayer.playerIndex, 5, true));
+        }
+        else if (interactingPlayer.currentSpaceIndex > 5 && interactingPlayer.currentSpaceIndex <= 15)
+        {
+            manager.StartCoroutine(manager.MovePlayerToSpace(interactingPlayer.playerIndex, 15, true));
+        }
+        else if (interactingPlayer.currentSpaceIndex > 15 && interactingPlayer.currentSpaceIndex <= 25)
+        {
+            manager.StartCoroutine(manager.MovePlayerToSpace(interactingPlayer.playerIndex, 25, true));
+        }
+        else
+        {
+            manager.StartCoroutine(manager.MovePlayerToSpace(interactingPlayer.playerIndex, 35, true));
+        }
     }
 
     void BankDividend()
@@ -84,7 +112,9 @@ public class Chance : PlayerSpace
     void GetOutOfJailFree()
     {
         manager.StartCoroutine(manager.UpdateUIText("Get out of Jail Free", 2));
-        // TODO: Set Up Jail System
+
+        // add a get out of jail free card to the player
+        interactingPlayer.getOutOfJailCards++;
     }
 
     void GoBackSpaces()
@@ -93,6 +123,7 @@ public class Chance : PlayerSpace
         // Go back 3 spaces
 
         // Set the player's new space to 3 spaces behind their current space
+        // TODO: Fix Go Back 3 Spaces Function
         int newSpaceIndex = (interactingPlayer.currentSpaceIndex <= 3) ? (interactingPlayer.currentSpaceIndex - 3) : (interactingPlayer.currentSpaceIndex + 39 - 3);
 
         // Move the player to their new space
@@ -103,7 +134,8 @@ public class Chance : PlayerSpace
     {
         manager.StartCoroutine(manager.UpdateUIText("Go directly to Jail. Do not pass Go, do not collect $200", 2));
         // Go directly to Jail. Do not pass Go, do not collect 200 Dollars
-        manager.StartCoroutine(manager.MovePlayerToSpace(interactingPlayer.playerIndex, 40, false));
+
+        manager.GoToJail(interactingPlayer.playerIndex);
     }
 
     void PropertyRepair()
