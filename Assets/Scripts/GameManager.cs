@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
 
     // The materials for each player
     [SerializeField, Tooltip("The material for each player")]
-    Material[] playerMaterials;
+    Mesh[] playerMeshes;
 
     private void Awake()
     {
@@ -278,7 +278,7 @@ public class GameManager : MonoBehaviour
             players.Add(temp);
 
             // Set the player's material
-            players[i].gameObject.GetComponentInChildren<MeshRenderer>().material = playerMaterials[i];
+            players[i].gameObject.GetComponentInChildren<MeshFilter>().mesh = playerMeshes[i];
 
             // Set the player's cash counter UI element
             players[i].playerCashUI = GameObject.Find($"Player {players[i].playerIndex + 1} Cash Counter").GetComponent<TextMeshProUGUI>();

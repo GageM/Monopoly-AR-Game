@@ -7167,11 +7167,11 @@ MonoBehaviour:
   players: []
   board: {fileID: 0}
   debugText: {fileID: 1956303173}
-  playerMaterials:
-  - {fileID: 2100000, guid: 27ff1e2dea7cfb143b74107bf34324c0, type: 2}
-  - {fileID: 2100000, guid: ef0f34e536e612a43847ef79e0d428e4, type: 2}
-  - {fileID: 2100000, guid: df5485214b11f6d488eb1d3a2cbb0d12, type: 2}
-  - {fileID: 2100000, guid: e786638f6860afa4aa0cd6b4677ea9f2, type: 2}
+  playerMeshes:
+  - {fileID: -2027792483851093499, guid: 902dd24b44f6cdf49ad4ac31d2fa3123, type: 3}
+  - {fileID: 6426241066746792426, guid: 8cc0737a11459e84e90282005da6306b, type: 3}
+  - {fileID: -3285773967676295178, guid: 7506f839c94d1d6478f22ac572fb9dac, type: 3}
+  - {fileID: 5989768839924825809, guid: a580a9a147e6ac54eadf9c2f254aad6b, type: 3}
 --- !u!1 &1425918340
 GameObject:
   m_ObjectHideFlags: 0
