@@ -7160,18 +7160,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae529d9c740a93743b8fcb9db95970fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 682274591840306671, guid: 2fcf6f9fca1b80644ab9cc7673c03edd, type: 3}
+  playerPrefab: {fileID: 2284605090809390543, guid: 2f74c995067acc14c87d904d8c8cf685, type: 3}
   boardPrefab: {fileID: 8204270144827097891, guid: 46a3a7a10fccd1b4eab3d9cc468945c3, type: 3}
   ARSessionPrefab: {fileID: 3345624715622732718, guid: 8bd23a89460a9124fb9eafd6b44f710d, type: 3}
   numberOfPlayers: 2
   players: []
   board: {fileID: 0}
   debugText: {fileID: 1956303173}
-  playerMeshes:
-  - {fileID: -2027792483851093499, guid: 902dd24b44f6cdf49ad4ac31d2fa3123, type: 3}
-  - {fileID: 6426241066746792426, guid: 8cc0737a11459e84e90282005da6306b, type: 3}
-  - {fileID: -3285773967676295178, guid: 7506f839c94d1d6478f22ac572fb9dac, type: 3}
-  - {fileID: 5989768839924825809, guid: a580a9a147e6ac54eadf9c2f254aad6b, type: 3}
 --- !u!1 &1425918340
 GameObject:
   m_ObjectHideFlags: 0

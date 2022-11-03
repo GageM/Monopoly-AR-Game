@@ -21,6 +21,12 @@ public class Player : MonoBehaviour
     [HideInInspector]
     public int playerIndex;
 
+    // The list of player tokens
+    public GameObject[] tokens;
+
+    // The token index the player chooses
+    public GameObject currentToken;
+
     [Tooltip("The amount of cash the player begins the game with")]
     public float startingCash;
 
@@ -71,5 +77,19 @@ public class Player : MonoBehaviour
     public void LandOnSpace()
     {
         currentSpace.OnLanded(this);
+    }
+
+    public void SetPlayerToken(int tokenIndex)
+    {
+        currentToken = tokens[tokenIndex];
+        for(int i = 0; i < tokens.Length; i++)
+        {
+            if(tokens[i] != currentToken)
+            {
+                Destroy(tokens[i]);
+            }
+        }
+
+        GetComponentInChildren<Animator>().StopPlayback();
     }
 }

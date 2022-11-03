@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     public int numberOfPlayers;
 
     // An array of all the game's players
+    [HideInInspector]
     public List<Player> players;
 
     // the game board
@@ -55,10 +56,6 @@ public class GameManager : MonoBehaviour
 
     // Debug Text on all screens
     [SerializeField] TextMeshProUGUI debugText;
-
-    // The materials for each player
-    [SerializeField, Tooltip("The material for each player")]
-    Mesh[] playerMeshes;
 
     private void Awake()
     {
@@ -154,6 +151,12 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator MovePLayerByRoll(int _playerIndex)
     {
+        // Time to move one space in s
+        float moveDuration = 1.208f;
+
+        // start a move animation while the player is moving
+        players[_playerIndex].GetComponentInChildren<Animator>().StartPlayback();
+
         while (rollResult > 0)
         {
             // Set the UI text to the amount of spaces left to move
@@ -171,7 +174,6 @@ public class GameManager : MonoBehaviour
                 // Move to the next space if there is a next space
                 players[_playerIndex].currentSpaceIndex++;
                 players[_playerIndex].currentSpace = board.spaces[players[_playerIndex].currentSpaceIndex];
-                players[_playerIndex].transform.SetPositionAndRotation(players[_playerIndex].currentSpace.transform.position, players[_playerIndex].currentSpace.transform.rotation);
             }
 
             // If the player passes GO
@@ -180,20 +182,31 @@ public class GameManager : MonoBehaviour
                 // Move to the first space if at the end of the board
                 players[_playerIndex].currentSpaceIndex = 0;
                 players[_playerIndex].currentSpace = board.spaces[0];
-                players[_playerIndex].transform.SetPositionAndRotation(players[_playerIndex].currentSpace.transform.position, players[_playerIndex].currentSpace.transform.rotation);
 
                 // Call the PassGO function since the player passed go
                 PassGO(_playerIndex);
             }
 
+            float time = 0;
+            while(time < moveDuration)
+            {
+                // lerp the player location to their next space
+                players[_playerIndex].transform.position = Vector3.Lerp(players[_playerIndex].transform.position, players[_playerIndex].currentSpace.transform.position, time / moveDuration);
+                players[_playerIndex].transform.rotation = Quaternion.Lerp(players[_playerIndex].transform.rotation, players[_playerIndex].currentSpace.transform.rotation, time / moveDuration);
+                time += Time.deltaTime;
+                yield return null;
+            }
+
             // decrement the roll result 
             rollResult--;
 
-            // delay between moves
-            yield return new WaitForSeconds(0.2f);
+
         }
         // Clear the UI text when finished moving
         UIText.text = string.Empty;
+
+        // Stop the animation when the player stops moving
+        players[_playerIndex].currentToken.GetComponentInChildren<Animator>().StopPlayback();
 
         LandOnSpace(_playerIndex);
 
@@ -278,7 +291,7 @@ public class GameManager : MonoBehaviour
             players.Add(temp);
 
             // Set the player's material
-            players[i].gameObject.GetComponentInChildren<MeshFilter>().mesh = playerMeshes[i];
+            players[i].SetPlayerToken(i);
 
             // Set the player's cash counter UI element
             players[i].playerCashUI = GameObject.Find($"Player {players[i].playerIndex + 1} Cash Counter").GetComponent<TextMeshProUGUI>();

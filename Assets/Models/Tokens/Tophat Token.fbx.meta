@@ -1,14 +1,26 @@
 fileFormatVersion: 2
-guid: 3d03f95c9bf2da74992a794cc5d65229
+guid: eb9a50ae304a6554aba6d8a844e2ad44
 ModelImporter:
   serializedVersion: 22103
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: 7325997272246929379
+    second: HatRig|HatRigAction
+  - first:
+      74: 3146852049475675517
+    second: HatRig|HatRigAction.001
+  - first:
+      74: 6722970728021555296
+    second: HatRig|HatRigAction.002
+  - first:
+      74: -6472797835256241439
+    second: HatRig|Thimble RigAction
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: House
-    second: {fileID: 2100000, guid: ef0f34e536e612a43847ef79e0d428e4, type: 2}
+      name: Monopoly Tokens
+    second: {fileID: 2100000, guid: 69dfff72b9a1cd74aaa2fe3fd1dc0438, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -36,11 +48,40 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: HatRig|HatRigAction.002
+      takeName: HatRig|HatRigAction.002
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 29
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 0.0001
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -94,7 +135,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1
+    globalScale: 0.0001
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

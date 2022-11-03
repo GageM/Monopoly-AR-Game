@@ -1,14 +1,29 @@
 fileFormatVersion: 2
-guid: 3d03f95c9bf2da74992a794cc5d65229
+guid: 632f905a10bbd4341895a56675d6b1a5
 ModelImporter:
   serializedVersion: 22103
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: -7801018874926965557
+    second: Thimble Rig|HatRigAction
+  - first:
+      74: 4371262787706718848
+    second: Thimble Rig|HatRigAction.001
+  - first:
+      74: -3036093546737931854
+    second: Thimble Rig|Iron RigAction
+  - first:
+      74: 7801724319767812192
+    second: Thimble Rig|Thimble RigAction
+  - first:
+      74: 8104791603574383162
+    second: Thimble Rig|Thimble RigAction.001
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: House
-    second: {fileID: 2100000, guid: ef0f34e536e612a43847ef79e0d428e4, type: 2}
+      name: Monopoly Tokens
+    second: {fileID: 2100000, guid: 69dfff72b9a1cd74aaa2fe3fd1dc0438, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -36,11 +51,40 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Thimble Rig|Thimble RigAction.001
+      takeName: Thimble Rig|Thimble RigAction.001
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 29
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 0.0001
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -94,7 +138,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1
+    globalScale: 0.0001
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

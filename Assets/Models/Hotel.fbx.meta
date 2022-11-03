@@ -3,7 +3,12 @@ guid: 41a127eb42c091c429da0605f39f85c8
 ModelImporter:
   serializedVersion: 22103
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hotel
+    second: {fileID: 2100000, guid: 27ff1e2dea7cfb143b74107bf34324c0, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
