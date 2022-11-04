@@ -40,6 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2012524080329441423}
+  - component: {fileID: 3431024274465464938}
   m_Layer: 0
   m_Name: Thimble Token
   m_TagString: Untagged
@@ -64,6 +65,26 @@ Transform:
   m_Father: {fileID: 3035444961677570397}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &3431024274465464938
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1199711567256787509}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d7b09216bf68b6d4aabbc272eb5962c3, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1214658084815609750
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,7 +205,7 @@ MonoBehaviour:
   - {fileID: 3765867223317590945}
   - {fileID: 6277843994232172962}
   - {fileID: 3093908039005471736}
-  currentToken: {fileID: 0}
+  currentToken: {fileID: 1199711567256787509}
   startingCash: 200
   cash: 0
   ownedProperties: []
@@ -263,6 +284,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2424084853563971906}
+  - component: {fileID: 4377443855384662432}
   m_Layer: 0
   m_Name: Wheelbarrow Token
   m_TagString: Untagged
@@ -287,6 +309,26 @@ Transform:
   m_Father: {fileID: 3035444961677570397}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &4377443855384662432
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3093908039005471736}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5d8a57b9799329244a82f3fbde48c46d, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3765867223317590945
 GameObject:
   m_ObjectHideFlags: 0
@@ -296,6 +338,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4542123100838422811}
+  - component: {fileID: 4961196906822511453}
   m_Layer: 0
   m_Name: Tophat Token
   m_TagString: Untagged
@@ -320,6 +363,26 @@ Transform:
   m_Father: {fileID: 3035444961677570397}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &4961196906822511453
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3765867223317590945}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 990d1a4d368be4e46ac962b5e24c939c, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3928718583460576766
 GameObject:
   m_ObjectHideFlags: 0
@@ -330,7 +393,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8264801131822332069}
   - component: {fileID: 492866023240687887}
-  - component: {fileID: 4721502712159796420}
   m_Layer: 0
   m_Name: TopHat
   m_TagString: Untagged
@@ -408,26 +470,6 @@ SkinnedMeshRenderer:
     m_Center: {x: 0, y: 0.0000007032892, z: 0}
     m_Extent: {x: 0.0000014870458, y: 0.0000006729282, z: 0.0000017585992}
   m_DirtyAABB: 0
---- !u!95 &4721502712159796420
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3928718583460576766}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 990d1a4d368be4e46ac962b5e24c939c, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5080444862775235050
 GameObject:
   m_ObjectHideFlags: 0
@@ -470,7 +512,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1274739856797481772}
   - component: {fileID: 5613822037994847882}
-  - component: {fileID: 2695905548645569604}
   m_Layer: 0
   m_Name: Thimble
   m_TagString: Untagged
@@ -547,26 +588,6 @@ SkinnedMeshRenderer:
     m_Center: {x: 0, y: 0.0000008318967, z: 0}
     m_Extent: {x: 0.00000070714, y: 0.0000008318967, z: 0.00000070713975}
   m_DirtyAABB: 0
---- !u!95 &2695905548645569604
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6254876442350584350}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d7b09216bf68b6d4aabbc272eb5962c3, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6277843994232172962
 GameObject:
   m_ObjectHideFlags: 0
@@ -576,6 +597,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6653137667568921368}
+  - component: {fileID: 6465380894247560231}
   m_Layer: 0
   m_Name: Iron Token
   m_TagString: Untagged
@@ -600,6 +622,26 @@ Transform:
   m_Father: {fileID: 3035444961677570397}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &6465380894247560231
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6277843994232172962}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f4bec714ce80e734f80fcca2a775ff85, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6508614714102183003
 GameObject:
   m_ObjectHideFlags: 0
@@ -706,7 +748,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3977862044097908312}
   - component: {fileID: 9138237161788133517}
-  - component: {fileID: 5250615344388020245}
   m_Layer: 0
   m_Name: Iron
   m_TagString: Untagged
@@ -783,26 +824,6 @@ SkinnedMeshRenderer:
     m_Center: {x: 0, y: 0.0000006672931, z: 0.0000000036999381}
     m_Extent: {x: 0.0000008715619, y: 0.0000006672931, z: 0.0000014990641}
   m_DirtyAABB: 0
---- !u!95 &5250615344388020245
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7088651247794112240}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f4bec714ce80e734f80fcca2a775ff85, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8271549101422752692
 GameObject:
   m_ObjectHideFlags: 0
@@ -909,7 +930,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6855208518323354977}
   - component: {fileID: 2634802297047815320}
-  - component: {fileID: 5223710548533956023}
   m_Layer: 0
   m_Name: Wheelbarrow
   m_TagString: Untagged
@@ -986,26 +1006,6 @@ SkinnedMeshRenderer:
     m_Center: {x: 0, y: 0.0000016902743, z: 0.000000023943528}
     m_Extent: {x: 0.00000064141483, y: 0.0000019931579, z: 0.0000006842852}
   m_DirtyAABB: 0
---- !u!95 &5223710548533956023
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9100132113354479696}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5d8a57b9799329244a82f3fbde48c46d, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &9208259659860381446
 GameObject:
   m_ObjectHideFlags: 0

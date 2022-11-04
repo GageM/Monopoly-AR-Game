@@ -155,7 +155,7 @@ public class GameManager : MonoBehaviour
         float moveDuration = 1.208f;
 
         // start a move animation while the player is moving
-        players[_playerIndex].GetComponentInChildren<Animator>().StartPlayback();
+
 
         while (rollResult > 0)
         {
@@ -187,6 +187,9 @@ public class GameManager : MonoBehaviour
                 PassGO(_playerIndex);
             }
 
+            // Tell the animator to play the moving animation
+            players[_playerIndex].GetComponentInChildren<Animator>().SetBool("isMoving", true);
+
             float time = 0;
             while(time < moveDuration)
             {
@@ -206,7 +209,7 @@ public class GameManager : MonoBehaviour
         UIText.text = string.Empty;
 
         // Stop the animation when the player stops moving
-        players[_playerIndex].currentToken.GetComponentInChildren<Animator>().StopPlayback();
+        players[_playerIndex].currentToken.GetComponentInChildren<Animator>().SetBool("isMoving", false);
 
         LandOnSpace(_playerIndex);
 

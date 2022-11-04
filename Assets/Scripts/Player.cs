@@ -65,13 +65,18 @@ public class Player : MonoBehaviour
 
         // Turns since jailed is 0
         turnsSinceJailed = 0;
+
+        //GetComponentInChildren<Animator>().StartPlayback();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Update the player's cash UI
-        playerCashUI.text = $"{cash} Dollars";
+        if (playerCashUI != null)
+        {
+            // Update the player's cash UI
+            playerCashUI.text = $"{cash} Dollars";
+        }
     }
 
     public void LandOnSpace()
