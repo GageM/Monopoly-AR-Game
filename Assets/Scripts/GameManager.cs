@@ -192,9 +192,7 @@ public class GameManager : MonoBehaviour
                 // Set the UI text to the amount of spaces left to move
                 UIText.text = $"{rollResult} Spaces left to move";
             }
-
-
-            //players[_playerIndex].GetComponentInChildren<Animator>().ResetTrigger("startMoving");
+          
             yield return null;
         }
 
@@ -219,7 +217,6 @@ public class GameManager : MonoBehaviour
                 // Move to the next space if there is a next space
                 players[_playerIndex].currentSpaceIndex++;
                 players[_playerIndex].currentSpace = board.spaces[players[_playerIndex].currentSpaceIndex];
-                players[_playerIndex].transform.SetPositionAndRotation(players[_playerIndex].currentSpace.transform.position, players[_playerIndex].currentSpace.transform.rotation);
             }
 
             // If the player passes GO
@@ -228,7 +225,6 @@ public class GameManager : MonoBehaviour
                 // Move to the first space if at the end of the board
                 players[_playerIndex].currentSpaceIndex = 0;
                 players[_playerIndex].currentSpace = board.spaces[0];
-                players[_playerIndex].transform.SetPositionAndRotation(players[_playerIndex].currentSpace.transform.position, players[_playerIndex].currentSpace.transform.rotation);
 
                 if (cashOnPassGo)
                 {
@@ -237,10 +233,12 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+
+        // Tell the animator to play the moving animation
+        players[_playerIndex].GetComponentInChildren<Animator>().SetTrigger("startMoving");
+
         // Clear the UI text when finished moving
         UIText.text = string.Empty;
-
-        LandOnSpace(_playerIndex);
 
         if (_playerIndex == currentPlayerIndex)
         {
