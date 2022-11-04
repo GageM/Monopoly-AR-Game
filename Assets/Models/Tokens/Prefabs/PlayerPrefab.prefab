@@ -41,6 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2012524080329441423}
   - component: {fileID: 3431024274465464938}
+  - component: {fileID: 1048292578251161206}
   m_Layer: 0
   m_Name: Thimble Token
   m_TagString: Untagged
@@ -85,6 +86,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1048292578251161206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1199711567256787509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffaa676c1840e0e499a3f5f90c1ce986, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1214658084815609750
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,6 +224,7 @@ MonoBehaviour:
   ownedProperties: []
   getOutOfJailCards: 0
   turnsSinceJailed: 0
+  isMoving: 0
   playerCashUI: {fileID: 0}
 --- !u!1 &2630764508940377997
 GameObject:
@@ -285,6 +299,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2424084853563971906}
   - component: {fileID: 4377443855384662432}
+  - component: {fileID: 722794393692827095}
   m_Layer: 0
   m_Name: Wheelbarrow Token
   m_TagString: Untagged
@@ -329,6 +344,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &722794393692827095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3093908039005471736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffaa676c1840e0e499a3f5f90c1ce986, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3765867223317590945
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,6 +366,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4542123100838422811}
   - component: {fileID: 4961196906822511453}
+  - component: {fileID: 1404867171718448669}
   m_Layer: 0
   m_Name: Tophat Token
   m_TagString: Untagged
@@ -383,6 +411,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1404867171718448669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3765867223317590945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffaa676c1840e0e499a3f5f90c1ce986, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3928718583460576766
 GameObject:
   m_ObjectHideFlags: 0
@@ -598,6 +638,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6653137667568921368}
   - component: {fileID: 6465380894247560231}
+  - component: {fileID: 7245896354745113143}
   m_Layer: 0
   m_Name: Iron Token
   m_TagString: Untagged
@@ -642,6 +683,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &7245896354745113143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6277843994232172962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffaa676c1840e0e499a3f5f90c1ce986, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6508614714102183003
 GameObject:
   m_ObjectHideFlags: 0

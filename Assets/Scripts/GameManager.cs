@@ -151,65 +151,55 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator MovePLayerByRoll(int _playerIndex)
     {
-        // Time to move one space in s
-        float moveDuration = 1.208f;
-
-        // start a move animation while the player is moving
-
-
         while (rollResult > 0)
         {
-            // Set the UI text to the amount of spaces left to move
-            UIText.text = $"{rollResult} Spaces left to move";
-
-            // if the player is moving after being in jail start them from Just Visiting
-            if (players[_playerIndex].currentSpaceIndex == 40)
+            if (!players[_playerIndex].isMoving)
             {
-                players[_playerIndex].currentSpaceIndex = 10;
+                // The player is moving
+                players[_playerIndex].isMoving = true;
+
+                // if the player is moving after being in jail start them from Just Visiting
+                if (players[_playerIndex].currentSpaceIndex == 40)
+                {
+                    players[_playerIndex].currentSpaceIndex = 10;
+                }
+
+                // If the player still has spaces before the end of the board
+                if (players[_playerIndex].currentSpaceIndex < board.spaces.Length - 2)
+                {
+                    // Move to the next space if there is a next space
+                    players[_playerIndex].currentSpaceIndex++;
+                    players[_playerIndex].currentSpace = board.spaces[players[_playerIndex].currentSpaceIndex];
+                }
+
+                // If the player passes GO
+                else
+                {
+                    // Move to the first space if at the end of the board
+                    players[_playerIndex].currentSpaceIndex = 0;
+                    players[_playerIndex].currentSpace = board.spaces[0];
+
+                    // Call the PassGO function since the player passed go
+                    PassGO(_playerIndex);
+                }
+
+                // Tell the animator to play the moving animation
+                players[_playerIndex].GetComponentInChildren<Animator>().SetTrigger("startMoving");
+
+                // decrement the roll result 
+                rollResult--;
+
+                // Set the UI text to the amount of spaces left to move
+                UIText.text = $"{rollResult} Spaces left to move";
             }
 
-            // If the player still has spaces before the end of the board
-            if (players[_playerIndex].currentSpaceIndex < board.spaces.Length - 2)
-            {
-                // Move to the next space if there is a next space
-                players[_playerIndex].currentSpaceIndex++;
-                players[_playerIndex].currentSpace = board.spaces[players[_playerIndex].currentSpaceIndex];
-            }
 
-            // If the player passes GO
-            else
-            {
-                // Move to the first space if at the end of the board
-                players[_playerIndex].currentSpaceIndex = 0;
-                players[_playerIndex].currentSpace = board.spaces[0];
-
-                // Call the PassGO function since the player passed go
-                PassGO(_playerIndex);
-            }
-
-            // Tell the animator to play the moving animation
-            players[_playerIndex].GetComponentInChildren<Animator>().SetBool("isMoving", true);
-
-            float time = 0;
-            while(time < moveDuration)
-            {
-                // lerp the player location to their next space
-                players[_playerIndex].transform.position = Vector3.Lerp(players[_playerIndex].transform.position, players[_playerIndex].currentSpace.transform.position, time / moveDuration);
-                players[_playerIndex].transform.rotation = Quaternion.Lerp(players[_playerIndex].transform.rotation, players[_playerIndex].currentSpace.transform.rotation, time / moveDuration);
-                time += Time.deltaTime;
-                yield return null;
-            }
-
-            // decrement the roll result 
-            rollResult--;
-
-
+            //players[_playerIndex].GetComponentInChildren<Animator>().ResetTrigger("startMoving");
+            yield return null;
         }
+
         // Clear the UI text when finished moving
         UIText.text = string.Empty;
-
-        // Stop the animation when the player stops moving
-        players[_playerIndex].currentToken.GetComponentInChildren<Animator>().SetBool("isMoving", false);
 
         LandOnSpace(_playerIndex);
 

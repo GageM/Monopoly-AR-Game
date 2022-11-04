@@ -42,6 +42,9 @@ public class Player : MonoBehaviour
     [HideInInspector, Tooltip("The amount of turns since the player went to jail")]
     public int turnsSinceJailed;
 
+    [HideInInspector, Tooltip("Whether or not the player is moving")]
+    public bool isMoving;
+
     // The UI element that displays the player's available cash
     [HideInInspector] public TextMeshProUGUI playerCashUI;
 
@@ -94,7 +97,28 @@ public class Player : MonoBehaviour
                 Destroy(tokens[i]);
             }
         }
+    }
 
-        GetComponentInChildren<Animator>().StopPlayback();
+    public void StartMoving()
+    {
+        StartCoroutine(MoveToken());
+    }
+
+    IEnumerator MoveToken()
+    {
+        // Time to move one space in s
+        float moveDuration = 1.208f;
+
+        float time = 0;
+        while (time < moveDuration)
+        {
+            // lerp the player location and rotation to their next space
+            transform.position = Vector3.Slerp(transform.position, currentSpace.transform.position, time / moveDuration);
+            transform.rotation = Quaternion.Slerp(transform.rotation, currentSpace.transform.rotation, time / moveDuration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        isMoving = false;
+        yield return null;
     }
 }
