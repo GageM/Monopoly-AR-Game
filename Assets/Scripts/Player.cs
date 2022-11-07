@@ -45,6 +45,12 @@ public class Player : MonoBehaviour
     [HideInInspector, Tooltip("Whether or not the player is moving")]
     public bool isMoving;
 
+    [HideInInspector, Tooltip("The game board")]
+    public GameBoard board;
+
+    [HideInInspector, Tooltip("The Game Manager")]
+    public GameManager gameManager;
+
     // The UI element that displays the player's available cash
     [HideInInspector] public TextMeshProUGUI playerCashUI;
 
@@ -85,6 +91,8 @@ public class Player : MonoBehaviour
     public void LandOnSpace()
     {
         currentSpace.OnLanded(this);
+
+        gameManager.uIController.OpenEndTurnUI();
     }
 
     public void SetPlayerToken(int tokenIndex)
@@ -104,6 +112,18 @@ public class Player : MonoBehaviour
         StartCoroutine(MoveToken());
     }
 
+    public void PayToLeaveJail()
+    {
+        cash -= 200;
+        isInJail = false;
+    }
+
+    public void UseGetOutOfJailCard()
+    {
+        getOutOfJailCards--;
+        isInJail = false;
+    }
+
     IEnumerator MoveToken()
     {
         // Time to move one space in s
@@ -120,5 +140,85 @@ public class Player : MonoBehaviour
         }
         isMoving = false;
         yield return null;
+    }
+
+    public IEnumerator MoveByRoll(int rollResult)
+    {
+        while (rollResult > 0)
+        {
+            if (!isMoving)
+            {
+                // The player is moving
+                isMoving = true;
+
+                // if the player is moving after being in jail start them from Just Visiting
+                if (currentSpaceIndex == 40)
+                {
+                    currentSpaceIndex = 10;
+                }
+
+                // If the player still has spaces before the end of the board
+                if (currentSpaceIndex < 38)
+                {
+                    // Move to the next space if there is a next space
+                    currentSpaceIndex++;
+                    currentSpace = board.spaces[currentSpaceIndex];
+                }
+
+                // If the player passes GO
+                else
+                {
+                    // Move to the first space if at the end of the board
+                    currentSpaceIndex = 0;
+                    currentSpace = board.spaces[0];
+
+                    // Call the PassGO function since the player passed go
+                    cash += 200;
+                }
+
+                // Tell the animator to play the moving animation
+                GetComponentInChildren<Animator>().SetTrigger("startMoving");
+
+                // decrement the roll result 
+                rollResult--;
+            }
+
+            yield return null;
+        }
+
+        LandOnSpace();
+    }
+
+    public IEnumerator MoveToSpace(int spaceIndex, bool cashOnPassGo)
+    {
+        while (currentSpaceIndex != spaceIndex)
+        {
+            // If the player still has spaces before the end of the board
+            if (currentSpaceIndex < 38)
+            {
+                // Move to the next space if there is a next space
+                currentSpaceIndex++;
+                currentSpace = board.spaces[currentSpaceIndex];
+            }
+
+            // If the player passes GO
+            else
+            {
+                // Move to the first space if at the end of the board
+                currentSpaceIndex = 0;
+                currentSpace = board.spaces[0];
+
+                if (cashOnPassGo)
+                {
+                    // Call the PassGO function since the player passed go
+                    cash += 200;
+                }
+            }
+        }
+
+        // Tell the animator to play the moving animation
+        GetComponentInChildren<Animator>().SetTrigger("startMoving");
+
+        return null;
     }
 }

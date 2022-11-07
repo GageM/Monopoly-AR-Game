@@ -37,16 +37,14 @@ public class GameManager : MonoBehaviour
     public GameBoard board;
 
     // The active player in the turn
-    int currentPlayerIndex;
+    [HideInInspector]
+    public int currentPlayerIndex;
 
     // Whether the AR system has been initialized
     bool initializedAR;
 
-    // Whether the game has started or not
+    // Whether the game has been started
     bool gameStarted;
-
-    // Whether the player can roll the dice
-    bool canRoll;
 
     // The result of a player rolling dice
     private int rollResult;
@@ -56,6 +54,9 @@ public class GameManager : MonoBehaviour
 
     // Debug Text on all screens
     [SerializeField] TextMeshProUGUI debugText;
+
+    // The UI controller for the game
+    public UIController uIController;
 
     private void Awake()
     {
@@ -69,7 +70,9 @@ public class GameManager : MonoBehaviour
         }
 
         // Has not yet initialized AR
-        initializedAR = true;
+        initializedAR = false;
+
+        // The game has not started
 
         // Get the UI Text to print game info
         UIText = GameObject.Find("UI_Text").GetComponent<TextMeshProUGUI>();
@@ -78,13 +81,7 @@ public class GameManager : MonoBehaviour
         _raycastManager = GetComponent<ARRaycastManager>();
 
         // Create a list of all the players
-        players = new List<Player>();
-
-        // Tell the manager that the game has not started yet
-        gameStarted = false;
-
-        // Tell the manager that no players can roll the dice yet
-        canRoll = false;    
+        players = new List<Player>();  
     }
 
     // Update is called once per frame
@@ -93,45 +90,20 @@ public class GameManager : MonoBehaviour
         // If the player does not touch the screen do nothing
         Touch touch;
         if (Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began) { return; }
-        
-        if (initializedAR)
-        {            
-            if (gameStarted)
-            {
-                // check if the player can start their turn
-                if(canRoll)
-                {
-                    // If the player isn't in jail, continue turn normally
-                    if (!players[currentPlayerIndex].isInJail)
-                    {
-                        BeginTurn();
-                    }
-                    // if the player is in jail
-                    else
-                    {
-                        BeginTurnFromJail();
-                    }
-                }
-            }
 
-            // initialize the game
-            else
+        if (initializedAR && !gameStarted)
+        {
+            // Perform AR raycast to any plane
+            if (_raycastManager.Raycast(touch.position, Hits, TrackableType.Planes))
             {
-                // Perform AR raycast to any plane
-                if (_raycastManager.Raycast(touch.position, Hits, TrackableType.Planes))
-                {
-                    // If a plane was hit, create a game board at the location
-                    InitializeGame(Hits[0]);
-                }
+                // If a plane was hit, create a game board at the location
+                InitializeGame(Hits[0]);
             }
         }
     }
 
-    public int RollDice()
+    public void RollDice()
     {
-        // Prevent the player from rolling again until the next turn
-        canRoll = false;
-
         // create integers for the two dice results
         int die1Result;
         int die2Result;
@@ -146,122 +118,30 @@ public class GameManager : MonoBehaviour
         // Print the roll result to the screen
         UIText.text = $"Rolled a {rollResult}";
 
-        return rollResult;
+        // Move the player to their next space        
+        StartCoroutine(MovePLayerByRoll(currentPlayerIndex));
     }
 
     public IEnumerator MovePLayerByRoll(int _playerIndex)
     {
-        while (rollResult > 0)
-        {
-            if (!players[_playerIndex].isMoving)
-            {
-                // The player is moving
-                players[_playerIndex].isMoving = true;
+        // Tell the player to move by the roll result
+        players[_playerIndex].StartCoroutine(players[_playerIndex].MoveByRoll(rollResult));
 
-                // if the player is moving after being in jail start them from Just Visiting
-                if (players[_playerIndex].currentSpaceIndex == 40)
-                {
-                    players[_playerIndex].currentSpaceIndex = 10;
-                }
-
-                // If the player still has spaces before the end of the board
-                if (players[_playerIndex].currentSpaceIndex < board.spaces.Length - 2)
-                {
-                    // Move to the next space if there is a next space
-                    players[_playerIndex].currentSpaceIndex++;
-                    players[_playerIndex].currentSpace = board.spaces[players[_playerIndex].currentSpaceIndex];
-                }
-
-                // If the player passes GO
-                else
-                {
-                    // Move to the first space if at the end of the board
-                    players[_playerIndex].currentSpaceIndex = 0;
-                    players[_playerIndex].currentSpace = board.spaces[0];
-
-                    // Call the PassGO function since the player passed go
-                    PassGO(_playerIndex);
-                }
-
-                // Tell the animator to play the moving animation
-                players[_playerIndex].GetComponentInChildren<Animator>().SetTrigger("startMoving");
-
-                // decrement the roll result 
-                rollResult--;
-
-                // Set the UI text to the amount of spaces left to move
-                UIText.text = $"{rollResult} Spaces left to move";
-            }
-          
-            yield return null;
-        }
-
-        // Clear the UI text when finished moving
-        UIText.text = string.Empty;
-
-        LandOnSpace(_playerIndex);
-
-        if (_playerIndex == currentPlayerIndex)
-        {
-            EndTurn();
-        }
+        yield return null;
     }
 
     public IEnumerator MovePlayerToSpace(int _playerIndex, int _spaceIndex, bool cashOnPassGo)
     {
-        while (players[_playerIndex].currentSpace != board.spaces[_spaceIndex])
-        {
-            // If the player still has spaces before the end of the board
-            if (players[_playerIndex].currentSpaceIndex < board.spaces.Length - 2)
-            {
-                // Move to the next space if there is a next space
-                players[_playerIndex].currentSpaceIndex++;
-                players[_playerIndex].currentSpace = board.spaces[players[_playerIndex].currentSpaceIndex];
-            }
+        // Move the player to the space
+        players[_playerIndex].StartCoroutine(players[_playerIndex].MoveToSpace(_spaceIndex, cashOnPassGo));
 
-            // If the player passes GO
-            else
-            {
-                // Move to the first space if at the end of the board
-                players[_playerIndex].currentSpaceIndex = 0;
-                players[_playerIndex].currentSpace = board.spaces[0];
-
-                if (cashOnPassGo)
-                {
-                    // Call the PassGO function since the player passed go
-                    PassGO(_playerIndex);
-                }
-            }
-        }
-
-        // Tell the animator to play the moving animation
-        players[_playerIndex].GetComponentInChildren<Animator>().SetTrigger("startMoving");
-
-        // Clear the UI text when finished moving
-        UIText.text = string.Empty;
-
+        // End this player's turn
         if (_playerIndex == currentPlayerIndex)
         {
             EndTurn();
         }
 
-        yield return "Player Moved";
-    }
-
-    public void PassGO(int _playerIndex)
-    {
-        // Give the player $200 for passing GO!
-        players[_playerIndex].cash += 200;
-        StartCoroutine(UpdateUIText($"You Passed GO!", 2));
-    }
-
-    void LandOnSpace(int _playerIndex)
-    {
-        // Set the UI text to display the space the player landed on
-        StartCoroutine(UpdateUIText(players[_playerIndex].currentSpace.name, 3f));
-
-        // Call the player's Land On Space Function
-        players[currentPlayerIndex].LandOnSpace();
+        yield return null;
     }
 
     public void InitializeGame(ARRaycastHit hit)
@@ -287,20 +167,22 @@ public class GameManager : MonoBehaviour
             // Set the player's cash counter UI element
             players[i].playerCashUI = GameObject.Find($"Player {players[i].playerIndex + 1} Cash Counter").GetComponent<TextMeshProUGUI>();
 
+            players[i].board = board;
+
+            players[i].gameManager = this;
+
             // Initialize the player on the first space
             players[i].currentSpace = board.spaces[players[i].currentSpaceIndex];
             players[i].transform.SetPositionAndRotation(players[i].currentSpace.transform.position, players[i].currentSpace.transform.rotation);
         }
 
-        // Register that the game has started
-        gameStarted = true;
-
-        // Allow the first player to roll the dice
-        canRoll = true;
-
         // Tell the user that the game has been initialized
         StartCoroutine(UpdateUIText($"Game Initialized", 2f));
 
+        gameStarted = true;
+
+        currentPlayerIndex = 0;
+        BeginTurn();
     }
 
     public IEnumerator UpdateUIText(string text, float duration)
@@ -331,7 +213,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    int EndTurn()
+    public int EndTurn()
     {
         // Change the active player to the next player
         if (currentPlayerIndex < numberOfPlayers - 1)
@@ -343,8 +225,7 @@ public class GameManager : MonoBehaviour
             currentPlayerIndex = 0;
         }
 
-        // Allow the next player to roll the dice
-        canRoll = true;
+        uIController.BeginTurn(players[currentPlayerIndex]);
 
         return currentPlayerIndex;
     }
@@ -377,66 +258,7 @@ public class GameManager : MonoBehaviour
 
     void BeginTurn()
     {
-        // Roll the dice
-        RollDice();
-
-        // Move the player to their next space        
-        StartCoroutine(MovePLayerByRoll(currentPlayerIndex));
-    }
-
-    void BeginTurnFromJail()
-    {
-        StartCoroutine(UpdateUIText("Player is in jail", 2));
-
-        // If the player has a get out of jail card
-        if (players[currentPlayerIndex].getOutOfJailCards > 0)
-        {
-            // Reset turns since jailed
-            players[currentPlayerIndex].turnsSinceJailed = 0;
-
-            // The player is no longer in jail
-            players[currentPlayerIndex].isInJail = false;
-
-            // Subtract a get out of jail card
-            players[currentPlayerIndex].getOutOfJailCards--;
-
-            // If the player can roll the dice, then do that
-            if (canRoll) RollDice();
-
-            // Move the player to their next space   
-            StartCoroutine(MovePLayerByRoll(currentPlayerIndex));
-        }
-        // if the player has no get out of jail cards
-        else
-        {
-            // Free the player if they have been in jail for 3 or more turns
-            if (players[currentPlayerIndex].turnsSinceJailed >= 3)
-            {
-                // Clear days since jailed
-                players[currentPlayerIndex].turnsSinceJailed = 0;
-
-                // The player is no longer in jail
-                players[currentPlayerIndex].isInJail = false;
-
-                // Pay jail fine
-                players[currentPlayerIndex].cash -= 50;
-
-                // Roll the dice
-                RollDice();
-
-                // Move the player to their next space        
-                StartCoroutine(MovePLayerByRoll(currentPlayerIndex));
-            }
-            else
-            {
-                // Increse the amount of turns since the player was jailed
-                players[currentPlayerIndex].turnsSinceJailed++;
-
-                // End the player's turn
-                EndTurn();
-            }
-
-        }
+            uIController.BeginTurn(players[currentPlayerIndex]);
     }
 
     public void GoToJail(int _playerIndex)
