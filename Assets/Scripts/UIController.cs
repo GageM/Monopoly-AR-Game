@@ -6,6 +6,8 @@ using TMPro;
 
 public class UIController : MonoBehaviour
 {
+    [Header("UI Panels")]
+    // UI Panels
     [SerializeField] Image mainMenuUI;
     [SerializeField] Image playerCashPanel;
     [SerializeField] Image topPanel;
@@ -18,19 +20,26 @@ public class UIController : MonoBehaviour
     [SerializeField] Image propertyOptions;
     [SerializeField] Image houseMenu;
     [SerializeField] Image hotelMenu;
-    [SerializeField] Image mortgageMenu;
 
-
-    [SerializeField] GameManager gameManager;
-    [SerializeField] GameObject buttonPrefab;
-
-    Player currentPlayer;
-
-    Property currentProperty;
+    [Header("UI Elements")]
+    // UI Elements
+    [SerializeField] Button addHouseButton;
+    [SerializeField] Button addHotelButton;
+    [SerializeField] TextMeshProUGUI buyHouseTitle;
+    [SerializeField] TextMeshProUGUI sellHouseTitle;
+    [SerializeField] TextMeshProUGUI buyHotelTitle;
+    [SerializeField] TextMeshProUGUI sellHotelTitle;
+    [SerializeField] TextMeshProUGUI mortgagePropertyText;
 
     // Debug Text on all screens
     [SerializeField] TextMeshProUGUI debugText;
 
+    [Header("Game Manager & Prefabs")]
+    [SerializeField] GameManager gameManager;
+    [SerializeField] GameObject buttonPrefab;
+
+    Player currentPlayer;
+    Property currentProperty;
 
     // Start is called before the first frame update
     void Start()
@@ -60,7 +69,6 @@ public class UIController : MonoBehaviour
         playerCashPanel.gameObject.SetActive(false);
         topPanel.gameObject.SetActive(false);
 
-        CloseMortgageMenu();
         CloseHotelMenu();
         CloseHouseMenu();
         ClosePropertyOptions();
@@ -163,10 +171,44 @@ public class UIController : MonoBehaviour
 
         propertyOptions.gameObject.SetActive(true);
         propertyOptions.enabled = true;
+
+        propertyOptions.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = property.name;
+
+        // If the player can develop the property show the options
+        if(currentProperty.CheckIfCanBuyHouse())
+        {
+            addHouseButton.gameObject.SetActive(true);
+            addHouseButton.enabled = true;
+
+            addHotelButton.gameObject.SetActive(true);
+            addHotelButton.enabled = true;
+        }
+
+        else
+        {
+            addHouseButton.gameObject.SetActive(false);
+            addHouseButton.enabled = false;
+
+            addHotelButton.gameObject.SetActive(false);
+            addHotelButton.enabled = false;
+        }
+
+        if (currentProperty.isMortgaged)
+        {
+            mortgagePropertyText.text = $"End Mortgage";
+        }
+
+        else
+        {
+            mortgagePropertyText.text = $"Mortgage";
+        }
+
     }
 
     public void ClosePropertyOptions()
     {
+        propertyOptions.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = string.Empty;
+
         propertyOptions.gameObject.SetActive(false);
         propertyOptions.enabled = false;
     }
@@ -175,10 +217,18 @@ public class UIController : MonoBehaviour
     {
         houseMenu.gameObject.SetActive(true);
         houseMenu.enabled = true;
+
+        // Set house valuse in UI
+        houseMenu.transform.Find("BuyHouseTitle").GetComponent<TextMeshProUGUI>().text = $"Buy Houses: -${currentProperty.houseCost}";
+        houseMenu.transform.Find("SellHouseTitle").GetComponent<TextMeshProUGUI>().text = $"Buy Houses: +${0.5f * currentProperty.houseCost}";
     }
 
     public void CloseHouseMenu()
     {
+        //Clear UI house values
+        buyHouseTitle.text = string.Empty;
+        sellHouseTitle.text = string.Empty;
+
         houseMenu.gameObject.SetActive(false);
         houseMenu.enabled = false;
     }
@@ -187,24 +237,20 @@ public class UIController : MonoBehaviour
     {
         hotelMenu.gameObject.SetActive(true);
         hotelMenu.enabled = true;
+
+        // Set UI hotel values
+        hotelMenu.transform.Find("BuyHotelTitle").GetComponent<TextMeshProUGUI>().text = $"Buy Hotel: -${currentProperty.houseCost}";
+        hotelMenu.transform.Find("SellHotelTitle").GetComponent<TextMeshProUGUI>().text = $"Buy Hotel: +${0.5f * currentProperty.houseCost}";
     }
 
     public void CloseHotelMenu()
     {
+        // Clear UI Hotel Values
+        buyHotelTitle.text = string.Empty;
+        sellHotelTitle.text = string.Empty;
+
         hotelMenu.gameObject.SetActive(false);
         hotelMenu.enabled = false;
-    }
-
-    public void OpenMortgageMenu()
-    {
-        mortgageMenu.gameObject.SetActive(true);
-        mortgageMenu.enabled = true;
-    }
-
-    public void CloseMortgageMenu()
-    {
-        mortgageMenu.gameObject.SetActive(false);
-        mortgageMenu.enabled = false;
     }
 
     public void OpenEndTurnUI()
@@ -255,6 +301,14 @@ public class UIController : MonoBehaviour
     public void Mortgage()
     {
         currentProperty.Mortgage();
+        if(currentProperty.isMortgaged)
+        {
+            mortgagePropertyText.text = $"End Mortgage";
+        }
+        else
+        {
+            mortgagePropertyText.text = $"Mortgage";
+        }
     }
 
     public void EndTurn()

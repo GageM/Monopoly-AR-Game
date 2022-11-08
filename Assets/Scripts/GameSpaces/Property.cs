@@ -10,11 +10,11 @@ public class Property : PlayerSpace
     [Tooltip("This property's rent amount")]
     public float rent;
 
-    [SerializeField, Tooltip("The Group This Property is a Part of")]
-    string group;
+    [Tooltip("The Group This Property is a Part of")]
+    public List<Property> siblingProperties;
 
-    [SerializeField, Tooltip("The cost of buying a house")]
-    float houseCost;
+    [Tooltip("The cost of buying a house")]
+    public float houseCost;
 
     [HideInInspector, Tooltip("The amount of houses on this property")]
     public int houseCount;
@@ -24,6 +24,12 @@ public class Property : PlayerSpace
 
     [HideInInspector, Tooltip("Whether or not this property is mortgaged")]
     public bool isMortgaged;
+
+    [Tooltip("The mortgage value of this property")]
+    public float mortgageValue;
+
+    [HideInInspector, Tooltip("Whether the owner can place a house on this property")]
+    public bool canBuyHouse;
 
     // The property's owner
     public Player owner = null;
@@ -62,6 +68,23 @@ public class Property : PlayerSpace
                 owner.cash += rent;
             }
         }
+    }
+
+    public bool CheckIfCanBuyHouse()
+    {
+        for(int i = 0; i < siblingProperties.Count; i++)
+        {
+            if(siblingProperties[i].owner == owner)
+            {
+                canBuyHouse = true;
+            }
+            else
+            {
+                canBuyHouse = false;
+                break;
+            }
+        }
+        return canBuyHouse;
     }
 
     public void AddHouse(int housesToAdd)
@@ -108,17 +131,41 @@ public class Property : PlayerSpace
         }
     }
 
-    public void Mortgage()
+    public bool Mortgage()
     {
         if(!isMortgaged)
         {
             isMortgaged = true;
-            owner.cash += value;
+            owner.cash += mortgageValue;
+
+            if(CheckIfCanBuyHouse())
+            {
+                for(int i = 0; i < siblingProperties.Count; i++)
+                {
+                    // Sell off all houses
+                    if(siblingProperties[i].houseCount > 0)
+                    {
+                        owner.cash += 0.5f * siblingProperties[i].houseCount * siblingProperties[i].houseCost;
+                        siblingProperties[i].houseCount = 0;    
+                    }
+                    // Sell off all hotels
+                    if(siblingProperties[i].hotelCount > 0)
+                    {
+                        owner.cash += 0.5f * siblingProperties[i].hotelCount * siblingProperties[i].houseCost;
+                        siblingProperties[i].hotelCount = 0;
+                    }
+                }
+            }
         }
         else
         {
-            isMortgaged = false;
-            owner.cash -= value;
+            if (owner.cash >= mortgageValue)
+            {
+                isMortgaged = false;
+                owner.cash -= mortgageValue;
+            }
         }
+
+        return isMortgaged;
     }
 }
