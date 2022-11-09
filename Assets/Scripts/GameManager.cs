@@ -8,6 +8,8 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    [Tooltip("Whether the game is being run on a mobile device")]
+    public bool UsingAR;
     public static GameManager Instance { get; private set; }
 
     // Cache ARRaycastManager GameObject from ARCoreSession
@@ -69,19 +71,25 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
 
-        // Has not yet initialized AR
-        initializedAR = false;
 
-        // The game has not started
+            // Has not yet initialized AR
+            initializedAR = false;
 
-        // Get the UI Text to print game info
-        UIText = GameObject.Find("UI_Text").GetComponent<TextMeshProUGUI>();
+            // The game has not started
 
-        // Set the raycastManager to its component on the object
-        _raycastManager = GetComponent<ARRaycastManager>();
+            // Get the UI Text to print game info
+            UIText = GameObject.Find("UI_Text").GetComponent<TextMeshProUGUI>();
 
-        // Create a list of all the players
-        players = new List<Player>();  
+            // Set the raycastManager to its component on the object
+            _raycastManager = GetComponent<ARRaycastManager>();
+
+            // Create a list of all the players
+            players = new List<Player>();
+
+        if(!UsingAR)
+        {
+            InitializeGame(new ARRaycastHit());
+        }
     }
 
     // Update is called once per frame
@@ -146,43 +154,89 @@ public class GameManager : MonoBehaviour
 
     public void InitializeGame(ARRaycastHit hit)
     {
-        // Create a new instance off the game board where the player taps
-        board = Instantiate(boardPrefab, hit.pose.position, hit.pose.rotation).GetComponent<GameBoard>();
-        board.gameObject.AddComponent<ARAnchor>();
-
-        for (int i = 0; i < numberOfPlayers; i++)
+        if (UsingAR)
         {
-            // Instantiate new player
-            Player temp = Instantiate(playerPrefab, board.transform).GetComponent<Player>();
+            // Create a new instance off the game board where the player taps
+            board = Instantiate(boardPrefab, hit.pose.position, hit.pose.rotation).GetComponent<GameBoard>();
+            board.gameObject.AddComponent<ARAnchor>();
 
-            // Set the player's player index
-            temp.playerIndex = i;
+            for (int i = 0; i < numberOfPlayers; i++)
+            {
+                // Instantiate new player
+                Player temp = Instantiate(playerPrefab, board.transform).GetComponent<Player>();
 
-            // Add to the list of players
-            players.Add(temp);
+                // Set the player's player index
+                temp.playerIndex = i;
 
-            // Set the player's material
-            players[i].SetPlayerToken(i);
+                // Add to the list of players
+                players.Add(temp);
 
-            // Set the player's cash counter UI element
-            players[i].playerCashUI = GameObject.Find($"Player {players[i].playerIndex + 1} Cash Counter").GetComponent<TextMeshProUGUI>();
+                // Set the player's material
+                players[i].SetPlayerToken(i);
 
-            players[i].board = board;
+                // Set the player's cash counter UI element
+                players[i].playerCashUI = GameObject.Find($"Player {players[i].playerIndex + 1} Cash Counter").GetComponent<TextMeshProUGUI>();
 
-            players[i].gameManager = this;
+                players[i].board = board;
 
-            // Initialize the player on the first space
-            players[i].currentSpace = board.spaces[players[i].currentSpaceIndex];
-            players[i].transform.SetPositionAndRotation(players[i].currentSpace.transform.position, players[i].currentSpace.transform.rotation);
+                players[i].gameManager = this;
+
+                // Initialize the player on the first space
+                players[i].currentSpace = board.spaces[players[i].currentSpaceIndex];
+                players[i].transform.SetPositionAndRotation(players[i].currentSpace.transform.position, players[i].currentSpace.transform.rotation);
+            }
+
+            // Tell the user that the game has been initialized
+            StartCoroutine(UpdateUIText($"Game Initialized", 2f));
+
+            gameStarted = true;
+
+            currentPlayerIndex = 0;
+
+            EndTrackingGeneration();
+
+            BeginTurn();
         }
+        else 
+        {
+            // Create a new instance off the game board where the player taps
+            board = Instantiate(boardPrefab, Vector3.zero, Quaternion.Euler(Vector3.zero)).GetComponent<GameBoard>();
 
-        // Tell the user that the game has been initialized
-        StartCoroutine(UpdateUIText($"Game Initialized", 2f));
+            for (int i = 0; i < numberOfPlayers; i++)
+            {
+                // Instantiate new player
+                Player temp = Instantiate(playerPrefab, board.transform).GetComponent<Player>();
 
-        gameStarted = true;
+                // Set the player's player index
+                temp.playerIndex = i;
 
-        currentPlayerIndex = 0;
-        BeginTurn();
+                // Add to the list of players
+                players.Add(temp);
+
+                // Set the player's material
+                players[i].SetPlayerToken(i);
+
+                // Set the player's cash counter UI element
+                players[i].playerCashUI = GameObject.Find($"Player {players[i].playerIndex + 1} Cash Counter").GetComponent<TextMeshProUGUI>();
+
+                players[i].board = board;
+
+                players[i].gameManager = this;
+
+                // Initialize the player on the first space
+                players[i].currentSpace = board.spaces[players[i].currentSpaceIndex];
+                players[i].transform.SetPositionAndRotation(players[i].currentSpace.transform.position, players[i].currentSpace.transform.rotation);
+            }
+
+            // Tell the user that the game has been initialized
+            StartCoroutine(UpdateUIText($"Game Initialized", 2f));
+
+            gameStarted = true;
+
+            currentPlayerIndex = 0;
+
+            BeginTurn();
+        }
     }
 
     public IEnumerator UpdateUIText(string text, float duration)
@@ -274,5 +328,15 @@ public class GameManager : MonoBehaviour
 
         // Move the player to jail
         players[_playerIndex].transform.SetPositionAndRotation(players[_playerIndex].currentSpace.transform.position, players[_playerIndex].currentSpace.transform.rotation);
+    }
+
+    void EndTrackingGeneration()
+    {
+        // Stop Generating Planes!!!
+        foreach(var plane in GetComponent<ARPlaneManager>().trackables)
+        {
+            plane.gameObject.SetActive(false);
+        }
+        GetComponent<ARPlaneManager>().enabled = false;
     }
 }

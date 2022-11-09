@@ -25,6 +25,8 @@ public class UIController : MonoBehaviour
     // UI Elements
     [SerializeField] Button addHouseButton;
     [SerializeField] Button addHotelButton;
+    [SerializeField] Button payJailFeeButton;
+    [SerializeField] Button useGetOutOfJailButton;
     [SerializeField] TextMeshProUGUI buyHouseTitle;
     [SerializeField] TextMeshProUGUI sellHouseTitle;
     [SerializeField] TextMeshProUGUI buyHotelTitle;
@@ -73,7 +75,6 @@ public class UIController : MonoBehaviour
         CloseHouseMenu();
         ClosePropertyOptions();
         ClosePropertiesUI();
-        CloseJailOptionsUI();
         CloseTurnOptionsUI();
         ClosePlayerTurnUI();
         CloseEndTurnUI();
@@ -107,10 +108,7 @@ public class UIController : MonoBehaviour
         }
         else
         {
-            jailOptions.gameObject.SetActive(true);
-            jailOptions.enabled = true;
-
-            jailOptions.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = $" Player { currentPlayer.playerIndex + 1}: You're In Jail";
+            OpenJailOptionsUI();
         }
     }
 
@@ -118,6 +116,36 @@ public class UIController : MonoBehaviour
     {
         turnOptions.gameObject.SetActive(false);
         turnOptions.enabled = false;
+        CloseJailOptionsUI();
+    }
+
+    public void OpenJailOptionsUI()
+    {
+        jailOptions.gameObject.SetActive(true);
+        jailOptions.enabled = true;
+
+        jailOptions.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = $" Player { currentPlayer.playerIndex + 1}: You're In Jail";
+
+        //if (currentPlayer != null)
+        //{
+        //    if (currentPlayer.cash >= 200)
+        //    {
+        //        payJailFeeButton.gameObject.SetActive(true);
+        //    }
+        //    else
+        //    {
+        //        payJailFeeButton.gameObject.SetActive(false);
+        //    }
+        //
+        //    if (currentPlayer.getOutOfJailCards >= 1)
+        //    {
+        //        useGetOutOfJailButton.gameObject.SetActive(true);
+        //    }
+        //    else
+        //    {
+        //        useGetOutOfJailButton.gameObject.SetActive(false);
+        //    }
+        //}
     }
 
     public void CloseJailOptionsUI()
@@ -150,7 +178,8 @@ public class UIController : MonoBehaviour
         // Populate the list of player properties
         for(int i = 0; i < gameManager.players[gameManager.currentPlayerIndex].ownedProperties.Count; i++)
         {
-            AddNewButton(currentPlayer.ownedProperties[i].name, currentPlayer.ownedProperties[i]);
+            GameObject button = AddNewButton(currentPlayer.ownedProperties[i].name, currentPlayer.ownedProperties[i]);
+            button.GetComponent<Image>().color = currentPlayer.ownedProperties[i].color;
         }
     }
 
@@ -318,6 +347,7 @@ public class UIController : MonoBehaviour
             currentPlayer.turnsSinceJailed++;
         }
         CloseEndTurnUI();
+        CloseJailOptionsUI();
 
         gameManager.EndTurn();
     }

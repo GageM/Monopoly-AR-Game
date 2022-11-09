@@ -183,14 +183,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactingPlayer: {fileID: 0}
   value: 260
-  rent: 22
+  rent:
+  - 22
+  - 110
+  - 330
+  - 800
+  - 975
+  - 1150
   siblingProperties:
   - {fileID: 3502924681816139779}
   - {fileID: 1549334077090512752}
+  propertyGroup: 8
   houseCost: 150
   houseCount: 0
   hotelCount: 0
   isMortgaged: 0
+  mortgageValue: 130
+  canBuyHouse: 0
+  color: {r: 0.7529412, g: 0.7490196, b: 0, a: 1}
   owner: {fileID: 0}
 --- !u!1 &1004620955573110420
 GameObject:
@@ -238,14 +248,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactingPlayer: {fileID: 0}
   value: 200
-  rent: 16
+  rent:
+  - 16
+  - 80
+  - 220
+  - 600
+  - 800
+  - 1000
   siblingProperties:
   - {fileID: 1374405133698402267}
   - {fileID: 9098696565319165032}
+  propertyGroup: 6
   houseCost: 100
   houseCount: 0
   hotelCount: 0
   isMortgaged: 0
+  mortgageValue: 100
+  canBuyHouse: 0
+  color: {r: 0.77254903, g: 0.3647059, b: 0, a: 1}
   owner: {fileID: 0}
 --- !u!1 &1665648202201059869
 GameObject:
@@ -338,14 +358,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactingPlayer: {fileID: 0}
   value: 260
-  rent: 22
+  rent:
+  - 22
+  - 110
+  - 330
+  - 800
+  - 975
+  - 1150
   siblingProperties:
   - {fileID: 3153368886280919106}
   - {fileID: 1549334077090512752}
+  propertyGroup: 8
   houseCost: 150
   houseCount: 0
   hotelCount: 0
   isMortgaged: 0
+  mortgageValue: 130
+  canBuyHouse: 0
+  color: {r: 0.7529412, g: 0.7490196, b: 0, a: 1}
   owner: {fileID: 0}
 --- !u!1 &1729873026485851932
 GameObject:
@@ -483,14 +513,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactingPlayer: {fileID: 0}
   value: 140
-  rent: 10
+  rent:
+  - 10
+  - 50
+  - 150
+  - 450
+  - 625
+  - 750
   siblingProperties:
   - {fileID: 1449961246827097401}
   - {fileID: 4366770612564670471}
+  propertyGroup: 4
   houseCost: 100
   houseCount: 0
   hotelCount: 0
   isMortgaged: 0
+  mortgageValue: 70
+  canBuyHouse: 0
+  color: {r: 0.6392157, g: 0.24313726, b: 0.50980395, a: 1}
   owner: {fileID: 0}
 --- !u!1 &2633932868231932628
 GameObject:
@@ -546,7 +586,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3706610319708737563}
-  - component: {fileID: 5238008961874098606}
+  - component: {fileID: 3967496610339571549}
   m_Layer: 0
   m_Name: Electric Company
   m_TagString: Untagged
@@ -569,7 +609,7 @@ Transform:
   m_Father: {fileID: 5511658453486484573}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 180}
---- !u!114 &5238008961874098606
+--- !u!114 &3967496610339571549
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -578,19 +618,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 2693419206307756434}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
+  m_Script: {fileID: 11500000, guid: 1f448b133c8256c40acafa727890c8df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   interactingPlayer: {fileID: 0}
   value: 150
-  rent: 24
+  rent:
+  - 25
   siblingProperties:
-  - {fileID: 268369225069695101}
+  - {fileID: 0}
+  propertyGroup: 5
   houseCost: 0
   houseCount: 0
   hotelCount: 0
   isMortgaged: 0
+  mortgageValue: 75
+  canBuyHouse: 0
+  color: {r: 0, g: 0, b: 0, a: 0.5019608}
   owner: {fileID: 0}
+  diceMultiplier: 0
 --- !u!1 &2933924947447776300
 GameObject:
   m_ObjectHideFlags: 0
@@ -600,7 +646,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2595404349989044443}
-  - component: {fileID: 268369225069695101}
+  - component: {fileID: 656638550433908327}
   m_Layer: 0
   m_Name: Water Works
   m_TagString: Untagged
@@ -623,7 +669,7 @@ Transform:
   m_Father: {fileID: 5511658453486484573}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 270}
---- !u!114 &268369225069695101
+--- !u!114 &656638550433908327
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -632,19 +678,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 2933924947447776300}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
+  m_Script: {fileID: 11500000, guid: 1f448b133c8256c40acafa727890c8df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   interactingPlayer: {fileID: 0}
   value: 150
-  rent: 24
+  rent:
+  - 25
   siblingProperties:
-  - {fileID: 5238008961874098606}
+  - {fileID: 3967496610339571549}
+  propertyGroup: 5
   houseCost: 0
   houseCount: 0
   hotelCount: 0
   isMortgaged: 0
+  mortgageValue: 75
+  canBuyHouse: 0
+  color: {r: 0, g: 0, b: 0, a: 0.5019608}
   owner: {fileID: 0}
+  diceMultiplier: 0
 --- !u!1 &3505404952882991320
 GameObject:
   m_ObjectHideFlags: 0
@@ -691,14 +743,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactingPlayer: {fileID: 0}
   value: 189
-  rent: 14
+  rent:
+  - 14
+  - 70
+  - 200
+  - 550
+  - 750
+  - 950
   siblingProperties:
   - {fileID: 1374405133698402267}
   - {fileID: 9129943875335000991}
+  propertyGroup: 6
   houseCost: 100
   houseCount: 0
   hotelCount: 0
   isMortgaged: 0
+  mortgageValue: 90
+  canBuyHouse: 0
+  color: {r: 0.77254903, g: 0.3647059, b: 0, a: 1}
   owner: {fileID: 0}
 --- !u!1 &3521685765056998933
 GameObject:
@@ -818,14 +880,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactingPlayer: {fileID: 0}
   value: 120
-  rent: 8
+  rent:
+  - 8
+  - 40
+  - 100
+  - 300
+  - 450
+  - 600
   siblingProperties:
   - {fileID: 0}
   - {fileID: 0}
+  propertyGroup: 3
   houseCost: 50
   houseCount: 0
   hotelCount: 0
   isMortgaged: 0
+  mortgageValue: 60
+  canBuyHouse: 0
+  color: {r: 0.5686275, g: 0.7529412, b: 0.8901961, a: 1}
   owner: {fileID: 0}
 --- !u!1 &4244177599228340899
 GameObject:
@@ -963,14 +1035,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactingPlayer: {fileID: 0}
   value: 300
-  rent: 26
+  rent:
+  - 26
+  - 130
+  - 390
+  - 900
+  - 1100
+  - 1275
   siblingProperties:
   - {fileID: 1200042261131090080}
   - {fileID: 5378629122475315032}
+  propertyGroup: 9
   houseCost: 200
   houseCount: 0
   hotelCount: 0
   isMortgaged: 0
+  mortgageValue: 150
+  canBuyHouse: 0
+  color: {r: 0, g: 0.509434, b: 0.2428143, a: 1}
   owner: {fileID: 0}
 --- !u!1 &4390062843628965653
 GameObject:
@@ -1063,14 +1145,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactingPlayer: {fileID: 0}
   value: 100
-  rent: 6
+  rent:
+  - 6
+  - 30
+  - 90
+  - 270
+  - 400
+  - 550
   siblingProperties:
   - {fileID: 2291978750374699432}
   - {fileID: 5709430858896124758}
+  propertyGroup: 3
   houseCost: 50
   houseCount: 0
   hotelCount: 0
   isMortgaged: 0
+  mortgageValue: 50
+  canBuyHouse: 0
+  color: {r: 0.5686275, g: 0.7529412, b: 0.8901961, a: 1}
   owner: {fileID: 0}
 --- !u!1 &4843266840826266357
 GameObject:
@@ -1118,14 +1210,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactingPlayer: {fileID: 0}
   value: 140
-  rent: 10
+  rent:
+  - 10
+  - 50
+  - 150
+  - 450
+  - 625
+  - 750
   siblingProperties:
   - {fileID: 8615542400895134442}
   - {fileID: 4366770612564670471}
+  propertyGroup: 4
   houseCost: 100
   houseCount: 0
   hotelCount: 0
   isMortgaged: 0
+  mortgageValue: 70
+  canBuyHouse: 0
+  color: {r: 0.6392157, g: 0.24313727, b: 0.50980395, a: 1}
   owner: {fileID: 0}
 --- !u!1 &5035348826118449280
 GameObject:
@@ -1136,7 +1238,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8982918472334923839}
-  - component: {fileID: 4941324324188253933}
+  - component: {fileID: 1691780164104834766}
   m_Layer: 0
   m_Name: Liverpool Station
   m_TagString: Untagged
@@ -1159,7 +1261,7 @@ Transform:
   m_Father: {fileID: 5511658453486484573}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 90, y: -90, z: 270}
---- !u!114 &4941324324188253933
+--- !u!114 &1691780164104834766
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1168,20 +1270,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 5035348826118449280}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2227bc838e5043d418b7239f70ac7ba3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   interactingPlayer: {fileID: 0}
   value: 200
-  rent: 25
+  rent:
+  - 25
   siblingProperties:
-  - {fileID: 5816553949942698830}
-  - {fileID: 2653652662084614736}
-  - {fileID: 1479744621266466559}
+  - {fileID: 8640586521690376453}
+  - {fileID: 4104923569709039976}
+  - {fileID: 1831969455565408181}
+  propertyGroup: 2
   houseCost: 0
   houseCount: 0
   hotelCount: 0
   isMortgaged: 0
+  mortgageValue: 100
+  canBuyHouse: 0
+  color: {r: 0, g: 0, b: 0, a: 0}
   owner: {fileID: 0}
 --- !u!1 &5068981051610069757
 GameObject:
@@ -1326,14 +1433,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactingPlayer: {fileID: 0}
   value: 160
-  rent: 12
+  rent:
+  - 12
+  - 60
+  - 180
+  - 500
+  - 700
+  - 900
   siblingProperties:
   - {fileID: 1449961246827097401}
   - {fileID: 8615542400895134442}
+  propertyGroup: 4
   houseCost: 100
   houseCount: 0
   hotelCount: 0
   isMortgaged: 0
+  mortgageValue: 80
+  canBuyHouse: 0
+  color: {r: 0.6392157, g: 0.24313726, b: 0.50980395, a: 1}
   owner: {fileID: 0}
 --- !u!1 &5944850085837553480
 GameObject:
@@ -1381,13 +1498,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactingPlayer: {fileID: 0}
   value: 350
-  rent: 35
+  rent:
+  - 35
+  - 175
+  - 500
+  - 1100
+  - 1300
+  - 1500
   siblingProperties:
   - {fileID: 2278810381128068078}
+  propertyGroup: 10
   houseCost: 200
   houseCount: 0
   hotelCount: 0
   isMortgaged: 0
+  mortgageValue: 175
+  canBuyHouse: 0
+  color: {r: 0.002447496, g: 0.24520907, b: 0.5188679, a: 1}
   owner: {fileID: 0}
 --- !u!1 &5970683061288717508
 GameObject:
@@ -1480,14 +1607,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactingPlayer: {fileID: 0}
   value: 280
-  rent: 24
+  rent:
+  - 24
+  - 120
+  - 360
+  - 850
+  - 1025
+  - 1200
   siblingProperties:
   - {fileID: 3502924681816139779}
   - {fileID: 3153368886280919106}
+  propertyGroup: 8
   houseCost: 150
   houseCount: 0
   hotelCount: 0
   isMortgaged: 0
+  mortgageValue: 140
+  canBuyHouse: 0
+  color: {r: 0.7529412, g: 0.7490196, b: 0, a: 1}
   owner: {fileID: 0}
 --- !u!1 &6668684403963040501
 GameObject:
@@ -1535,14 +1672,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactingPlayer: {fileID: 0}
   value: 320
-  rent: 28
+  rent:
+  - 28
+  - 150
+  - 450
+  - 1000
+  - 1200
+  - 1400
   siblingProperties:
   - {fileID: 7787302397577423696}
   - {fileID: 1200042261131090080}
+  propertyGroup: 9
   houseCost: 200
   houseCount: 0
   hotelCount: 0
   isMortgaged: 0
+  mortgageValue: 160
+  canBuyHouse: 0
+  color: {r: 0, g: 0.50980395, b: 0.24313726, a: 1}
   owner: {fileID: 0}
 --- !u!1 &7148796695548938070
 GameObject:
@@ -1590,14 +1737,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactingPlayer: {fileID: 0}
   value: 240
-  rent: 20
+  rent:
+  - 20
+  - 100
+  - 300
+  - 750
+  - 950
+  - 1100
   siblingProperties:
   - {fileID: 5642583828251978743}
   - {fileID: 5804383133933861769}
+  propertyGroup: 7
   houseCost: 150
   houseCount: 0
   hotelCount: 0
   isMortgaged: 0
+  mortgageValue: 120
+  canBuyHouse: 0
+  color: {r: 0.7058824, g: 0.015686275, b: 0.05490196, a: 1}
   owner: {fileID: 0}
 --- !u!1 &7357445061469853447
 GameObject:
@@ -1608,7 +1765,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4016320298086505478}
-  - component: {fileID: 1479744621266466559}
+  - component: {fileID: 1831969455565408181}
   m_Layer: 0
   m_Name: Fenchurch Station
   m_TagString: Untagged
@@ -1631,7 +1788,7 @@ Transform:
   m_Father: {fileID: 5511658453486484573}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 270}
---- !u!114 &1479744621266466559
+--- !u!114 &1831969455565408181
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1640,20 +1797,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 7357445061469853447}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2227bc838e5043d418b7239f70ac7ba3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   interactingPlayer: {fileID: 0}
   value: 200
-  rent: 25
+  rent:
+  - 25
   siblingProperties:
-  - {fileID: 5816553949942698830}
-  - {fileID: 2653652662084614736}
-  - {fileID: 4941324324188253933}
+  - {fileID: 8640586521690376453}
+  - {fileID: 4104923569709039976}
+  propertyGroup: 2
   houseCost: 0
   houseCount: 0
   hotelCount: 0
   isMortgaged: 0
+  mortgageValue: 100
+  canBuyHouse: 0
+  color: {r: 0, g: 0, b: 0, a: 0.5019608}
   owner: {fileID: 0}
 --- !u!1 &7696812999952770676
 GameObject:
@@ -1747,14 +1908,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactingPlayer: {fileID: 0}
   value: 220
-  rent: 18
+  rent:
+  - 18
+  - 90
+  - 250
+  - 700
+  - 875
+  - 1050
   siblingProperties:
   - {fileID: 5642583828251978743}
   - {fileID: 7771391068708154036}
+  propertyGroup: 7
   houseCost: 150
   houseCount: 0
   hotelCount: 0
   isMortgaged: 0
+  mortgageValue: 110
+  canBuyHouse: 0
+  color: {r: 0.7058824, g: 0.015686275, b: 0.05490196, a: 1}
   owner: {fileID: 0}
 --- !u!1 &7954357974014637906
 GameObject:
@@ -1765,7 +1936,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5341962119430609942}
-  - component: {fileID: 2653652662084614736}
+  - component: {fileID: 4104923569709039976}
   m_Layer: 0
   m_Name: Marylebone Station
   m_TagString: Untagged
@@ -1788,7 +1959,7 @@ Transform:
   m_Father: {fileID: 5511658453486484573}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 180}
---- !u!114 &2653652662084614736
+--- !u!114 &4104923569709039976
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1797,20 +1968,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 7954357974014637906}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2227bc838e5043d418b7239f70ac7ba3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   interactingPlayer: {fileID: 0}
   value: 200
-  rent: 25
+  rent:
+  - 25
   siblingProperties:
-  - {fileID: 5816553949942698830}
-  - {fileID: 1479744621266466559}
-  - {fileID: 4941324324188253933}
+  - {fileID: 8640586521690376453}
+  - {fileID: 1831969455565408181}
+  - {fileID: 1691780164104834766}
+  propertyGroup: 2
   houseCost: 0
   houseCount: 0
   hotelCount: 0
   isMortgaged: 0
+  mortgageValue: 100
+  canBuyHouse: 0
+  color: {r: 0, g: 0, b: 0, a: 0.5019608}
   owner: {fileID: 0}
 --- !u!1 &7954509166513422037
 GameObject:
@@ -1858,14 +2034,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactingPlayer: {fileID: 0}
   value: 220
-  rent: 18
+  rent:
+  - 18
+  - 90
+  - 250
+  - 700
+  - 875
+  - 1050
   siblingProperties:
   - {fileID: 5804383133933861769}
   - {fileID: 7771391068708154036}
+  propertyGroup: 7
   houseCost: 150
   houseCount: 0
   hotelCount: 0
   isMortgaged: 0
+  mortgageValue: 110
+  canBuyHouse: 0
+  color: {r: 0.7075472, g: 0.01668743, b: 0.054766297, a: 1}
   owner: {fileID: 0}
 --- !u!1 &8003914383761094317
 GameObject:
@@ -1913,14 +2099,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactingPlayer: {fileID: 0}
   value: 100
-  rent: 6
+  rent:
+  - 6
+  - 30
+  - 90
+  - 270
+  - 400
+  - 550
   siblingProperties:
   - {fileID: 4152204136526287331}
   - {fileID: 5709430858896124758}
+  propertyGroup: 3
   houseCost: 50
   houseCount: 0
   hotelCount: 0
   isMortgaged: 0
+  mortgageValue: 50
+  canBuyHouse: 0
+  color: {r: 0.5686275, g: 0.75294125, b: 0.89019614, a: 1}
   owner: {fileID: 0}
 --- !u!1 &8041088029941782424
 GameObject:
@@ -1976,7 +2172,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2242923668368448227}
-  - component: {fileID: 5816553949942698830}
+  - component: {fileID: 8640586521690376453}
   m_Layer: 0
   m_Name: Kings Cross Station
   m_TagString: Untagged
@@ -1999,7 +2195,7 @@ Transform:
   m_Father: {fileID: 5511658453486484573}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
---- !u!114 &5816553949942698830
+--- !u!114 &8640586521690376453
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2008,20 +2204,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 8167887298840670514}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5b1a19a15d67164d9dd60c2f40ff80c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2227bc838e5043d418b7239f70ac7ba3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   interactingPlayer: {fileID: 0}
   value: 200
-  rent: 25
+  rent:
+  - 25
   siblingProperties:
-  - {fileID: 2653652662084614736}
-  - {fileID: 1479744621266466559}
-  - {fileID: 4941324324188253933}
+  - {fileID: 4104923569709039976}
+  - {fileID: 1831969455565408181}
+  - {fileID: 1691780164104834766}
+  propertyGroup: 2
   houseCost: 0
   houseCount: 0
   hotelCount: 0
   isMortgaged: 0
+  mortgageValue: 100
+  canBuyHouse: 0
+  color: {r: 0, g: 0, b: 0, a: 0.49803922}
   owner: {fileID: 0}
 --- !u!1 &8204270144827097891
 GameObject:
@@ -2075,17 +2276,17 @@ MonoBehaviour:
   - {fileID: 6033632521863332787}
   - {fileID: 5522120608644583995}
   - {fileID: 2398640681080562512}
-  - {fileID: 5816553949942698830}
+  - {fileID: 8640586521690376453}
   - {fileID: 2291978750374699432}
   - {fileID: 6213119353382967977}
   - {fileID: 4152204136526287331}
   - {fileID: 5709430858896124758}
   - {fileID: 6380650583424881611}
   - {fileID: 1449961246827097401}
-  - {fileID: 5238008961874098606}
+  - {fileID: 3967496610339571549}
   - {fileID: 8615542400895134442}
   - {fileID: 4366770612564670471}
-  - {fileID: 2653652662084614736}
+  - {fileID: 4104923569709039976}
   - {fileID: 1374405133698402267}
   - {fileID: 349342649808242681}
   - {fileID: 9098696565319165032}
@@ -2095,17 +2296,17 @@ MonoBehaviour:
   - {fileID: 7119669820084027260}
   - {fileID: 5804383133933861769}
   - {fileID: 7771391068708154036}
-  - {fileID: 1479744621266466559}
+  - {fileID: 1831969455565408181}
   - {fileID: 3502924681816139779}
   - {fileID: 3153368886280919106}
-  - {fileID: 268369225069695101}
+  - {fileID: 656638550433908327}
   - {fileID: 1549334077090512752}
   - {fileID: 7629533115763730497}
   - {fileID: 7787302397577423696}
   - {fileID: 1200042261131090080}
   - {fileID: 8326368644240001228}
   - {fileID: 5378629122475315032}
-  - {fileID: 4941324324188253933}
+  - {fileID: 1691780164104834766}
   - {fileID: 5517861990963143188}
   - {fileID: 8691040953328828633}
   - {fileID: 8814422091581283907}
@@ -2157,13 +2358,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactingPlayer: {fileID: 0}
   value: 60
-  rent: 2
+  rent:
+  - 2
+  - 10
+  - 30
+  - 90
+  - 160
+  - 250
   siblingProperties:
   - {fileID: 5522120608644583995}
+  propertyGroup: 1
   houseCost: 50
   houseCount: 0
   hotelCount: 0
   isMortgaged: 0
+  mortgageValue: 30
+  canBuyHouse: 0
+  color: {r: 0.2509804, g: 0.1882353, b: 0.17254902, a: 1}
   owner: {fileID: 0}
 --- !u!1 &8795279928875197189
 GameObject:
@@ -2211,13 +2422,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactingPlayer: {fileID: 0}
   value: 60
-  rent: 4
+  rent:
+  - 4
+  - 20
+  - 60
+  - 180
+  - 320
+  - 450
   siblingProperties:
   - {fileID: 6017773575482462459}
+  propertyGroup: 1
   houseCost: 50
   houseCount: 0
   hotelCount: 0
   isMortgaged: 0
+  mortgageValue: 30
+  canBuyHouse: 0
+  color: {r: 0.2509804, g: 0.1882353, b: 0.17254902, a: 1}
   owner: {fileID: 0}
 --- !u!1 &8871144939763868062
 GameObject:
@@ -2265,13 +2486,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactingPlayer: {fileID: 0}
   value: 400
-  rent: 50
+  rent:
+  - 50
+  - 200
+  - 600
+  - 1400
+  - 1700
+  - 2000
   siblingProperties:
   - {fileID: 8691040953328828633}
+  propertyGroup: 10
   houseCost: 200
   houseCount: 0
   hotelCount: 0
   isMortgaged: 0
+  mortgageValue: 200
+  canBuyHouse: 0
+  color: {r: 0.003921569, g: 0.24705882, b: 0.5176471, a: 1}
   owner: {fileID: 0}
 --- !u!1 &8881141263634183796
 GameObject:
@@ -2319,14 +2550,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactingPlayer: {fileID: 0}
   value: 180
-  rent: 14
+  rent:
+  - 14
+  - 70
+  - 200
+  - 550
+  - 750
+  - 950
   siblingProperties:
   - {fileID: 9098696565319165032}
   - {fileID: 9129943875335000991}
+  propertyGroup: 6
   houseCost: 100
   houseCount: 0
   hotelCount: 0
   isMortgaged: 0
+  mortgageValue: 90
+  canBuyHouse: 0
+  color: {r: 0.7735849, g: 0.36335045, b: 0, a: 1}
   owner: {fileID: 0}
 --- !u!1 &9006468609073847717
 GameObject:
@@ -2374,12 +2615,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactingPlayer: {fileID: 0}
   value: 300
-  rent: 26
+  rent:
+  - 26
+  - 130
+  - 390
+  - 900
+  - 1100
+  - 1275
   siblingProperties:
   - {fileID: 7787302397577423696}
   - {fileID: 5378629122475315032}
+  propertyGroup: 9
   houseCost: 200
   houseCount: 0
   hotelCount: 0
   isMortgaged: 0
+  mortgageValue: 150
+  canBuyHouse: 0
+  color: {r: 0, g: 0.50980395, b: 0.24313726, a: 1}
   owner: {fileID: 0}

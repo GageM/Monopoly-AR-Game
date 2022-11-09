@@ -81,7 +81,7 @@ ModelImporter:
         functionName: StartMoving
         data: 
         objectReferenceParameter: {fileID: 2284605090809390543, guid: 2f74c995067acc14c87d904d8c8cf685, type: 3}
-        floatParameter: 0
+        floatParameter: 1
         intParameter: 0
         messageOptions: 0
       transformMask: []

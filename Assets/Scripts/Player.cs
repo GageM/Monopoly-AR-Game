@@ -45,6 +45,9 @@ public class Player : MonoBehaviour
     [HideInInspector, Tooltip("Whether or not the player is moving")]
     public bool isMoving;
 
+    [HideInInspector, Tooltip("The player's roll result")]
+    public int rollResult;
+
     [HideInInspector, Tooltip("The game board")]
     public GameBoard board;
 
@@ -107,9 +110,9 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void StartMoving()
+    public void StartMoving(float moveDuration)
     {
-        StartCoroutine(MoveToken());
+        StartCoroutine(MoveToken(moveDuration));
     }
 
     public void PayToLeaveJail()
@@ -124,10 +127,10 @@ public class Player : MonoBehaviour
         isInJail = false;
     }
 
-    IEnumerator MoveToken()
+    IEnumerator MoveToken(float moveDuration)
     {
         // Time to move one space in s
-        float moveDuration = 1.208f;
+        //float moveDuration = 1.208f;
 
         float time = 0;
         while (time < moveDuration)
@@ -142,9 +145,10 @@ public class Player : MonoBehaviour
         yield return null;
     }
 
-    public IEnumerator MoveByRoll(int rollResult)
+    public IEnumerator MoveByRoll(int _rollResult)
     {
-        while (rollResult > 0)
+        rollResult = _rollResult;
+        while (_rollResult > 0)
         {
             if (!isMoving)
             {
@@ -180,7 +184,7 @@ public class Player : MonoBehaviour
                 GetComponentInChildren<Animator>().SetTrigger("startMoving");
 
                 // decrement the roll result 
-                rollResult--;
+                _rollResult--;
             }
 
             yield return null;
@@ -220,5 +224,11 @@ public class Player : MonoBehaviour
         GetComponentInChildren<Animator>().SetTrigger("startMoving");
 
         return null;
+    }
+
+    public void SortOwnedProperties()
+    {
+        // TODO: Fix Broken Sorting Algorithm
+        //ownedProperties.Sort();
     }
 }

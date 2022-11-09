@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class TokenMessenger : MonoBehaviour
 {
-    public void StartMoving()
+    public void StartMoving(float moveDuration)
     {
-        GetComponentInParent<Player>().StartMoving();
+        GetComponentInParent<Player>().StartMoving(moveDuration);
     }
 }

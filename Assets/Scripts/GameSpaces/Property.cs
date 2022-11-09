@@ -8,10 +8,13 @@ public class Property : PlayerSpace
     public float value;
 
     [Tooltip("This property's rent amount")]
-    public float rent;
+    public float[] rent;
 
-    [Tooltip("The Group This Property is a Part of")]
+    [Tooltip("This property's sibling properties")]
     public List<Property> siblingProperties;
+
+    [Tooltip("The group this property belongs to")]
+    public int propertyGroup;
 
     [Tooltip("The cost of buying a house")]
     public float houseCost;
@@ -31,7 +34,11 @@ public class Property : PlayerSpace
     [HideInInspector, Tooltip("Whether the owner can place a house on this property")]
     public bool canBuyHouse;
 
+    [Tooltip("This Proerty's Colour")]
+    public Color color;
+
     // The property's owner
+    [HideInInspector]
     public Player owner = null;
         
     // Start is called before the first frame update
@@ -56,7 +63,9 @@ public class Property : PlayerSpace
                 // Remove the cash from the player buying this property
                 interactingPlayer.cash -= value;
                 // Add this property to the player's list of properties
-                owner.ownedProperties.Add(this);
+                interactingPlayer.ownedProperties.Add(this);
+                // Sort the owning player's property list
+                interactingPlayer.SortOwnedProperties();
             }
         }
         else
@@ -64,13 +73,13 @@ public class Property : PlayerSpace
             if(owner != interactingPlayer && !isMortgaged)
             {
                 // Give the rent to the owning player from the interacting player
-                interactingPlayer.cash -= rent;
-                owner.cash += rent;
+                interactingPlayer.cash -= ChooseRent();
+                owner.cash += ChooseRent();
             }
         }
     }
 
-    public bool CheckIfCanBuyHouse()
+    public virtual bool CheckIfCanBuyHouse()
     {
         for(int i = 0; i < siblingProperties.Count; i++)
         {
@@ -167,5 +176,39 @@ public class Property : PlayerSpace
         }
 
         return isMortgaged;
+    }
+
+    public virtual float ChooseRent()
+    {
+        if(hotelCount > 0)
+        {
+            return rent[5];
+        }
+
+        return houseCount switch
+        {
+            0 => rent[0],
+            1 => rent[1],
+            2 => rent[2],
+            3 => rent[3],
+            4 => rent[4],
+            _ => rent[0],
+        };
+    }
+
+    public int CompareTo(Property comparable)
+    {
+        var a = propertyGroup;
+        var b = comparable.propertyGroup;
+
+        if(a < b)
+        {
+            return -1;
+        }
+        if(a > b)
+        {
+            return 1;
+        }
+        return 0;
     }
 }
