@@ -49,6 +49,7 @@ public class UIController : MonoBehaviour
     [SerializeField] Button goToJailButton;
     [SerializeField] Button giveUpButton;
     [SerializeField] Button rollAgainButton;
+    public TextMeshProUGUI endTurnTitle;
 
 
     [Header("Trade Menu UI")]
@@ -62,6 +63,10 @@ public class UIController : MonoBehaviour
     public TextMeshProUGUI player2CashAmount;
     [SerializeField] Slider player1CashSlider;
     [SerializeField] Slider player2CashSlider;
+
+    [Header("End Game UI")]
+    [SerializeField] Image endGameUI;
+    [SerializeField] TextMeshProUGUI endGameTitle;
 
     // Debug Text on all screens
     [SerializeField] TextMeshProUGUI debugText;
@@ -103,15 +108,15 @@ public class UIController : MonoBehaviour
     {
         playerCashPanel.gameObject.SetActive(true);
 
-        //if(gameManager.players.Count < 4)
-        //{
-        //    player4CashUI.gameObject.SetActive(false);
-        //}
-        //
-        //if(gameManager.players.Count < 3)
-        //{
-        //    player3CashUI.gameObject.SetActive(false);
-        //}
+        if(gameManager.numberOfPlayers < 4)
+        {
+            player4CashUI.gameObject.SetActive(false);
+        }
+        
+        if(gameManager.numberOfPlayers < 3)
+        {
+            player3CashUI.gameObject.SetActive(false);
+        }
     }
 
     IEnumerator LateStart()
@@ -129,6 +134,7 @@ public class UIController : MonoBehaviour
         ClosePlayerTurnUI();
         CloseEndTurnUI();
         CloseTradeMenu();
+        CloseEndGameUI();
     }
 
     public void BeginTurn(Player _player)
@@ -452,6 +458,7 @@ public class UIController : MonoBehaviour
             rollAgainButton.gameObject.SetActive(true);
             currentPlayer.rolledDoubles = false;
             endTurnButton.gameObject.SetActive(false);
+            endTurnButton.enabled = false;
         }
         else if (currentPlayer.rolledDoubles && currentPlayer.doublesRollCount >= 3)
         {
@@ -471,7 +478,9 @@ public class UIController : MonoBehaviour
     public void CloseEndTurnButton()
     {
         endTurnButton.gameObject.SetActive(false);
+        endTurnButton.enabled = false;
         rollAgainButton.gameObject.SetActive(false);
+        goToJailButton.gameObject.SetActive(false);
 
     }
 
@@ -536,8 +545,7 @@ public class UIController : MonoBehaviour
 
     public void GoToJail()
     {
-        currentPlayer.MoveToSpace(40, false);
-        currentPlayer.isInJail = true;
+        currentPlayer.GoToJail();
 
         currentPlayer.gameManager.uIController.CloseGoToJailButton();
         currentPlayer.gameManager.uIController.OpenEndTurnButton();
@@ -564,6 +572,8 @@ public class UIController : MonoBehaviour
     {
         giveUpButton.gameObject.SetActive(true);
         giveUpButton.enabled = true;
+
+        CloseEndTurnButton();
     }
 
     public void CloseGiveUpButton()
@@ -620,5 +630,26 @@ public class UIController : MonoBehaviour
     {
         tradeMenu.gameObject.SetActive(false);
         tradeMenu.enabled = false;
+    }
+
+    public void OpenEndGameUI()
+    {
+        ClosePlayerTurnUI();
+        CloseEndTurnUI();
+
+        endGameUI.gameObject.SetActive(true);
+        endGameUI.enabled = true;
+        endGameTitle.gameObject.SetActive(true);
+        endGameTitle.enabled = true;
+
+        endGameTitle.text = $" Player {currentPlayer.playerIndex + 1} Wins!";
+    }
+
+    public void CloseEndGameUI()
+    {
+        endGameTitle.gameObject.SetActive(false);
+        endGameTitle.enabled = false;
+        endGameUI.gameObject.SetActive(false);
+        endGameUI.enabled = false;
     }
 }

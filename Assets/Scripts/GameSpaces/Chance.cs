@@ -16,20 +16,20 @@ public class Chance : PlayerSpace
         manager = GameObject.Find("AR Session Origin").GetComponent<GameManager>();
 
         // Add the chance cards to the list
-        chanceCards.Add(AdvanceToGo);
-        chanceCards.Add(AdvanceToTrafalgarSquare);
-        chanceCards.Add(AdvanceToPallMall);
-        //chanceCards.Add(AdvanceToNearestRailroad);
-        //chanceCards.Add(AdvanceToUtility);
-        chanceCards.Add(BankDividend);
-        chanceCards.Add(GetOutOfJailFree);
-        //chanceCards.Add(GoBackSpaces);
+        chanceCards.Add(AdvanceToGo); //Works
+        chanceCards.Add(AdvanceToTrafalgarSquare); //Works
+        chanceCards.Add(AdvanceToPallMall); //Works
+        chanceCards.Add(AdvanceToNearestRailroad); //Works
+        //chanceCards.Add(AdvanceToUtility); // Broken
+        chanceCards.Add(BankDividend); //Works
+        chanceCards.Add(GetOutOfJailFree); //Works
+        //chanceCards.Add(GoBackSpaces); //Broken
         chanceCards.Add(GoToJail);
         //chanceCards.Add(PropertyRepair);
-        chanceCards.Add(AdvanceToKingsCross);
-        chanceCards.Add(AdvanceToMayfair);
-        chanceCards.Add(PayPlayers);
-        chanceCards.Add(LoanMatures);
+        chanceCards.Add(AdvanceToKingsCross); //Works
+        chanceCards.Add(AdvanceToMayfair); //Works
+        chanceCards.Add(PayPlayers); // Works
+        chanceCards.Add(LoanMatures); // Works
     }
 
     public override void OnLanded(Player _interactingPlayer)
@@ -55,28 +55,28 @@ public class Chance : PlayerSpace
 
     void AdvanceToGo()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Advance to Go, Collect $200", 2));
+        manager.uIController.endTurnTitle.text = "Advance to Go, Collect $200";
         // Advance to Go, Collect 200 Dollars
         interactingPlayer.StartCoroutine(interactingPlayer.MoveToSpace(0, true));
     }
 
     void AdvanceToTrafalgarSquare()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Advance to Trafalgar Square. If you pass Go, collect $200", 2));
+        manager.uIController.endTurnTitle.text = "Advance to Trafalgar Square. If you pass Go, collect $200";
         // Advance to Trafalgar Square. If you pass Go, collect 200 Dollars
         interactingPlayer.StartCoroutine(interactingPlayer.MoveToSpace(24, true));
     }
 
     void AdvanceToPallMall()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Advance to Pall Mall If you pass Go, collect $200.", 2));
+        manager.uIController.endTurnTitle.text = "Advance to Pall Mall If you pass Go, collect $200.";
         // Advance to Pall Mall If you pass Go, collect 200 Dollars.
         interactingPlayer.StartCoroutine(interactingPlayer.MoveToSpace(11, true));
     }
 
     void AdvanceToUtility()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Advance token to the nearest Utility.", 2));
+        manager.uIController.endTurnTitle.text = "Advance token to the nearest Utility.";
         // Advance token to the nearest Utility.
 
         // Determine the Utility to move to
@@ -92,7 +92,7 @@ public class Chance : PlayerSpace
 
     void AdvanceToNearestRailroad()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Advance to the nearest Railroad.", 2));
+        manager.uIController.endTurnTitle.text = "Advance to the nearest Railroad.";
         // Advance to the nearest Railroad.
 
         // Determine the Railway to move to
@@ -116,14 +116,14 @@ public class Chance : PlayerSpace
 
     void BankDividend()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Bank pays you dividend of $50", 2));
+        manager.uIController.endTurnTitle.text = "Bank pays you dividend of $50";
         // Bank pays you dividend of 50 Dollars
         interactingPlayer.cash += 50;
     }
 
     void GetOutOfJailFree()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Get out of Jail Free", 2));
+        manager.uIController.endTurnTitle.text = "Get out of Jail Free";
 
         // add a get out of jail free card to the player
         interactingPlayer.getOutOfJailCards++;
@@ -131,7 +131,7 @@ public class Chance : PlayerSpace
 
     void GoBackSpaces()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Go back 3 spaces", 2));
+        manager.uIController.endTurnTitle.text = "Go back 3 spaces";
         // Go back 3 spaces
 
         // Set the player's new space to 3 spaces behind their current space
@@ -144,7 +144,7 @@ public class Chance : PlayerSpace
 
     void GoToJail()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Go directly to Jail. Do not pass Go, do not collect $200", 2));
+        manager.uIController.endTurnTitle.text = "Go directly to Jail. Do not pass Go, do not collect $200";
         // Go directly to Jail. Do not pass Go, do not collect 200 Dollars
 
         interactingPlayer.isInJail = true;
@@ -170,21 +170,21 @@ public class Chance : PlayerSpace
 
     void AdvanceToKingsCross()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Take a ride to King’s Cross Station. If you pass Go, collect $200", 2));
+        manager.uIController.endTurnTitle.text = "Take a ride to King’s Cross Station. If you pass Go, collect $200";
         // Take a ride to King’s Cross Station. If you pass Go, collect 200 Dollars
         interactingPlayer.StartCoroutine(interactingPlayer.MoveToSpace(5, true));
     }
 
     void AdvanceToMayfair()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Take a walk on the board walk. Advance token to Mayfair", 2));
+        manager.uIController.endTurnTitle.text = "Take a walk on the board walk. Advance token to Mayfair";
         // Take a walk on the board walk. Advance token to Mayfair
         interactingPlayer.StartCoroutine(interactingPlayer.MoveToSpace(39, true));
     }
 
     void PayPlayers()
     {
-        manager.StartCoroutine(manager.UpdateUIText("You have been elected Chairman of the Board. Pay each player $50.", 2));
+        manager.uIController.endTurnTitle.text = "You have been elected Chairman of the Board. Pay each player $50.";
         // You have been elected Chairman of the Board. Pay each player 50 Dollars.
         for (int i = 0; i < manager.numberOfPlayers; i++)
         {
@@ -199,7 +199,7 @@ public class Chance : PlayerSpace
 
     void LoanMatures()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Your building loan matures. Collect $150.", 2));
+        manager.uIController.endTurnTitle.text = "Your building loan matures. Collect $150.";
         // Your building loan matures. Collect 150 Dollars.
         interactingPlayer.cash += 150;
     }

@@ -56,28 +56,28 @@ public class CommunityChest : PlayerSpace
 
     void AdvanceToGo()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Advance to Go, Collect $200", 2));
+        manager.uIController.endTurnTitle.text = "Advance to Go, Collect $200";
 
         interactingPlayer.StartCoroutine(interactingPlayer.MoveToSpace(0, true));
     }
 
     void BankError()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Bank error in your favour. Collect $200", 2));
+        manager.uIController.endTurnTitle.text = "Bank error in your favour. Collect $200";
 
         interactingPlayer.cash += 200;
     }
 
     void DoctorsFees()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Doctors fees. Pay $50", 2));
+        manager.uIController.endTurnTitle.text = "Doctors fees. Pay $50";
 
         interactingPlayer.cash -= 50;
     }
 
     void GetOutOfJailFree()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Get out of Jail Free", 2));
+        manager.uIController.endTurnTitle.text = "Get out of Jail Free";
 
         // add a get out of jail free card to the player
         interactingPlayer.getOutOfJailCards++;
@@ -85,7 +85,7 @@ public class CommunityChest : PlayerSpace
 
     void GoToJail()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Go directly to Jail. Do not pass Go, do not collect $200", 2));
+        manager.uIController.endTurnTitle.text = "Go directly to Jail. Do not pass Go, do not collect $200";
         // Go directly to Jail. Do not pass Go, do not collect 200 Dollars
 
         interactingPlayer.isInJail = true;
@@ -94,7 +94,7 @@ public class CommunityChest : PlayerSpace
 
     void OperaNight()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Grand opera night. Collect $50 from every player for opening night seats", 2));
+        manager.uIController.endTurnTitle.text = "Grand opera night. Collect $50 from every player for opening night seats";
 
         for (int i = 0; i < manager.numberOfPlayers - 1; i++)
         {
@@ -108,19 +108,19 @@ public class CommunityChest : PlayerSpace
 
     void FundMatures()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Holiday fund matures. Collect $100", 2));
+        manager.uIController.endTurnTitle.text = "Holiday fund matures. Collect $100";
         interactingPlayer.cash += 100;
     }
 
     void TaxRefund()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Income tax refund. Collect $20", 2));
+        manager.uIController.endTurnTitle.text = "Income tax refund. Collect $20";
         interactingPlayer.cash += 20;
     }
 
     void Birthday()
     {
-        manager.StartCoroutine(manager.UpdateUIText("It's your birthday. Collect $10 from every player", 2));
+        manager.uIController.endTurnTitle.text = "It's your birthday. Collect $10 from every player";
 
         for (int i = 0; i < manager.numberOfPlayers - 1; i++)
         {
@@ -134,35 +134,35 @@ public class CommunityChest : PlayerSpace
 
     void InsuranceMatures()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Life insurance matures. Collect $100", 2));
+        manager.uIController.endTurnTitle.text = "Life insurance matures. Collect $100";
 
         interactingPlayer.cash += 100;
     }
 
     void HospitalFees()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Hospital fees. Pay $50", 2));
+        manager.uIController.endTurnTitle.text = "Hospital fees. Pay $50";
 
         interactingPlayer.cash -= 50;
     }
 
     void SchoolFees()
     {
-        manager.StartCoroutine(manager.UpdateUIText("School fees. Pay $50", 2));
+        manager.uIController.endTurnTitle.text = "School fees. Pay $50";
 
         interactingPlayer.cash -= 50;
     }
 
     void ConsultancyFees()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Recieve $25 consultancy fee", 2));
+        manager.uIController.endTurnTitle.text = "Recieve $25 consultancy fee";
 
         interactingPlayer.cash -= 25;
     }
 
     void StreetRepairs()
     {
-        manager.StartCoroutine(manager.UpdateUIText("You are assessed for street repairs. Pay $40 per house and $115 for each hotel you own", 2));
+        manager.uIController.endTurnTitle.text = "You are assessed for street repairs. Pay $40 per house and $115 for each hotel you own";
         // Make general repairs on all your properties: For each house pay 25 Dollars, For each hotel pay 100 Dollars
         int hotelCount = 0;
         int houseCount = 0;
@@ -179,14 +179,14 @@ public class CommunityChest : PlayerSpace
 
     void SecondPrize()
     {
-        manager.StartCoroutine(manager.UpdateUIText("You won 2nd place in a beauty contest. Collect $10", 2));
+        manager.uIController.endTurnTitle.text = "You won 2nd place in a beauty contest. Collect $10";
 
         interactingPlayer.cash += 10;
     }
 
     void Inheritance()
     {
-        manager.StartCoroutine(manager.UpdateUIText("You inherit $100", 2));
+        manager.uIController.endTurnTitle.text = "You inherit $100";
 
         interactingPlayer.cash += 100;
     }

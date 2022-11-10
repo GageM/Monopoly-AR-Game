@@ -110,8 +110,6 @@ public class GameManager : MonoBehaviour
     {
         uIController.OpenPlayerCashUI();
 
-        if (UsingAR)
-        {
             // Create a new instance off the game board where the player taps
             board = Instantiate(boardPrefab, hit.pose.position, hit.pose.rotation).GetComponent<GameBoard>();
             board.gameObject.AddComponent<ARAnchor>();
@@ -152,47 +150,7 @@ public class GameManager : MonoBehaviour
             EndTrackingGeneration();
 
             BeginTurn();
-        }
-        else 
-        {
-            // Create a new instance off the game board where the player taps
-            board = Instantiate(boardPrefab, Vector3.zero, Quaternion.Euler(Vector3.zero)).GetComponent<GameBoard>();
 
-            for (int i = 0; i < numberOfPlayers; i++)
-            {
-                // Instantiate new player
-                Player temp = Instantiate(playerPrefab, board.transform).GetComponent<Player>();
-
-                // Set the player's player index
-                temp.playerIndex = i;
-
-                // Add to the list of players
-                players.Add(temp);
-
-                // Set the player's material
-                players[i].SetPlayerToken(i);
-
-                // Set the player's cash counter UI element
-                players[i].playerCashUI = GameObject.Find($"Player {players[i].playerIndex + 1} Cash Counter").GetComponent<TextMeshProUGUI>();
-
-                players[i].board = board;
-
-                players[i].gameManager = this;
-
-                // Initialize the player on the first space
-                players[i].currentSpace = board.spaces[players[i].currentSpaceIndex];
-                players[i].transform.SetPositionAndRotation(players[i].currentSpace.transform.position, players[i].currentSpace.transform.rotation);
-            }
-
-            // Tell the user that the game has been initialized
-            StartCoroutine(UpdateUIText($"Game Initialized", 2f));
-
-            gameStarted = true;
-
-            currentPlayerIndex = 0;
-
-            BeginTurn();
-        }
     }
 
     public IEnumerator UpdateUIText(string text, float duration)
@@ -291,11 +249,19 @@ public class GameManager : MonoBehaviour
         GetComponent<ARPointCloudManager>().enabled = false;
     }
 
+    void StartTrackingGeneration()
+    {
+        GetComponent<ARPointCloudManager>().enabled = true;
+
+        GetComponent<ARPointCloudManager>().enabled = true;
+    }
+
     public void RemovePlayer(Player playerToRemove)
     {
-        if (playerToRemove == null)
+        if (playerToRemove != null)
         {
-            currentPlayerIndex = currentPlayerIndex < (players.Count - 1) ? currentPlayerIndex + 1: 0;
+            // Loop around to the next player
+            currentPlayerIndex = 0; // currentPlayerIndex < (players.Count - 1) ? currentPlayerIndex + 1: 0;
 
             // Destroy the player's cash counter UI element
             Destroy(GameObject.Find($"Player {playerToRemove.playerIndex + 1} Cash Counter"));
@@ -305,10 +271,13 @@ public class GameManager : MonoBehaviour
 
             if (players.Count == 1)
             {
-                // End the game
+                BeginTurn();
+                uIController.OpenEndGameUI();
+
             }
             else
             {
+                uIController.CloseEndTurnUI();
                 BeginTurn();
             }
         }

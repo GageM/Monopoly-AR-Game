@@ -31,7 +31,18 @@ public class Player : MonoBehaviour
     public float startingCash;
 
     // The amount of money the player has
-    [HideInInspector] public float cash;
+    [HideInInspector] public float cash; 
+    //{
+    //    get
+    //  {
+    //      return cash;
+    //  }
+    //    set
+    //  {
+    //      cash = value;
+    //      UpdatePlayerCashUI();
+    //  }    
+    //}
 
     // A list of all the properties the player owns
     public List<Property> ownedProperties;
@@ -109,8 +120,8 @@ public class Player : MonoBehaviour
         int die2Result;
 
         // Set the dice results to a random value between 1 & 6
-        die1Result = Random.Range(1, 6);
-        die2Result = die1Result;// Random.Range(1, 6);
+        die1Result = Random.Range(1, 7);
+        die2Result = Random.Range(1, 7);
 
         // Set rollResult to the result of the dice roll
         rollResult = die1Result + die2Result;
@@ -118,6 +129,7 @@ public class Player : MonoBehaviour
         // Print the roll result to the screen
         gameManager.UIText.text = $"Rolled {die1Result} and {die2Result} for {rollResult}";
 
+        // Check if the player rolled doubles
         if (die1Result == die2Result)
         {
             rolledDoubles = true;
@@ -148,6 +160,12 @@ public class Player : MonoBehaviour
     public void StartMoving(float moveDuration)
     {
         StartCoroutine(MoveToken(moveDuration));
+    }
+
+    public void GoToJail()
+    {
+        StartCoroutine(MoveToSpace(40, false));
+        isInJail = true;
     }
 
     public void PayToLeaveJail()
@@ -197,7 +215,7 @@ public class Player : MonoBehaviour
                 }
 
                 // If the player still has spaces before the end of the board
-                if (currentSpaceIndex < 38)
+                if (currentSpaceIndex < 39)
                 {
                     // Move to the next space if there is a next space
                     currentSpaceIndex++;
@@ -235,7 +253,7 @@ public class Player : MonoBehaviour
             if (spaceIndex != 40)
             {
             // If the player still has spaces before the end of the board
-            if (currentSpaceIndex < 38)
+            if (currentSpaceIndex < 39)
                 {
                     // Move to the next space if there is a next space
                     currentSpaceIndex++;

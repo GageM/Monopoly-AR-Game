@@ -6,33 +6,42 @@ using TMPro;
 
 public class TradeMenu : MonoBehaviour
 {
+    // References to the two trading players
     public Player player1;
     public Player player2;
 
+    // What Player 1 Offers in the trade
     List<Property> player1Properties;
     public float player1CashOffer;
 
+    // What player 2 offers in the trade
     List<Property> player2Properties;
     public float player2CashOffer;
 
+    // The toggle prefab for player property trading 
     [SerializeField] GameObject togglePrefab;
 
+    // The parent scrollbox for each player's properties
     [SerializeField] Transform player1PropertiesContent;
     [SerializeField] Transform player2PropertiesContent;
 
+    // A Reference to the UI Controller
     [SerializeField] UIController uIController;
 
     private void Awake()
     {
+        // Create the lists for each playerr's trade options
         player1Properties = new List<Property>();
         player2Properties = new List<Property>();
     }
 
     public void OpenTradeMenu()
     {
+        // Reset player cash offerings
         player1CashOffer = 0;
         player2CashOffer = 0;
 
+        // Clear all the properties to trade
         player1Properties.Clear();
         player2Properties.Clear();
 
@@ -47,12 +56,13 @@ public class TradeMenu : MonoBehaviour
         };
 
 
-
+        // Fill the property trade options
         PopulateTradeOptions();
     }
 
     void PopulateTradeOptions()
     {
+        // Get all the players' properties and add them to a list of toggles
         for(int i = 0; i < player1.ownedProperties.Count; i++)
         {
             AddNewCheckBox(player1.ownedProperties[i].name, player1.ownedProperties[i], player1PropertiesContent);
@@ -76,6 +86,7 @@ public class TradeMenu : MonoBehaviour
 
     public void AddToPlayerProperties(Property property, Player player)
     {
+        // add the propery to the list of properties to be traded
         if(player == player1)
         {
             player1Properties.Add(property);
@@ -88,6 +99,7 @@ public class TradeMenu : MonoBehaviour
 
     public void RemoveFromPlayerProperties(Property property, Player player)
     {
+        // Remove the property from the list of properties to be traded
         if (player == player1)
         {
             player1Properties.Remove(property);
@@ -100,6 +112,7 @@ public class TradeMenu : MonoBehaviour
 
     public void CancelTrade()
     {
+        // Cancel the tade and reset the trade menu
         player1CashOffer = 0;
         player2CashOffer = 0;
 
@@ -108,11 +121,13 @@ public class TradeMenu : MonoBehaviour
 
         foreach (RectTransform child in player1PropertiesContent)
         {
+            child.gameObject.SetActive(false);
             Destroy(child);
         }
 
         foreach (RectTransform child in player2PropertiesContent)
         {
+            child.gameObject.SetActive(false);
             Destroy(child);
         }
 
@@ -154,13 +169,15 @@ public class TradeMenu : MonoBehaviour
         player1Properties.Clear();
         player2Properties.Clear();
 
-        foreach(RectTransform child in player1PropertiesContent)
+        foreach(Transform child in player1PropertiesContent)
         {
+            child.gameObject.SetActive(false);
             Destroy(child);
         }
 
-        foreach (RectTransform child in player2PropertiesContent)
+        foreach (Transform child in player2PropertiesContent)
         {
+            child.gameObject.SetActive(false);
             Destroy(child);
         }
 
