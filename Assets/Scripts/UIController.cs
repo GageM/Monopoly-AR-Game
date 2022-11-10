@@ -38,7 +38,7 @@ public class UIController : MonoBehaviour
     [SerializeField] Image player3CashUI;
     [SerializeField] Image player4CashUI;
     [SerializeField] Button jailRollDiceButton;
-    [SerializeField] Button jailEndtTurnButton;
+    [SerializeField] Button jailEndTurnButton;
 
     [Header("End Turn UI Elements")]
     [SerializeField] Button endTurnButton;
@@ -67,7 +67,8 @@ public class UIController : MonoBehaviour
     [Header("End Game UI")]
     [SerializeField] Image endGameUI;
     [SerializeField] TextMeshProUGUI endGameTitle;
-
+    
+    [Space(10f)]
     // Debug Text on all screens
     [SerializeField] TextMeshProUGUI debugText;
 
@@ -102,6 +103,7 @@ public class UIController : MonoBehaviour
     public void OpenGameTextUI()
     {
         topPanel.gameObject.SetActive(true);
+        topPanel.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Tap A Yellow Plane To Start The Game";
     }
 
     public void OpenPlayerCashUI()
@@ -183,32 +185,51 @@ public class UIController : MonoBehaviour
 
         jailOptions.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = $" Player { currentPlayer.playerIndex + 1}: You're In Jail";
 
-        //if (currentPlayer != null)
-        //{
-        //    if (currentPlayer.cash >= 200)
-        //    {
-        //        payJailFeeButton.gameObject.SetActive(true);
-        //    }
-        //    else
-        //    {
-        //        payJailFeeButton.gameObject.SetActive(false);
-        //    }
-        //
-        //    if (currentPlayer.getOutOfJailCards >= 1)
-        //    {
-        //        useGetOutOfJailButton.gameObject.SetActive(true);
-        //    }
-        //    else
-        //    {
-        //        useGetOutOfJailButton.gameObject.SetActive(false);
-        //    }
-        //}
+
+        ClosePayJailFeeButton();
+        CloseUseGetOutJailButton();
+        if (currentPlayer != null)
+        {
+            if (currentPlayer.cash >= 200)
+            {
+                OpenPayJailFeeButton();
+            }
+        
+            if (currentPlayer.getOutOfJailCards >= 1)
+            {
+                OpenUseGetOutJailButton();
+            }
+        }
     }
 
     public void CloseJailOptionsUI()
     {
         jailOptions.gameObject.SetActive(false);
         jailOptions.enabled = false;
+    }
+
+    public void OpenPayJailFeeButton()
+    {
+        payJailFeeButton.gameObject.SetActive(true);
+        payJailFeeButton.enabled = true;
+    }
+
+    public void ClosePayJailFeeButton()
+    {
+        payJailFeeButton.gameObject.SetActive(false);
+        payJailFeeButton.enabled = false;
+    }
+
+    public void OpenUseGetOutJailButton()
+    {
+        useGetOutOfJailButton.gameObject.SetActive(true);
+        useGetOutOfJailButton.enabled = true;
+    }
+
+    public void CloseUseGetOutJailButton()
+    {
+        useGetOutOfJailButton.gameObject.SetActive(false);
+        useGetOutOfJailButton.enabled = false;
     }
 
     public void RollDice()
@@ -226,7 +247,7 @@ public class UIController : MonoBehaviour
             else
             {
                 jailRollDiceButton.gameObject.SetActive(false);
-                jailEndtTurnButton.gameObject.SetActive(true);
+                jailEndTurnButton.gameObject.SetActive(true);
             }
         }
         else
@@ -517,12 +538,12 @@ public class UIController : MonoBehaviour
         buyPropertyButton.enabled = false;
     }
 
-    public void OpenPayTaxButton(float tax)
+    public void OpenPayTaxButton(float value)
     {
         payTaxButton.gameObject.SetActive(true);
         payTaxButton.enabled = true;
 
-        payRentButton.GetComponentInChildren<TextMeshProUGUI>().text = $"Pay Tax: $ {tax}";
+        payTaxButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"Pay Tax: ${value}";
     }
 
     public void ClosePayTaxButton()

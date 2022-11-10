@@ -94,6 +94,7 @@ public class GameManager : MonoBehaviour
         Touch touch;
         if (Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began) { return; }
 
+        // If the game isn't initialized, initialize it
         if (initializedAR && !gameStarted)
         {
             // Perform AR raycast to any plane
@@ -110,11 +111,12 @@ public class GameManager : MonoBehaviour
     {
         uIController.OpenPlayerCashUI();
 
-            // Create a new instance off the game board where the player taps
-            board = Instantiate(boardPrefab, hit.pose.position, hit.pose.rotation).GetComponent<GameBoard>();
-            board.gameObject.AddComponent<ARAnchor>();
+        // Create a new instance off the game board where the player taps
+        board = Instantiate(boardPrefab, hit.pose.position, hit.pose.rotation).GetComponent<GameBoard>();
+        board.gameObject.AddComponent<ARAnchor>();
 
-            for (int i = 0; i < numberOfPlayers; i++)
+        //Initialize the players
+        for (int i = 0; i < numberOfPlayers; i++)
             {
                 // Instantiate new player
                 Player temp = Instantiate(playerPrefab, board.transform).GetComponent<Player>();
@@ -138,19 +140,22 @@ public class GameManager : MonoBehaviour
                 // Initialize the player on the first space
                 players[i].currentSpace = board.spaces[players[i].currentSpaceIndex];
                 players[i].transform.SetPositionAndRotation(players[i].currentSpace.transform.position, players[i].currentSpace.transform.rotation);
-            }
+        }
 
-            // Tell the user that the game has been initialized
-            StartCoroutine(UpdateUIText($"Game Initialized", 2f));
+        // Tell the user that the game has been initialized
+        StartCoroutine(UpdateUIText($"Game Initialized", 2f));
 
-            gameStarted = true;
+        // The game has started now
+        gameStarted = true;
 
-            currentPlayerIndex = 0;
+        // Player 1 goes first
+        currentPlayerIndex = 0;
 
-            EndTrackingGeneration();
+        // Stop generating AR Trackers
+        EndTrackingGeneration();
 
-            BeginTurn();
-
+        // Begin playe 1's turn
+        BeginTurn();
     }
 
     public IEnumerator UpdateUIText(string text, float duration)
@@ -183,6 +188,7 @@ public class GameManager : MonoBehaviour
 
     public int EndTurn()
     {
+        // Clear anything related to the player rolling doubles
         players[currentPlayerIndex].rolledDoubles = false;
         players[currentPlayerIndex].doublesRollCount = 0;
 
@@ -196,8 +202,10 @@ public class GameManager : MonoBehaviour
             currentPlayerIndex = 0;
         }
 
+        // Begin the next player's turn
         uIController.BeginTurn(players[currentPlayerIndex]);
 
+        // Return the index of the next player
         return currentPlayerIndex;
     }
 
@@ -229,7 +237,8 @@ public class GameManager : MonoBehaviour
 
     public void BeginTurn()
     {
-            uIController.BeginTurn(players[currentPlayerIndex]);
+        // Tell the UI controller to show the player's turn UI
+        uIController.BeginTurn(players[currentPlayerIndex]);
     }
 
     void EndTrackingGeneration()
@@ -247,13 +256,6 @@ public class GameManager : MonoBehaviour
             pointCloud.gameObject.SetActive(false);
         }
         GetComponent<ARPointCloudManager>().enabled = false;
-    }
-
-    void StartTrackingGeneration()
-    {
-        GetComponent<ARPointCloudManager>().enabled = true;
-
-        GetComponent<ARPointCloudManager>().enabled = true;
     }
 
     public void RemovePlayer(Player playerToRemove)

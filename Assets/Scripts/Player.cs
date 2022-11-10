@@ -32,17 +32,6 @@ public class Player : MonoBehaviour
 
     // The amount of money the player has
     [HideInInspector] public float cash; 
-    //{
-    //    get
-    //  {
-    //      return cash;
-    //  }
-    //    set
-    //  {
-    //      cash = value;
-    //      UpdatePlayerCashUI();
-    //  }    
-    //}
 
     // A list of all the properties the player owns
     public List<Property> ownedProperties;
@@ -106,6 +95,7 @@ public class Player : MonoBehaviour
 
     public void UpdatePlayerCashUI()
     {
+        // If the player has a cash UI
         if (playerCashUI != null)
         {
             // Update the player's cash UI
@@ -132,21 +122,28 @@ public class Player : MonoBehaviour
         // Check if the player rolled doubles
         if (die1Result == die2Result)
         {
+            // Cache that the player rolled doubles
             rolledDoubles = true;
+            // Increase the counter keeping track of the amount of times doubles were rolled
             doublesRollCount++;
         }
 
+        // Return the roll result
         return rollResult;
     }
 
     public void LandOnSpace()
     {
+        // Open The End Turn UI
         gameManager.uIController.OpenEndTurnUI();
+
+        // Interact with the space
         currentSpace.OnLanded(this);
     }
 
     public void SetPlayerToken(int tokenIndex)
     {
+        // Choose which token this player will use
         currentToken = tokens[tokenIndex];
         for(int i = 0; i < tokens.Length; i++)
         {
@@ -157,6 +154,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    // Called by animation event
     public void StartMoving(float moveDuration)
     {
         StartCoroutine(MoveToken(moveDuration));
@@ -164,7 +162,10 @@ public class Player : MonoBehaviour
 
     public void GoToJail()
     {
+        // Send the player to the jail space
         StartCoroutine(MoveToSpace(40, false));
+
+        // Tell the player that they are in jail
         isInJail = true;
     }
 
@@ -293,9 +294,4 @@ public class Player : MonoBehaviour
         return null;
     }
 
-    public void SortOwnedProperties()
-    {
-        // TODO: Fix Broken Sorting Algorithm
-        ownedProperties.Sort();
-    }
 }

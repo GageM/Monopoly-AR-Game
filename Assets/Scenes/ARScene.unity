@@ -17365,7 +17365,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Pay Tax: ${Tax}'
+  m_text: Blarg
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 75681e84b7261bd4c8c466fab1d4d758, type: 2}
   m_sharedMaterial: {fileID: 8343520060603026296, guid: 75681e84b7261bd4c8c466fab1d4d758, type: 2}

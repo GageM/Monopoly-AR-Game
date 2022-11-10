@@ -20,15 +20,11 @@ public class Chance : PlayerSpace
         chanceCards.Add(AdvanceToTrafalgarSquare); //Works
         chanceCards.Add(AdvanceToPallMall); //Works
         chanceCards.Add(AdvanceToNearestRailroad); //Works
-        //chanceCards.Add(AdvanceToUtility); // Broken
         chanceCards.Add(BankDividend); //Works
         chanceCards.Add(GetOutOfJailFree); //Works
-        //chanceCards.Add(GoBackSpaces); //Broken
         chanceCards.Add(GoToJail);
-        //chanceCards.Add(PropertyRepair);
         chanceCards.Add(AdvanceToKingsCross); //Works
         chanceCards.Add(AdvanceToMayfair); //Works
-        chanceCards.Add(PayPlayers); // Works
         chanceCards.Add(LoanMatures); // Works
     }
 
@@ -73,23 +69,6 @@ public class Chance : PlayerSpace
         // Advance to Pall Mall If you pass Go, collect 200 Dollars.
         interactingPlayer.StartCoroutine(interactingPlayer.MoveToSpace(11, true));
     }
-
-    void AdvanceToUtility()
-    {
-        manager.uIController.endTurnTitle.text = "Advance token to the nearest Utility.";
-        // Advance token to the nearest Utility.
-
-        // Determine the Utility to move to
-        if (interactingPlayer.currentSpaceIndex >= 28 || interactingPlayer.currentSpaceIndex <= 12)
-        {
-            interactingPlayer.StartCoroutine(interactingPlayer.MoveToSpace(12, true));
-        }
-        else
-        {
-            interactingPlayer.StartCoroutine(interactingPlayer.MoveToSpace(28, true));
-        }
-    }
-
     void AdvanceToNearestRailroad()
     {
         manager.uIController.endTurnTitle.text = "Advance to the nearest Railroad.";
@@ -129,19 +108,6 @@ public class Chance : PlayerSpace
         interactingPlayer.getOutOfJailCards++;
     }
 
-    void GoBackSpaces()
-    {
-        manager.uIController.endTurnTitle.text = "Go back 3 spaces";
-        // Go back 3 spaces
-
-        // Set the player's new space to 3 spaces behind their current space
-        // TODO: Fix Go Back 3 Spaces Function
-        int newSpaceIndex = (interactingPlayer.currentSpaceIndex <= 3) ? (interactingPlayer.currentSpaceIndex - 3) : (interactingPlayer.currentSpaceIndex + 39 - 3);
-
-        // Move the player to their new space
-        interactingPlayer.StartCoroutine(interactingPlayer.MoveToSpace(newSpaceIndex, false));
-    }
-
     void GoToJail()
     {
         manager.uIController.endTurnTitle.text = "Go directly to Jail. Do not pass Go, do not collect $200";
@@ -149,23 +115,6 @@ public class Chance : PlayerSpace
 
         interactingPlayer.isInJail = true;
         interactingPlayer.StartCoroutine(interactingPlayer.MoveToSpace(40, true));
-    }
-
-    void PropertyRepair()
-    {
-        manager.StartCoroutine(manager.UpdateUIText("Make general repairs on all your properties: For each house pay 25 Dollars, For each hotel pay $100", 2));
-        // Make general repairs on all your properties: For each house pay 25 Dollars, For each hotel pay 100 Dollars
-        int hotelCount = 0;
-        int houseCount = 0;
-
-        for(int i = 0; i < interactingPlayer.ownedProperties.Count; i++)
-        {
-            houseCount += interactingPlayer.ownedProperties[i].houseCount;
-            hotelCount += interactingPlayer.ownedProperties[i].hotelCount;
-        }
-
-        interactingPlayer.cash -= 25 * houseCount;
-        interactingPlayer.cash -= 100 * hotelCount;
     }
 
     void AdvanceToKingsCross()
@@ -180,21 +129,6 @@ public class Chance : PlayerSpace
         manager.uIController.endTurnTitle.text = "Take a walk on the board walk. Advance token to Mayfair";
         // Take a walk on the board walk. Advance token to Mayfair
         interactingPlayer.StartCoroutine(interactingPlayer.MoveToSpace(39, true));
-    }
-
-    void PayPlayers()
-    {
-        manager.uIController.endTurnTitle.text = "You have been elected Chairman of the Board. Pay each player $50.";
-        // You have been elected Chairman of the Board. Pay each player 50 Dollars.
-        for (int i = 0; i < manager.numberOfPlayers; i++)
-        {
-            // Pay each player that isnt the interacting player
-            if (manager.players[i] != interactingPlayer)
-            {
-                interactingPlayer.cash -= 50;
-                manager.players[i].cash += 50;
-            }
-        }
     }
 
     void LoanMatures()

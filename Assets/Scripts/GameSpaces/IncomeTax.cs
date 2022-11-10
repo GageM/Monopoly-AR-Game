@@ -55,6 +55,8 @@ public class IncomeTax : PlayerSpace
 
     public override void SpaceInteraction()
     {
+        interactingPlayer.cash -= finalTaxAmount;
+
         interactingPlayer.gameManager.uIController.ClosePayTaxButton();
         interactingPlayer.gameManager.uIController.OpenEndTurnButton();
     }
