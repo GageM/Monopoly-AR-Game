@@ -42,6 +42,12 @@ public class Player : MonoBehaviour
     [HideInInspector, Tooltip("The amount of turns since the player went to jail")]
     public int turnsSinceJailed;
 
+    [HideInInspector, Tooltip("If the player rolled doubles on their turn")]
+    public bool rolledDoubles;
+
+    [HideInInspector, Tooltip("How many turns in a row the player rolled doubles")]
+    public int doublesRollCount;
+
     [HideInInspector, Tooltip("Whether or not the player is moving")]
     public bool isMoving;
 
@@ -84,6 +90,11 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        UpdatePlayerCashUI();
+    }
+
+    public void UpdatePlayerCashUI()
+    {
         if (playerCashUI != null)
         {
             // Update the player's cash UI
@@ -91,11 +102,35 @@ public class Player : MonoBehaviour
         }
     }
 
+    public int RollDice()
+    {
+        // Create integers for the two dice results
+        int die1Result;
+        int die2Result;
+
+        // Set the dice results to a random value between 1 & 6
+        die1Result = Random.Range(1, 6);
+        die2Result = die1Result;// Random.Range(1, 6);
+
+        // Set rollResult to the result of the dice roll
+        rollResult = die1Result + die2Result;
+
+        // Print the roll result to the screen
+        gameManager.UIText.text = $"Rolled {die1Result} and {die2Result} for {rollResult}";
+
+        if (die1Result == die2Result)
+        {
+            rolledDoubles = true;
+            doublesRollCount++;
+        }
+
+        return rollResult;
+    }
+
     public void LandOnSpace()
     {
-        currentSpace.OnLanded(this);
-
         gameManager.uIController.OpenEndTurnUI();
+        currentSpace.OnLanded(this);
     }
 
     public void SetPlayerToken(int tokenIndex)
@@ -197,31 +232,45 @@ public class Player : MonoBehaviour
     {
         while (currentSpaceIndex != spaceIndex)
         {
+            if (spaceIndex != 40)
+            {
             // If the player still has spaces before the end of the board
             if (currentSpaceIndex < 38)
+                {
+                    // Move to the next space if there is a next space
+                    currentSpaceIndex++;
+                    currentSpace = board.spaces[currentSpaceIndex];
+                }
+
+                // If the player passes GO
+                else
+                {
+                    // Move to the first space if at the end of the board
+                    currentSpaceIndex = 0;
+                    currentSpace = board.spaces[0];
+
+                    if (cashOnPassGo)
+                    {
+                        // Call the PassGO function since the player passed go
+                        cash += 200;
+                    }
+                }
+            }
             {
                 // Move to the next space if there is a next space
                 currentSpaceIndex++;
                 currentSpace = board.spaces[currentSpaceIndex];
             }
-
-            // If the player passes GO
-            else
-            {
-                // Move to the first space if at the end of the board
-                currentSpaceIndex = 0;
-                currentSpace = board.spaces[0];
-
-                if (cashOnPassGo)
-                {
-                    // Call the PassGO function since the player passed go
-                    cash += 200;
-                }
-            }
         }
 
         // Tell the animator to play the moving animation
         GetComponentInChildren<Animator>().SetTrigger("startMoving");
+
+        // Allow the player to end their turn
+        gameManager.uIController.CloseEndTurnUI();
+        gameManager.uIController.OpenEndTurnUI();
+        gameManager.uIController.OpenEndTurnButton();
+
 
         return null;
     }
@@ -229,6 +278,6 @@ public class Player : MonoBehaviour
     public void SortOwnedProperties()
     {
         // TODO: Fix Broken Sorting Algorithm
-        //ownedProperties.Sort();
+        ownedProperties.Sort();
     }
 }

@@ -24,4 +24,12 @@ public class Utility : Property
         }
         return diceMultiplier * rent[0];
     }
+
+    public override void UpdatePropertyMeshes()
+    {
+    }
+
+    public override void GetHouseObjects()
+    {
+    }
 }

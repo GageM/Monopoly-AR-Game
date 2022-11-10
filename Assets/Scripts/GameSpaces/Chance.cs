@@ -19,13 +19,13 @@ public class Chance : PlayerSpace
         chanceCards.Add(AdvanceToGo);
         chanceCards.Add(AdvanceToTrafalgarSquare);
         chanceCards.Add(AdvanceToPallMall);
-        chanceCards.Add(AdvanceToNearestRailroad);
-        chanceCards.Add(AdvanceToUtility);
+        //chanceCards.Add(AdvanceToNearestRailroad);
+        //chanceCards.Add(AdvanceToUtility);
         chanceCards.Add(BankDividend);
         chanceCards.Add(GetOutOfJailFree);
-        chanceCards.Add(GoBackSpaces);
+        //chanceCards.Add(GoBackSpaces);
         chanceCards.Add(GoToJail);
-        chanceCards.Add(PropertyRepair);
+        //chanceCards.Add(PropertyRepair);
         chanceCards.Add(AdvanceToKingsCross);
         chanceCards.Add(AdvanceToMayfair);
         chanceCards.Add(PayPlayers);
@@ -36,69 +36,81 @@ public class Chance : PlayerSpace
     {
         base.OnLanded(_interactingPlayer);
 
+        interactingPlayer.gameManager.uIController.OpenDrawCardButton();
+        interactingPlayer.gameManager.uIController.CloseEndTurnButton();
+    }
+
+    public override void SpaceInteraction()
+    {
+        // Choose a random card from the pile
         int topCard = Random.Range(0, chanceCards.Count - 1);
 
+        // Call that card's function
         chanceCards[topCard]();
+
+        interactingPlayer.gameManager.uIController.CloseDrawCardButton();
+
+        interactingPlayer.gameManager.uIController.OpenEndTurnButton();
     }
 
     void AdvanceToGo()
     {
         manager.StartCoroutine(manager.UpdateUIText("Advance to Go, Collect $200", 2));
         // Advance to Go, Collect 200 Dollars
-        manager.StartCoroutine(manager.MovePlayerToSpace(interactingPlayer.playerIndex, 0, true));
+        interactingPlayer.StartCoroutine(interactingPlayer.MoveToSpace(0, true));
     }
 
     void AdvanceToTrafalgarSquare()
     {
         manager.StartCoroutine(manager.UpdateUIText("Advance to Trafalgar Square. If you pass Go, collect $200", 2));
         // Advance to Trafalgar Square. If you pass Go, collect 200 Dollars
-        manager.StartCoroutine(manager.MovePlayerToSpace(interactingPlayer.playerIndex, 24, true));
+        interactingPlayer.StartCoroutine(interactingPlayer.MoveToSpace(24, true));
     }
 
     void AdvanceToPallMall()
     {
         manager.StartCoroutine(manager.UpdateUIText("Advance to Pall Mall If you pass Go, collect $200.", 2));
         // Advance to Pall Mall If you pass Go, collect 200 Dollars.
-        manager.StartCoroutine(manager.MovePlayerToSpace(interactingPlayer.playerIndex, 11, true));
+        interactingPlayer.StartCoroutine(interactingPlayer.MoveToSpace(11, true));
     }
 
     void AdvanceToUtility()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Advance token to the nearest Utility. If unowned, you may buy it from the Bank. If owned, throw dice and pay owner a total 10 times the amount thrown.", 2));
-        // Advance token to the nearest Utility. If unowned, you may buy it from the Bank. If owned, throw dice and pay owner a total 10 times the amount thrown.
+        manager.StartCoroutine(manager.UpdateUIText("Advance token to the nearest Utility.", 2));
+        // Advance token to the nearest Utility.
 
         // Determine the Utility to move to
         if (interactingPlayer.currentSpaceIndex >= 28 || interactingPlayer.currentSpaceIndex <= 12)
         {
-            manager.StartCoroutine(manager.MovePlayerToSpace(interactingPlayer.playerIndex, 12, true));
+            interactingPlayer.StartCoroutine(interactingPlayer.MoveToSpace(12, true));
         }
         else
         {
-            manager.StartCoroutine(manager.MovePlayerToSpace(interactingPlayer.playerIndex, 28, true));
+            interactingPlayer.StartCoroutine(interactingPlayer.MoveToSpace(28, true));
         }
     }
 
     void AdvanceToNearestRailroad()
     {
-        manager.StartCoroutine(manager.UpdateUIText("Advance to the nearest Railroad. If unowned, you may buy it from the Bank. If owned, pay owner twice the rental price.", 2));
-        // Advance to the nearest Railroad. If unowned, you may buy it from the Bank. If owned, pay owner twice the rental price.
+        manager.StartCoroutine(manager.UpdateUIText("Advance to the nearest Railroad.", 2));
+        // Advance to the nearest Railroad.
 
         // Determine the Railway to move to
         if (interactingPlayer.currentSpaceIndex >= 36 || interactingPlayer.currentSpaceIndex <= 5)
         {
-            manager.StartCoroutine(manager.MovePlayerToSpace(interactingPlayer.playerIndex, 5, true));
+            interactingPlayer.StartCoroutine(interactingPlayer.MoveToSpace(5, true));
         }
         else if (interactingPlayer.currentSpaceIndex > 5 && interactingPlayer.currentSpaceIndex <= 15)
         {
-            manager.StartCoroutine(manager.MovePlayerToSpace(interactingPlayer.playerIndex, 15, true));
+            interactingPlayer.StartCoroutine(interactingPlayer.MoveToSpace(15, true));
         }
         else if (interactingPlayer.currentSpaceIndex > 15 && interactingPlayer.currentSpaceIndex <= 25)
         {
-            manager.StartCoroutine(manager.MovePlayerToSpace(interactingPlayer.playerIndex, 25, true));
+            interactingPlayer.StartCoroutine(interactingPlayer.MoveToSpace(25, true));
         }
         else
         {
-            manager.StartCoroutine(manager.MovePlayerToSpace(interactingPlayer.playerIndex, 35, true));
+            interactingPlayer.StartCoroutine(interactingPlayer.MoveToSpace(35, true));
         }
     }
 
@@ -127,7 +139,7 @@ public class Chance : PlayerSpace
         int newSpaceIndex = (interactingPlayer.currentSpaceIndex <= 3) ? (interactingPlayer.currentSpaceIndex - 3) : (interactingPlayer.currentSpaceIndex + 39 - 3);
 
         // Move the player to their new space
-        manager.StartCoroutine(manager.MovePlayerToSpace(interactingPlayer.playerIndex, newSpaceIndex, false));
+        interactingPlayer.StartCoroutine(interactingPlayer.MoveToSpace(newSpaceIndex, false));
     }
 
     void GoToJail()
@@ -135,7 +147,8 @@ public class Chance : PlayerSpace
         manager.StartCoroutine(manager.UpdateUIText("Go directly to Jail. Do not pass Go, do not collect $200", 2));
         // Go directly to Jail. Do not pass Go, do not collect 200 Dollars
 
-        manager.GoToJail(interactingPlayer.playerIndex);
+        interactingPlayer.isInJail = true;
+        interactingPlayer.StartCoroutine(interactingPlayer.MoveToSpace(40, true));
     }
 
     void PropertyRepair()
@@ -159,14 +172,14 @@ public class Chance : PlayerSpace
     {
         manager.StartCoroutine(manager.UpdateUIText("Take a ride to King’s Cross Station. If you pass Go, collect $200", 2));
         // Take a ride to King’s Cross Station. If you pass Go, collect 200 Dollars
-        manager.StartCoroutine(manager.MovePlayerToSpace(interactingPlayer.playerIndex, 5, true));
+        interactingPlayer.StartCoroutine(interactingPlayer.MoveToSpace(5, true));
     }
 
     void AdvanceToMayfair()
     {
         manager.StartCoroutine(manager.UpdateUIText("Take a walk on the board walk. Advance token to Mayfair", 2));
         // Take a walk on the board walk. Advance token to Mayfair
-        manager.StartCoroutine(manager.MovePlayerToSpace(interactingPlayer.playerIndex, 39, true));
+        interactingPlayer.StartCoroutine(interactingPlayer.MoveToSpace(39, true));
     }
 
     void PayPlayers()

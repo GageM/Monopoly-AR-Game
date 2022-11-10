@@ -48,11 +48,8 @@ public class GameManager : MonoBehaviour
     // Whether the game has been started
     bool gameStarted;
 
-    // The result of a player rolling dice
-    private int rollResult;
-
     // The Text UI
-    private TextMeshProUGUI UIText;
+    [HideInInspector] public TextMeshProUGUI UIText;
 
     // Debug Text on all screens
     [SerializeField] TextMeshProUGUI debugText;
@@ -74,8 +71,6 @@ public class GameManager : MonoBehaviour
 
             // Has not yet initialized AR
             initializedAR = false;
-
-            // The game has not started
 
             // Get the UI Text to print game info
             UIText = GameObject.Find("UI_Text").GetComponent<TextMeshProUGUI>();
@@ -108,52 +103,13 @@ public class GameManager : MonoBehaviour
                 InitializeGame(Hits[0]);
             }
         }
-    }
-
-    public void RollDice()
-    {
-        // create integers for the two dice results
-        int die1Result;
-        int die2Result;
-
-        // Set the dice results to a random value between 1 & 6
-        die1Result = Random.Range(1, 6);
-        die2Result = Random.Range(1, 6);
-
-        // Set rollResult to the result of the dice roll
-        rollResult = die1Result + die2Result;
-
-        // Print the roll result to the screen
-        UIText.text = $"Rolled a {rollResult}";
-
-        // Move the player to their next space        
-        StartCoroutine(MovePLayerByRoll(currentPlayerIndex));
-    }
-
-    public IEnumerator MovePLayerByRoll(int _playerIndex)
-    {
-        // Tell the player to move by the roll result
-        players[_playerIndex].StartCoroutine(players[_playerIndex].MoveByRoll(rollResult));
-
-        yield return null;
-    }
-
-    public IEnumerator MovePlayerToSpace(int _playerIndex, int _spaceIndex, bool cashOnPassGo)
-    {
-        // Move the player to the space
-        players[_playerIndex].StartCoroutine(players[_playerIndex].MoveToSpace(_spaceIndex, cashOnPassGo));
-
-        // End this player's turn
-        if (_playerIndex == currentPlayerIndex)
-        {
-            EndTurn();
-        }
-
-        yield return null;
+        else { return; }
     }
 
     public void InitializeGame(ARRaycastHit hit)
     {
+        uIController.OpenPlayerCashUI();
+
         if (UsingAR)
         {
             // Create a new instance off the game board where the player taps
@@ -269,6 +225,9 @@ public class GameManager : MonoBehaviour
 
     public int EndTurn()
     {
+        players[currentPlayerIndex].rolledDoubles = false;
+        players[currentPlayerIndex].doublesRollCount = 0;
+
         // Change the active player to the next player
         if (currentPlayerIndex < numberOfPlayers - 1)
         {
@@ -310,24 +269,9 @@ public class GameManager : MonoBehaviour
         initializedAR = true;
     }
 
-    void BeginTurn()
+    public void BeginTurn()
     {
             uIController.BeginTurn(players[currentPlayerIndex]);
-    }
-
-    public void GoToJail(int _playerIndex)
-    {
-        // Tell the game the player is in jail
-        players[_playerIndex].isInJail = true;
-
-        // Set the player's space index to the jail space
-        players[_playerIndex].currentSpaceIndex = 40;
-
-        // Set the player's current space to the jail space
-        players[_playerIndex].currentSpace = board.spaces[players[_playerIndex].currentSpaceIndex];
-
-        // Move the player to jail
-        players[_playerIndex].transform.SetPositionAndRotation(players[_playerIndex].currentSpace.transform.position, players[_playerIndex].currentSpace.transform.rotation);
     }
 
     void EndTrackingGeneration()
@@ -338,5 +282,35 @@ public class GameManager : MonoBehaviour
             plane.gameObject.SetActive(false);
         }
         GetComponent<ARPlaneManager>().enabled = false;
+
+        // Stop Creating Point Clouds too!
+        foreach(var pointCloud in GetComponent<ARPointCloudManager>().trackables)
+        {
+            pointCloud.gameObject.SetActive(false);
+        }
+        GetComponent<ARPointCloudManager>().enabled = false;
+    }
+
+    public void RemovePlayer(Player playerToRemove)
+    {
+        if (playerToRemove == null)
+        {
+            currentPlayerIndex = currentPlayerIndex < (players.Count - 1) ? currentPlayerIndex + 1: 0;
+
+            // Destroy the player's cash counter UI element
+            Destroy(GameObject.Find($"Player {playerToRemove.playerIndex + 1} Cash Counter"));
+
+            players.Remove(playerToRemove);
+            Destroy(playerToRemove.gameObject);
+
+            if (players.Count == 1)
+            {
+                // End the game
+            }
+            else
+            {
+                BeginTurn();
+            }
+        }
     }
 }

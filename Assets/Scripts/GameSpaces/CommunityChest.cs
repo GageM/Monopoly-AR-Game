@@ -28,7 +28,7 @@ public class CommunityChest : PlayerSpace
         communityCards.Add(HospitalFees);
         communityCards.Add(SchoolFees);
         communityCards.Add(ConsultancyFees);
-        communityCards.Add(StreetRepairs);
+        //communityCards.Add(StreetRepairs);
         communityCards.Add(SecondPrize);
         communityCards.Add(Inheritance);
     }
@@ -38,16 +38,27 @@ public class CommunityChest : PlayerSpace
     {
         base.OnLanded(interactingPlayer);
 
+        interactingPlayer.gameManager.uIController.OpenDrawCardButton();
+        interactingPlayer.gameManager.uIController.CloseEndTurnButton();
+    }
+
+    public override void SpaceInteraction()
+    {
+        // Choose a random card from the deck
         int topCard = Random.Range(0, communityCards.Count - 1);
 
+        // Call that card's function
         communityCards[topCard]();
+
+        interactingPlayer.gameManager.uIController.CloseDrawCardButton();
+        interactingPlayer.gameManager.uIController.OpenEndTurnButton();
     }
 
     void AdvanceToGo()
     {
         manager.StartCoroutine(manager.UpdateUIText("Advance to Go, Collect $200", 2));
 
-        manager.StartCoroutine(manager.MovePlayerToSpace(interactingPlayer.playerIndex, 0, true));
+        interactingPlayer.StartCoroutine(interactingPlayer.MoveToSpace(0, true));
     }
 
     void BankError()
@@ -77,7 +88,8 @@ public class CommunityChest : PlayerSpace
         manager.StartCoroutine(manager.UpdateUIText("Go directly to Jail. Do not pass Go, do not collect $200", 2));
         // Go directly to Jail. Do not pass Go, do not collect 200 Dollars
 
-        manager.GoToJail(interactingPlayer.playerIndex);
+        interactingPlayer.isInJail = true;
+        interactingPlayer.StartCoroutine(interactingPlayer.MoveToSpace(40, true));
     }
 
     void OperaNight()

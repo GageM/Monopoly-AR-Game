@@ -21,6 +21,7 @@ public class UIController : MonoBehaviour
     [SerializeField] Image houseMenu;
     [SerializeField] Image hotelMenu;
 
+
     [Header("UI Elements")]
     // UI Elements
     [SerializeField] Button addHouseButton;
@@ -32,6 +33,35 @@ public class UIController : MonoBehaviour
     [SerializeField] TextMeshProUGUI buyHotelTitle;
     [SerializeField] TextMeshProUGUI sellHotelTitle;
     [SerializeField] TextMeshProUGUI mortgagePropertyText;
+    [SerializeField] Image player1CashUI;
+    [SerializeField] Image player2CashUI;
+    [SerializeField] Image player3CashUI;
+    [SerializeField] Image player4CashUI;
+    [SerializeField] Button jailRollDiceButton;
+    [SerializeField] Button jailEndtTurnButton;
+
+    [Header("End Turn UI Elements")]
+    [SerializeField] Button endTurnButton;
+    [SerializeField] Button payRentButton;
+    [SerializeField] Button buyPropertyButton;
+    [SerializeField] Button payTaxButton;
+    [SerializeField] Button drawCardButton;
+    [SerializeField] Button goToJailButton;
+    [SerializeField] Button giveUpButton;
+    [SerializeField] Button rollAgainButton;
+
+
+    [Header("Trade Menu UI")]
+    [SerializeField] TradeMenu tradeMenu;
+    [SerializeField] Image playersToTradeWith;
+    [SerializeField] Button player1TradeButton;
+    [SerializeField] Button player2TradeButton;
+    [SerializeField] Button player3TradeButton;
+    [SerializeField] Button player4TradeButton;
+    public TextMeshProUGUI player1CashAmount;
+    public TextMeshProUGUI player2CashAmount;
+    [SerializeField] Slider player1CashSlider;
+    [SerializeField] Slider player2CashSlider;
 
     // Debug Text on all screens
     [SerializeField] TextMeshProUGUI debugText;
@@ -59,10 +89,29 @@ public class UIController : MonoBehaviour
         mainMenuUI.gameObject.SetActive(false);
         mainMenuUI.enabled = false;
 
-        playerCashPanel.gameObject.SetActive(true);
-        topPanel.gameObject.SetActive(true);
+        OpenGameTextUI();
 
         gameManager.StartAR();
+    }
+
+    public void OpenGameTextUI()
+    {
+        topPanel.gameObject.SetActive(true);
+    }
+
+    public void OpenPlayerCashUI()
+    {
+        playerCashPanel.gameObject.SetActive(true);
+
+        //if(gameManager.players.Count < 4)
+        //{
+        //    player4CashUI.gameObject.SetActive(false);
+        //}
+        //
+        //if(gameManager.players.Count < 3)
+        //{
+        //    player3CashUI.gameObject.SetActive(false);
+        //}
     }
 
     IEnumerator LateStart()
@@ -76,8 +125,10 @@ public class UIController : MonoBehaviour
         ClosePropertyOptions();
         ClosePropertiesUI();
         CloseTurnOptionsUI();
+        ClosePlayersToTradeWith();
         ClosePlayerTurnUI();
         CloseEndTurnUI();
+        CloseTradeMenu();
     }
 
     public void BeginTurn(Player _player)
@@ -156,8 +207,36 @@ public class UIController : MonoBehaviour
 
     public void RollDice()
     {
-        gameManager.RollDice();
+        if (currentPlayer.isInJail)
+        {
+            currentPlayer.RollDice();
+
+            if(currentPlayer.rolledDoubles)
+            {
+                OpenTurnOptionsUI();
+                currentPlayer.rolledDoubles = false;
+                currentPlayer.doublesRollCount = 0;
+            }
+            else
+            {
+                jailRollDiceButton.gameObject.SetActive(false);
+                jailEndtTurnButton.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            currentPlayer.StartCoroutine(currentPlayer.MoveByRoll(currentPlayer.RollDice()));
+            CloseTurnOptionsUI();
+        }        
+    }
+
+    public void RollAgain()
+    {
+        rollAgainButton.gameObject.SetActive(false);
+
+        currentPlayer.StartCoroutine(currentPlayer.MoveByRoll(currentPlayer.RollDice()));
         CloseTurnOptionsUI();
+        CloseEndTurnUI();
     }
 
     public void PayToLeaveJail()
@@ -292,6 +371,15 @@ public class UIController : MonoBehaviour
 
     public void CloseEndTurnUI()
     {
+        CloseBuyPropertyButton();
+        ClosePayRentButton();
+        CloseDrawCardButton();
+        CloseGiveUpButton();
+        CloseGoToJailButton();
+        CloseEndTurnButton();
+        goToJailButton.gameObject.SetActive(false);
+        rollAgainButton.gameObject.SetActive(false);
+
         endTurnUI.gameObject.SetActive(false);
         endTurnUI.enabled = false;
     }
@@ -340,6 +428,11 @@ public class UIController : MonoBehaviour
         }
     }
 
+    public void LandOnSpace()
+    {
+        currentPlayer.LandOnSpace();
+    }
+
     public void EndTurn()
     {
         if(currentPlayer.isInJail)
@@ -350,5 +443,182 @@ public class UIController : MonoBehaviour
         CloseJailOptionsUI();
 
         gameManager.EndTurn();
+    }
+
+    public void OpenEndTurnButton()
+    {
+        if (currentPlayer.rolledDoubles && currentPlayer.doublesRollCount < 3)
+        {
+            rollAgainButton.gameObject.SetActive(true);
+            currentPlayer.rolledDoubles = false;
+            endTurnButton.gameObject.SetActive(false);
+        }
+        else if (currentPlayer.rolledDoubles && currentPlayer.doublesRollCount >= 3)
+        {
+            goToJailButton.gameObject.SetActive(true);
+            endTurnButton.gameObject.SetActive(false);
+            goToJailButton.enabled = true;
+            currentPlayer.rolledDoubles = false;
+        }
+        else
+        {
+            endTurnButton.gameObject.SetActive(true);
+            endTurnButton.enabled = true;
+            currentPlayer.rolledDoubles = false;
+        }
+    }
+
+    public void CloseEndTurnButton()
+    {
+        endTurnButton.gameObject.SetActive(false);
+        rollAgainButton.gameObject.SetActive(false);
+
+    }
+
+    public void SpaceInteraction()
+    {
+        currentPlayer.currentSpace.SpaceInteraction();
+    }
+
+    public void OpenPayRentButton(float rent)
+    {
+        payRentButton.gameObject.SetActive(true);
+        payRentButton.enabled = true;
+
+        payRentButton.GetComponentInChildren<TextMeshProUGUI>().text = $"Pay Rent: ${rent}";
+    }
+
+    public void ClosePayRentButton()
+    {
+        payRentButton.gameObject.SetActive(false);
+        payRentButton.enabled = false;
+    }
+
+    public void OpenBuyPropertyButton(float value)
+    {
+        buyPropertyButton.gameObject.SetActive(true);
+        buyPropertyButton.enabled = true;
+
+        buyPropertyButton.GetComponentInChildren<TextMeshProUGUI>().text = $"Buy Property: ${value}";
+    }
+
+    public void CloseBuyPropertyButton()
+    {
+        buyPropertyButton.gameObject.SetActive(false);
+        buyPropertyButton.enabled = false;
+    }
+
+    public void OpenPayTaxButton(float tax)
+    {
+        payTaxButton.gameObject.SetActive(true);
+        payTaxButton.enabled = true;
+
+        payRentButton.GetComponentInChildren<TextMeshProUGUI>().text = $"Pay Tax: $ {tax}";
+    }
+
+    public void ClosePayTaxButton()
+    {
+        payTaxButton.gameObject.SetActive(false);
+        payTaxButton.enabled = false;
+    }
+
+    public void OpenDrawCardButton()
+    {
+        drawCardButton.gameObject.SetActive(true);
+        drawCardButton.enabled = true;
+    }
+
+    public void CloseDrawCardButton()
+    {
+        drawCardButton.gameObject.SetActive(false);
+        drawCardButton.enabled = false;
+    }
+
+    public void GoToJail()
+    {
+        currentPlayer.MoveToSpace(40, false);
+        currentPlayer.isInJail = true;
+
+        currentPlayer.gameManager.uIController.CloseGoToJailButton();
+        currentPlayer.gameManager.uIController.OpenEndTurnButton();
+    }
+
+    public void OpenGoToJailButton()
+    {
+        goToJailButton.gameObject.SetActive(true);
+        goToJailButton.enabled = true;
+    }
+
+    public void CloseGoToJailButton()
+    {
+        goToJailButton.gameObject.SetActive(false);
+        goToJailButton.enabled = false;
+    }
+
+    public void GiveUp()
+    {
+        gameManager.RemovePlayer(currentPlayer);
+    }
+
+    public void OpenGiveUpButton()
+    {
+        giveUpButton.gameObject.SetActive(true);
+        giveUpButton.enabled = true;
+    }
+
+    public void CloseGiveUpButton()
+    {
+        giveUpButton.gameObject.SetActive(false);
+        giveUpButton.enabled = false;
+    }
+
+    public void OpenPlayersToTradeWith()
+    {
+        playersToTradeWith.gameObject.SetActive(true);
+
+        if(currentPlayer.playerIndex != 0)
+        player1TradeButton.gameObject.SetActive(true);
+
+        if(currentPlayer.playerIndex != 1)
+        player2TradeButton.gameObject.SetActive(true);
+
+        if(currentPlayer.playerIndex != 2 && gameManager.players.Count >= 3)
+        player3TradeButton.gameObject.SetActive(true);
+
+        if(currentPlayer.playerIndex != 3 && gameManager.players.Count >= 4)
+        player4TradeButton.gameObject.SetActive(true);
+    }
+
+    public void ClosePlayersToTradeWith()
+    {
+        player1TradeButton.gameObject.SetActive(false);
+        player2TradeButton.gameObject.SetActive(false);
+        player3TradeButton.gameObject.SetActive(false);
+        player4TradeButton.gameObject.SetActive(false);
+
+        playersToTradeWith.gameObject.SetActive(false);
+    }
+
+    public void OpenTradeMenu(int otherPlayer)
+    {
+        tradeMenu.gameObject.SetActive(true);
+        tradeMenu.enabled = true;
+
+        tradeMenu.GetComponent<TradeMenu>().player1 = currentPlayer;
+        tradeMenu.GetComponent<TradeMenu>().player2 = gameManager.players[otherPlayer];
+
+        player1CashSlider.maxValue = currentPlayer.cash;
+        player1CashSlider.minValue = 0;
+
+        player2CashSlider.maxValue = gameManager.players[otherPlayer].cash;
+        player2CashSlider.minValue = 0;
+
+        tradeMenu.OpenTradeMenu();
+    }
+
+    public void CloseTradeMenu()
+    {
+        tradeMenu.gameObject.SetActive(false);
+        tradeMenu.enabled = false;
     }
 }

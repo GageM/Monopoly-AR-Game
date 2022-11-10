@@ -9,6 +9,12 @@ public class PlayerSpace : MonoBehaviour
     public virtual void OnLanded(Player _interactingPlayer)
     {
         interactingPlayer = _interactingPlayer;
+        interactingPlayer.gameManager.uIController.OpenEndTurnButton();
+    }
+
+    public virtual void SpaceInteraction()
+    {
+
     }
 
     private void OnDrawGizmos()

@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class GoToJail : PlayerSpace
 {
-    GameManager manager;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        manager = GameObject.Find("AR Session Origin").GetComponent<GameManager>();
-    }
-
     public override void OnLanded(Player _interactingPlayer)
     {
         base.OnLanded(_interactingPlayer);
 
-         manager.GoToJail(interactingPlayer.playerIndex);
+        interactingPlayer.gameManager.uIController.OpenGoToJailButton();
+        interactingPlayer.gameManager.uIController.CloseEndTurnButton();
+    }
+
+    public override void SpaceInteraction()
+    {
+        interactingPlayer.isInJail = true;
+        interactingPlayer.StartCoroutine(interactingPlayer.MoveToSpace(40, false));
+
+        interactingPlayer.gameManager.uIController.CloseGoToJailButton();
+        interactingPlayer.gameManager.uIController.OpenEndTurnButton();
     }
 }

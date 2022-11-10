@@ -13,6 +13,9 @@ public class IncomeTax : PlayerSpace
     [HideInInspector, Tooltip("The amount of money taken as tax")]
     float taxAmount;
 
+    [HideInInspector, Tooltip("The tax amount after calculations")]
+    float finalTaxAmount;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +26,7 @@ public class IncomeTax : PlayerSpace
     {
 
         base.OnLanded(_interactingPlayer);
+
         float netWorth = 0;
 
         for(int i = 0; i < interactingPlayer.ownedProperties.Count; i++)
@@ -33,7 +37,25 @@ public class IncomeTax : PlayerSpace
 
         taxAmount = netWorth * taxPercentage;
 
-        interactingPlayer.cash -= (taxAmount <= 200f) ? taxAmount : flatTaxAmount;
+        finalTaxAmount = (taxAmount <= 200f) ? taxAmount : flatTaxAmount;
+        Mathf.Round(finalTaxAmount);
 
+        if (interactingPlayer.cash >= finalTaxAmount)
+        {
+            interactingPlayer.gameManager.uIController.OpenPayTaxButton(finalTaxAmount);
+        }
+        else
+        {
+            interactingPlayer.gameManager.uIController.OpenGiveUpButton();
+        }
+
+        interactingPlayer.gameManager.uIController.CloseEndTurnButton();
+
+    }
+
+    public override void SpaceInteraction()
+    {
+        interactingPlayer.gameManager.uIController.ClosePayTaxButton();
+        interactingPlayer.gameManager.uIController.OpenEndTurnButton();
     }
 }

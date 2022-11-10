@@ -40,6 +40,12 @@ public class Property : PlayerSpace
     // The property's owner
     [HideInInspector]
     public Player owner = null;
+
+    [SerializeField] GameObject house1;
+    [SerializeField] GameObject house2;
+    [SerializeField] GameObject house3;
+    [SerializeField] GameObject house4;
+    [SerializeField] GameObject hotel;
         
     // Start is called before the first frame update
     void Start()
@@ -47,6 +53,8 @@ public class Property : PlayerSpace
         houseCount = 0;
         hotelCount = 0;
         isMortgaged = false;
+
+        GetHouseObjects();
     }
 
     public override void OnLanded(Player _interactingPlayer)
@@ -58,25 +66,74 @@ public class Property : PlayerSpace
         {
             if (interactingPlayer.cash >= value)
             {
-                // Set the ownership of this property to the interacting player
-                owner = interactingPlayer;
-                // Remove the cash from the player buying this property
-                interactingPlayer.cash -= value;
-                // Add this property to the player's list of properties
-                interactingPlayer.ownedProperties.Add(this);
-                // Sort the owning player's property list
-                interactingPlayer.SortOwnedProperties();
+                // Open the buy property option in the UI Controller
+                interactingPlayer.gameManager.uIController.OpenBuyPropertyButton(value);
+
+                // Open the end turn button
+                interactingPlayer.gameManager.uIController.OpenEndTurnButton();
             }
+            interactingPlayer.gameManager.uIController.OpenEndTurnButton();
         }
         else
         {
             if(owner != interactingPlayer && !isMortgaged)
             {
-                // Give the rent to the owning player from the interacting player
-                interactingPlayer.cash -= ChooseRent();
-                owner.cash += ChooseRent();
+                if (interactingPlayer.cash >= ChooseRent())
+                {
+                    // Open the Pay Rent option in the UI Controller
+                    interactingPlayer.gameManager.uIController.OpenPayRentButton(ChooseRent());
+                    // Hide the End Turn option in the UI Controller
+                    interactingPlayer.gameManager.uIController.CloseEndTurnButton();
+                }
+                else 
+                {
+                    interactingPlayer.gameManager.uIController.OpenGiveUpButton();
+                }
             }
         }
+    }
+
+    public override void SpaceInteraction()
+    {
+        if (owner == null)
+        {
+                BuyProperty();
+        }
+        else
+        {
+            if (owner != interactingPlayer && !isMortgaged)
+            {
+                PayRent();
+            }
+        }
+    }
+
+    public virtual void PayRent()
+    {
+        if (interactingPlayer.cash > ChooseRent())
+        {
+            // Give the rent to the owning player from the interacting player
+            interactingPlayer.cash -= ChooseRent();
+            owner.cash += ChooseRent();
+
+            interactingPlayer.gameManager.uIController.ClosePayRentButton();
+            interactingPlayer.gameManager.uIController.OpenEndTurnButton();
+        }
+    }
+
+    public virtual void BuyProperty()
+    {
+        // Set the ownership of this property to the interacting player
+        owner = interactingPlayer;
+        // Remove the cash from the player buying this property
+        interactingPlayer.cash -= value;
+        // Add this property to the player's list of properties
+        interactingPlayer.ownedProperties.Add(this);
+        // Sort the owning player's property list // This Function Doesn't work
+        //interactingPlayer.SortOwnedProperties();
+
+        interactingPlayer.gameManager.uIController.CloseBuyPropertyButton();
+        interactingPlayer.gameManager.uIController.OpenEndTurnButton();
     }
 
     public virtual bool CheckIfCanBuyHouse()
@@ -107,6 +164,9 @@ public class Property : PlayerSpace
             }
             else break;
         }
+        owner.UpdatePlayerCashUI();
+
+        UpdatePropertyMeshes();
     }
 
     public void AddHotel()
@@ -117,6 +177,9 @@ public class Property : PlayerSpace
             owner.cash -= houseCost;
             houseCount = 0;
         }
+        owner.UpdatePlayerCashUI();
+
+        UpdatePropertyMeshes();
     }
 
     public void SellHouse(int housesToSell)
@@ -129,6 +192,9 @@ public class Property : PlayerSpace
                 owner.cash += (0.5f * houseCost);
             }
         }
+        owner.UpdatePlayerCashUI();
+
+        UpdatePropertyMeshes();
     }
 
     public void SellHotel()
@@ -138,6 +204,9 @@ public class Property : PlayerSpace
             hotelCount--;
             owner.cash += (0.5f * houseCost);
         }
+        owner.UpdatePlayerCashUI();
+
+        UpdatePropertyMeshes();
     }
 
     public bool Mortgage()
@@ -175,6 +244,7 @@ public class Property : PlayerSpace
             }
         }
 
+        owner.UpdatePlayerCashUI();
         return isMortgaged;
     }
 
@@ -210,5 +280,57 @@ public class Property : PlayerSpace
             return 1;
         }
         return 0;
+    }
+
+    public virtual void UpdatePropertyMeshes()
+    {
+        switch (houseCount)
+        {
+            case 1:
+                house1.SetActive(true);
+                house2.SetActive(true);
+                house3.SetActive(true);
+                house4.SetActive(true);
+                break;
+            case 2:
+                house1.SetActive(true);
+                house2.SetActive(true);
+                house1.SetActive(false);
+                house2.SetActive(false);
+                break;
+            case 3:
+                house1.SetActive(true);
+                house2.SetActive(true);
+                house3.SetActive(true);
+                house3.SetActive(false);
+                break;
+            case 4:
+                house1.SetActive(true);
+                house2.SetActive(true);
+                house3.SetActive(true);
+                house4.SetActive(true);
+                break;
+            default:
+                break;
+
+        }
+        if(hotelCount == 1)
+        {
+            hotel.SetActive(true);
+        }
+        else
+        {
+            hotel.SetActive(false);
+        }
+    }
+
+    public virtual void GetHouseObjects()
+    {
+
+        house1.SetActive(false);
+        house2.SetActive(false);
+        house3.SetActive(false);
+        house4.SetActive(false);
+        hotel.SetActive(false);
     }
 }

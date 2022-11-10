@@ -219,12 +219,17 @@ MonoBehaviour:
   - {fileID: 6277843994232172962}
   - {fileID: 3093908039005471736}
   currentToken: {fileID: 1199711567256787509}
-  startingCash: 200
+  startingCash: 1500
   cash: 0
   ownedProperties: []
   getOutOfJailCards: 0
   turnsSinceJailed: 0
+  rolledDoubles: 0
+  doublesTurnCount: 0
   isMoving: 0
+  rollResult: 0
+  board: {fileID: 0}
+  gameManager: {fileID: 0}
   playerCashUI: {fileID: 0}
 --- !u!1 &2630764508940377997
 GameObject:
